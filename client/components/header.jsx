@@ -3,8 +3,7 @@ import React from 'react';
 export default function Header() {
   return (
     <div>
-      <div>Logo</div>
-      <div>Wicked Sales Header</div>
+      <h1 className='text-center'>Wicked Sales</h1>
     </div>
   );
 }
