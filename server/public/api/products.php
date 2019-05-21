@@ -19,7 +19,7 @@
   }
   $output = file_get_contents( 'dummy-products-list.json');
   
-  print($output);
+  print("{$output}\n");
 
   print_r($conn);
 
