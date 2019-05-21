@@ -24,6 +24,10 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
       }
     ]
   },
@@ -38,7 +42,7 @@ module.exports = {
     proxy: {
       '/api': {
         changeOrigin: true,
-        target: 'http://wicked-sales.localhost'
+        target: 'http://localhost/wicked-sales/server/public'
       }
     }
   }
