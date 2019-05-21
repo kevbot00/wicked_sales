@@ -30,7 +30,6 @@ export default class App extends React.Component {
       <div className="container-fluid">
         <Header />
         <ProductList products={ this.state.products } />
-
       </div>
     );
   }
