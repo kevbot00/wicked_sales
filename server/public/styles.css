@@ -1,9 +1,23 @@
+body {
+  background-color: gray
+}
+
 .header-container {
-  height: 15vh;
+  height: 12vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  
+  background-color: rgb(18, 23, 60);
+  color: white
+}
+
+.cardContainer:hover {
+  box-shadow: 3px 3px rgb(213, 213, 213);
+  transition: all 0.2s;
+  transform: scale(1.03)
+}
+.cardContainer:hover > .cardImg {
+  filter: none;
 }
 
 .cardImg {
@@ -12,5 +26,32 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+.backText {
+  font-size: 20px;
+}
+.backText:hover {
+  color: rgb(165, 165, 165);
+  text-decoration: underline;
+}
+
+.detailContainer {
+  height: 85vh;
+}
+
+@media screen and (max-width: 375px) {
+  .productImg {
+    max-height: 30vh;
+  }
+}
+
+.productImg {
+  width: 100%;
+  max-height: 40vh;
+}
+
+.productPrice {
+  color: rgb(97, 97, 97)
 }
 
