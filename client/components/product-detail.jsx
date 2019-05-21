@@ -7,6 +7,7 @@ class ProductDetails extends React.Component {
       product: null
     };
     this.clickHandler = this.clickHandler.bind(this);
+    this.addHandler = this.addHandler.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +27,10 @@ class ProductDetails extends React.Component {
     this.props.goBack('catalog', {});
   }
 
+  addHandler() {
+    this.props.addHandler(this.state.product);
+  }
+
   render() {
     return this.state.product ? (
       <div className='detailContainer container-fluid'>
@@ -40,7 +45,9 @@ class ProductDetails extends React.Component {
             <h2 className='mb-4'>{this.state.product.name}</h2>
             <h4 className='productPrice mb-4'>${ (this.state.product.price / 100).toFixed(2)}</h4>
             { this.state.product.shortDescription }
+            <button className="addBtn btn-lg btn-outline-dark mt-4" onClick={ this.addHandler } >Add to Cart</button>
           </div>
+
         </div>
         <div className="productDescription mt-4">
           { this.state.product.longDescription }
