@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
+import ProductDetails from './product-detail';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -41,9 +42,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <Header />
-        <ProductList products={ this.state.products } view={ this.setView } />
+        <div className="container-fluid">
+          { this.state.view.name !== 'details'
+            ? <ProductList products={ this.state.products } view={ this.setView } />
+            : <ProductDetails id={ this.state.view.params } goBack={ this.setView } />}
+        </div>
       </div>
     );
   }

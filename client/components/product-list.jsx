@@ -10,6 +10,5 @@ export default function ProductList(props) {
     <div className="row">
       {productArray}
     </div>
-
   );
 }
