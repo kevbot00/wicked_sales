@@ -6,12 +6,26 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      view: {
+        name: 'catalog',
+        params: {}
+      }
     };
+    this.setView = this.setView.bind(this);
   }
 
   componentDidMount() {
     this.getProducts();
+  }
+
+  setView(name, params) {
+    this.setState({
+      view: {
+        name,
+        params
+      }
+    });
   }
 
   getProducts() {
@@ -29,7 +43,7 @@ export default class App extends React.Component {
     return (
       <div className="container-fluid">
         <Header />
-        <ProductList products={ this.state.products } />
+        <ProductList products={ this.state.products } view={ this.setView } />
       </div>
     );
   }
