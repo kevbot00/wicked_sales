@@ -11,22 +11,16 @@ export default class App extends React.Component {
       view: {
         name: 'catalog',
         params: {}
-      }
+      },
+      cart: []
     };
     this.setView = this.setView.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
     this.getProducts();
-  }
-
-  setView(name, params) {
-    this.setState({
-      view: {
-        name,
-        params
-      }
-    });
+    this.getCartItems();
   }
 
   getProducts() {
@@ -40,14 +34,47 @@ export default class App extends React.Component {
       .then(data => this.setState({ products: data }));
   }
 
+  getCartItems() {
+    fetch('/api/cart.php', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(cart => this.setState({ cart }));
+  }
+
+  setView(name, params) {
+    this.setState({
+      view: {
+        name,
+        params
+      }
+    });
+  }
+
+  addToCart(product) {
+    fetch('/api/cart.php', {
+      method: 'POST',
+      body: JSON.stringify(product),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => this.setState({ cart: [...this.state.cart, product] }));
+
+  }
+
   render() {
     return (
       <div>
-        <Header />
+        <Header cartItemCount={ this.state.cart } />
         <div className="container-fluid">
           { this.state.view.name !== 'details'
-            ? <ProductList products={ this.state.products } view={ this.setView } />
-            : <ProductDetails id={ this.state.view.params } goBack={ this.setView } />}
+            ? <ProductList products={ this.state.products } view={ this.setView } addHandler={ this.addToCart } />
+            : <ProductDetails id={ this.state.view.params } goBack={ this.setView } addHandler={ this.addToCart } />}
         </div>
       </div>
     );
