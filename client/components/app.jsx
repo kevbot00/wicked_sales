@@ -19,15 +19,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.getProducts();
-  }
-
-  setView(name, params) {
-    this.setState({
-      view: {
-        name,
-        params
-      }
-    });
+    this.getCartItems();
   }
 
   getProducts() {
@@ -49,13 +41,22 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(data => data);
+      .then(cart => this.setState({ cart }));
+  }
+
+  setView(name, params) {
+    this.setState({
+      view: {
+        name,
+        params
+      }
+    });
   }
 
   render() {
     return (
       <div>
-        <Header />
+        <Header cartItemCount={ this.state.cart } />
         <div className="container-fluid">
           { this.state.view.name !== 'details'
             ? <ProductList products={ this.state.products } view={ this.setView } />

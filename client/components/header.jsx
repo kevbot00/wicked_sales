@@ -1,9 +1,17 @@
 import React from 'react';
 
-export default function Header() {
+export default function Header(props) {
   return (
     <div className='header-container mb-4'>
-      <h1 className='text-center'><i className="fas fa-fist-raised"></i>Wicked Sales</h1>
+      <div className='header'>
+        <h1 className='text-left ml-4'><i className="fas fa-fist-raised mr-3"></i>Wicked Sales</h1>
+      </div>
+      <div className='shoppingCart'>
+        <span className='itemCount mr-4'>{ props.cart.length } Items</span>
+        <span>
+          <i className="fas fa-shopping-cart fa-2x ml-2"></i>
+        </span>
+      </div>
     </div>
   );
 }

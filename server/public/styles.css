@@ -2,10 +2,21 @@ body {
   background-color: gray
 }
 
+.shoppingCart {
+  display: flex;
+  position: absolute;
+  right: 4vw;
+  align-items: center;
+}
+
+
+
+
+
 .header-container {
   height: 12vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: rgb(18, 23, 60);
   color: white
