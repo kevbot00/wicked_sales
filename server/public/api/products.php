@@ -14,12 +14,15 @@
   startUp();
 
   if (!$conn){
-    throw new Exception("Error" . mysqli_connect_error($conn));
+    throw new Exception('Error' . mysqli_connect_error($conn));
   }
-  if ( $_GET['id'] ){
+
+
+  if ( is_numeric( $_GET['id'] ) ){
     $whereClause = "WHERE `id` = {$_GET['id']}";
   } else {
     $whereClause = '';
+    throw new Exception('id needs to be a number');
   }
   $query = "SELECT * FROM `products` $whereClause";
   $result = mysqli_query( $conn, $query );
