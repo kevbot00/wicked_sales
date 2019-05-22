@@ -1,6 +1,16 @@
 body {
   background-color: gray
 }
+.fakeCard {
+  border-radius: .25rem;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+}
+
+.cartImg {
+  border-right: 1px solid rgba(199, 199, 199, 0.5)
+}
 
 .shoppingCart {
   display: flex;

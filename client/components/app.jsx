@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-detail';
+import CartSummary from './cart-summary';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -70,11 +71,29 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Header cartItemCount={ this.state.cart } />
-        <div className="container-fluid">
-          { this.state.view.name !== 'details'
-            ? <ProductList products={ this.state.products } view={ this.setView } addHandler={ this.addToCart } />
-            : <ProductDetails id={ this.state.view.params } goBack={ this.setView } addHandler={ this.addToCart } />}
+        <Header cartItemCount={ this.state.cart } setView={ this.setView } />
+        <div className="container">
+          { (this.state.view.name === 'catalog') &&
+              <ProductList
+                products={ this.state.products }
+                view={ this.setView }
+                addHandler={ this.addToCart }
+              />
+          }
+          {(this.state.view.name === 'details') &&
+            <ProductDetails
+              id={ this.state.view.params }
+              goBack={ this.setView }
+              addHandler={ this.addToCart }
+            />
+          }
+          {(this.state.view.name === 'cart') &&
+              <CartSummary
+                cart={ this.state.cart }
+                goBack={ this.setView }
+              />
+          }
+
         </div>
       </div>
     );

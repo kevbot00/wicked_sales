@@ -9,7 +9,7 @@ export default function Header(props) {
       <div className='shoppingCart'>
         <span className='itemCount mr-4'>{ props.cartItemCount.length ? `${props.cartItemCount.length} items` : null }</span>
         <span>
-          <i className="fas fa-shopping-cart fa-2x ml-2"></i>
+          <i className="fas fa-shopping-cart fa-2x ml-2" onClick={ () => props.setView('cart', {})}></i>
         </span>
       </div>
     </div>
