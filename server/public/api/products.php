@@ -12,20 +12,9 @@
   require_once 'db_connection.php';
 
   set_exception_handler( "error_handler" );
-  
-  if (!$conn){
-    http_response_code(400);
-    die('Connection error: ' . mysqli_connect_error());
-  }
   $output = file_get_contents( 'dummy-products-list.json');
-  
+  do_error();
   print("{$output}\n");
-
   print_r($conn);
-
-  mysqli_close($conn);
-
-
-
   
 ?>
