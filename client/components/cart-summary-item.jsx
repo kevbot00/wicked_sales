@@ -4,9 +4,11 @@ function CartSummaryItem(props) {
   const { item } = props;
 
   return (
-    <div className="cartItemContainer">
-      <div className="cartItemCard">
-        <div>{item.name}</div>
+    <div className="card">
+      <div className="card-body">
+        <div className='cart-title'>{item.name}</div>
+        <div className='card-text'>${((item.price) / 100).toFixed(2)}</div>
+        <div className='card-text'>{item.shortDescription}</div>
       </div>
     </div>
   );
