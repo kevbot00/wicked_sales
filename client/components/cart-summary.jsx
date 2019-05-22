@@ -5,6 +5,7 @@ class CartSummary extends React.Component {
   constructor(props) {
     super(props);
     this.clickHandler = this.clickHandler.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
 
   }
 
@@ -26,6 +27,12 @@ class CartSummary extends React.Component {
     return (total / 100).toFixed(2);
   }
 
+  placeOrder() {
+    if (this.props.cart.length) {
+      this.props.goBack('checkout', {});
+    }
+  }
+
   render() {
     return (
       <div className="cartSummaryContainer container">
@@ -33,6 +40,7 @@ class CartSummary extends React.Component {
         <h3>My Cart</h3>
         { this.viewCart() }
         <h3 className='mt-4'>Item Total: ${ this.addTotal() }</h3>
+        <button onClick={ this.placeOrder } >Checkout</button>
 
       </div>
     );
