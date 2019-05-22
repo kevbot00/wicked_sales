@@ -17,12 +17,23 @@ class CartSummary extends React.Component {
     this.props.goBack('catalog', {});
   }
 
+  addTotal() {
+    const { cart } = this.props;
+    let total = 0;
+    for (var item of cart) {
+      total += item.price;
+    }
+    return (total / 100).toFixed(2);
+  }
+
   render() {
     return (
-      <div className="cartSummaryContainer container-fluid">
+      <div className="cartSummaryContainer container">
         <div className='backText mb-4' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
         <h3>My Cart</h3>
         { this.viewCart() }
+        <h3 className='mt-4'>Item Total: ${ this.addTotal() }</h3>
+
       </div>
     );
   }
