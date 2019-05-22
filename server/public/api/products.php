@@ -13,7 +13,6 @@
 
   set_exception_handler( "error_handler" );
   $output = file_get_contents( 'dummy-products-list.json');
-  do_error();
   print("{$output}\n");
   print_r($conn);
   
