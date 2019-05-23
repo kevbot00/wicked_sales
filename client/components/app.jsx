@@ -18,6 +18,7 @@ export default class App extends React.Component {
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
   }
 
   componentDidMount() {
@@ -77,15 +78,21 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(res => res.json())
-      .then(order => this.setState({ name: 'catalog', params: {} }));
+      .then(this.setState({
+        view: {
+          name: 'catalog',
+          params: {}
+
+        }
+      })
+      );
   }
 
   render() {
     return (
       <div>
         <Header cartItemCount={ this.state.cart } setView={ this.setView } />
-        <div className="container">
+        <div className="container appContainer">
           { (this.state.view.name === 'catalog') &&
             <ProductList
               products={ this.state.products }
@@ -109,6 +116,7 @@ export default class App extends React.Component {
           {(this.state.view.name === 'checkout') &&
             <CheckoutForm
               cart={ this.state.cart }
+              goBack={ this.setView }
               placeOrder={ this.placeOrder }
             />
 

@@ -35,13 +35,14 @@ class CartSummary extends React.Component {
 
   render() {
     return (
-      <div className="cartSummaryContainer container">
-        <div className='backText mb-4' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
+      <div className="">
+        <div className='backText mb-2' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
         <h3>My Cart</h3>
         { this.viewCart() }
-        <h3 className='mt-4'>Item Total: ${ this.addTotal() }</h3>
-        <button onClick={ this.placeOrder } >Checkout</button>
-
+        <div className='checkoutContainer mt-4'>
+          <h3 className='itemDisplay'>Item Total: ${ this.addTotal() }</h3>
+          <button className='checkoutBtn btn-outline-primary btn btn-lg' onClick={ this.placeOrder } >Checkout</button>
+        </div>
       </div>
     );
   }
