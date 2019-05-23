@@ -10,7 +10,8 @@ class CartSummary extends React.Component {
   }
 
   viewCart() {
-    const shoppingCart = this.props.cart.map(item => <CartSummaryItem key={ item.id } item={item}/>);
+    let itemCount = 0;
+    const shoppingCart = this.props.cart.map(item => <CartSummaryItem key={ itemCount++ } item={item}/>);
     return shoppingCart;
   }
 
@@ -22,7 +23,7 @@ class CartSummary extends React.Component {
     const { cart } = this.props;
     let total = 0;
     for (var item of cart) {
-      total += item.price;
+      total += parseInt(item.price);
     }
     return (total / 100).toFixed(2);
   }

@@ -18,13 +18,13 @@ class CheckoutForm extends React.Component {
     const { cart } = this.props;
     let total = 0;
     for (var item of cart) {
-      total += item.price;
+      total += parseInt(item.price);
     }
     return (total / 100).toFixed(2);
   }
 
   changeHandler(evt) {
-    const target = event.target;
+    const target = evt.target;
     target.name === 'name' && this.setState({ name: target.value });
     target.name === 'card' && this.setState({ creditCard: target.value });
     target.name === 'address' && this.setState({ shippingAddress: target.value });

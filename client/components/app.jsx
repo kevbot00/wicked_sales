@@ -78,14 +78,14 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
+      .then(res => res.json())
       .then(this.setState({
         view: {
           name: 'catalog',
           params: {}
-
-        }
-      })
-      );
+        },
+        cart: []
+      }));
   }
 
   render() {
