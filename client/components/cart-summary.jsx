@@ -10,8 +10,7 @@ class CartSummary extends React.Component {
   }
 
   viewCart() {
-    let itemCount = 0;
-    const shoppingCart = this.props.cart.map(item => <CartSummaryItem key={ itemCount++ } item={item}/>);
+    const shoppingCart = this.props.cart.map((item, itemId) => <CartSummaryItem key={ itemId } item={item}/>);
     return shoppingCart;
   }
 

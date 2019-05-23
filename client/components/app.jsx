@@ -79,7 +79,7 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(this.setState({
+      .then(() => this.setState({
         view: {
           name: 'catalog',
           params: {}
