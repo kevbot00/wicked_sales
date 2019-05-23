@@ -6,9 +6,12 @@ body {
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .cartImg {
+  /* background-size: contain; */
   border-right: 1px solid rgba(199, 199, 199, 0.5)
 }
 
@@ -87,6 +90,7 @@ body {
 
 .backText {
   font-size: 20px;
+  
 }
 .backText:hover {
   color: rgb(165, 165, 165);
@@ -112,3 +116,28 @@ body {
   color: rgb(97, 97, 97)
 }
 
+.checkoutBtn {
+  display: flex;
+  position: absolute;
+  right: 0;
+  align-items: center;
+}
+
+.itemDisplay {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.checkoutContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.appContainer {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

@@ -43,7 +43,7 @@ class ProductDetails extends React.Component {
           </div>
           <div className="productInfo col-lg-6 col-md-4 mt-2 mb-4">
             <h2 className='mb-4'>{this.state.product.name}</h2>
-            <h4 className='productPrice mb-4'>${ (this.state.product.price / 100).toFixed(2)}</h4>
+            <h4 className='productPrice mb-4'>${ (parseInt(this.state.product.price) / 100).toFixed(2)}</h4>
             { this.state.product.shortDescription }
             <button className="addBtn btn-lg btn-outline-dark mt-4" onClick={ this.addHandler } >Add to Cart</button>
           </div>

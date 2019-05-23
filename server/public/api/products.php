@@ -27,6 +27,7 @@
   while ( $row = mysqli_fetch_assoc( $result )){
     array_push( $output, $row );
   }
+  
   $json_output = json_encode( $output );
   print( $json_output );
 
