@@ -10,6 +10,7 @@
 
   require_once 'functions.php';
   require_once 'db_connection.php';
+
   set_exception_handler( "error_handler" );
   startUp();
 
@@ -17,38 +18,44 @@
     throw new Exception('Error' . mysqli_connect_error($conn));
   }
 
-  if ( $_GET['id'] ){
-    if ( !is_numeric( $_GET['id'])){
-      throw new Exception('id needs to be a number' . $row_num);
-    }
-    $whereClause = "WHERE `id` = {$_GET['id']}";
-  } else {
+  $id = false;
+
+  if ( empty($_GET['id']) ){
     $whereClause = '';
+  } else {
+    if ( !is_numeric( $_GET['id'])){
+      throw new Exception('id needs to be a int');
+    }
+    $id = intval($_GET['id']);
+    $whereClause = "WHERE `id` = $id";
   }
 
-  // if ( $_GET['id'] > $row ){
-  //   throw new Exception("invalid ID: {$_GET['id']}");
-  // }
-
   $query = "SELECT * FROM `products` $whereClause";
+
   $result = mysqli_query( $conn, $query );
-  if ( $result ){
-    $row_num = mysqli_num_rows( $result );
-    if ( $_GET['id'] > $row_num ){
-      throw new Exception("invalid ID: $row_num");
-    }
-  } else {
+
+  if ( !$result ){
     throw new Exception('Error' . mysqli_error( $conn ));
   }
 
+  if ( mysqli_num_rows( $result ) === 0 && $id !== false ){
+    throw new Exception( "invalid ID: $id");
+  }
+  
   $output = [];
-
   while ( $row = mysqli_fetch_assoc( $result )){
+    $row['price'] = intval( $row['price']);
+    $row['id'] = intval( $row['id'] );
     array_push( $output, $row );
+  }
+
+  if ( $id ){
+    $output = $output[0];
   }
   
   $json_output = json_encode( $output );
-  print( $json_output );
+  
+  print($json_output );
 
   
 ?>
