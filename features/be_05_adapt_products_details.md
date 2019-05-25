@@ -21,7 +21,7 @@
     * ![raw products output](assets/be05_4.png)
 1. one more possibility is that we select an ID that doesn't exist.  If there are no products when we look for any, we don't consider that an error for this endpoint.
 1. however, if we gave an ID, and there was no product by that ID, that is an error.
-1. If you have a num_rows check, or you after youa dd one, 
+1. If you have a num_rows check, or you after you add one, 
     * add a check to see if you have an ID sent to you from the client (like you used above).
     * if you do have an ID, and you have no data, throw an exception of "invalid ID: " and the ID that was requested
 1. submit a pull request for this version
