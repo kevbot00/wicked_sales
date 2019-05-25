@@ -15,6 +15,7 @@
   startUp();
 
   if (!$conn){
+
     throw new Exception('Error' . mysqli_connect_error($conn));
   }
 
@@ -56,6 +57,7 @@
   $json_output = json_encode( $output );
   
   print($json_output );
+
 
   
 ?>

@@ -1,6 +1,6 @@
 <?php
   
-  function error_handler( $error){
+  function error_handler( $error ){
     $output = [
       'success' => false,
       'error' => $error->getMessage()
