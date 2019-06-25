@@ -6,7 +6,7 @@ function CartSummaryItem(props) {
   return (
 
     <div className="mt-4 row fakeCard">
-      <div className="col-4">
+      <div className="col-12 col-sm-4 col-md-4 px-0">
         <img src={item.image} className="card-img cardImg cartImg"/>
       </div>
       <div className="col-8">

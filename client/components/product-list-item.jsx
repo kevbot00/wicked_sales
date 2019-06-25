@@ -19,7 +19,7 @@ class ProductListItem extends React.Component {
 
   render() {
     return (
-      <div className='col-md-4 col-sm-6 card-group' onClick={ this.clickHandler } >
+      <div className='col-md-4 col-sm-6 col-12 card-group' onClick={ this.clickHandler } >
         <div className='card mb-4 cardContainer'>
           <div className="overlayContainer">
             <img className='card-img cardImg' style={{ 'backgroundImage': `url(${this.props.product.image})` }} />

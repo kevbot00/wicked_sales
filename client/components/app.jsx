@@ -14,7 +14,8 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      updated: false
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
@@ -26,6 +27,11 @@ export default class App extends React.Component {
     this.getCartItems();
   }
 
+  componentDidUpdate(){
+    if ( !this.state.updated )
+    this.getCartItems();
+  }
+
   getProducts() {
     fetch('/api/products.php', {
       method: 'GET',
@@ -34,7 +40,7 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(data => this.setState({ products: data }));
+      .then(data => this.setState({ products: data}));
   }
 
   getCartItems() {
@@ -45,7 +51,7 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(cart => this.setState({ cart }));
+      .then(cart => this.setState({ cart, updated: true } , () => console.log( 'get cart items', cart )));
   }
 
   setView(name, params) {
@@ -66,8 +72,7 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(data => this.setState({ cart: [...this.state.cart, product] }));
-
+      .then(data => this.setState({ cart: [...this.state.cart, product], updated: false }));
   }
 
   placeOrder(custInfo) {
@@ -90,9 +95,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="col-12 px-0">
         <Header cartItemCount={ this.state.cart } setView={ this.setView } />
-        <div className="container appContainer">
+        <div className="container appContainer ">
           { (this.state.view.name === 'catalog') &&
             <ProductList
               products={ this.state.products }

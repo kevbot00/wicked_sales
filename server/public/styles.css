@@ -1,5 +1,11 @@
 body {
-  background-color: gray
+  background-color: #F9F8FF !important;
+  padding-bottom: 5px;
+}
+
+
+.appContainer {
+  height: 100vh !important;
 }
 .fakeCard {
   border-radius: .25rem;
@@ -11,7 +17,7 @@ body {
 }
 
 .cartImg {
-  /* background-size: contain; */
+  object-fit: contain;
   border-right: 1px solid rgba(199, 199, 199, 0.5)
 }
 
@@ -44,6 +50,7 @@ body {
   font-size: 20px;
   padding: 20px;
   text-align: center;
+  border: 0;
 }
 
 .overlayContainer:hover .overlay {
@@ -100,17 +107,15 @@ body {
 .detailContainer {
   height: 85vh;
 }
-
-@media screen and (max-width: 375px) {
-  .productImg {
-    max-height: 30vh;
-  }
-}
-
 .productImg {
-  width: 100%;
-  max-height: 40vh;
+  width: 50% !important;
 }
+
+.productImgContainer {
+  background-color: white;
+}
+@media screen and (max-width: 375px) {
+
 
 .productPrice {
   color: rgb(97, 97, 97)
@@ -140,4 +145,5 @@ body {
 .appContainer {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
 }

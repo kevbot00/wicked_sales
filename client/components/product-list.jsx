@@ -7,7 +7,7 @@ export default function ProductList(props) {
   });
 
   return (
-    <div className="row">
+    <div className="row d-flex justify-content-center">
       {productArray}
     </div>
   );
