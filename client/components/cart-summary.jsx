@@ -29,7 +29,8 @@ class CartSummary extends React.Component {
 
   placeOrder() {
     if (this.props.cart.length) {
-      this.props.goBack('checkout', {});
+      console.log( this.addTotal() );
+      this.props.goBack('checkout', {totalAmount: this.addTotal()});
     }
   }
 
@@ -39,9 +40,9 @@ class CartSummary extends React.Component {
         <div className='backText mb-2' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
         <h3>My Cart</h3>
         { this.viewCart() }
-        <div className='checkoutContainer mt-4'>
+        <div className='checkoutContainer mx-2 my-4 d-flex justify-content-between'>
           <h3 className='itemDisplay'>Item Total: ${ this.addTotal() }</h3>
-          <button className='checkoutBtn btn-outline-primary btn btn-lg' onClick={ this.placeOrder } >Checkout</button>
+          <button className='checkoutBtn btn-outline-primary btn btn-lg d-block' onClick={ this.placeOrder } >Checkout</button>
         </div>
       </div>
     );

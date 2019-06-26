@@ -28,8 +28,10 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(){
-    if ( !this.state.updated )
-    this.getCartItems();
+    if ( !this.state.updated ){
+      this.getProducts();
+      this.getCartItems();
+    }
   }
 
   getProducts() {
@@ -51,10 +53,11 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(cart => this.setState({ cart, updated: true } , () => console.log( 'get cart items', cart )));
+      .then(cart => this.setState({ cart, updated: true }));
   }
 
   setView(name, params) {
+    console.log( 'params', params )
     this.setState({
       view: {
         name,
@@ -93,11 +96,15 @@ export default class App extends React.Component {
       }));
   }
 
+
   render() {
+    this.state
+    let count = null;
+    const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
       <div className="col-12 px-0">
-        <Header cartItemCount={ this.state.cart } setView={ this.setView } />
-        <div className="container appContainer ">
+        <Header cartItemCount={ count } setView={ this.setView } />
+        <div className="container appContainer p-0">
           { (this.state.view.name === 'catalog') &&
             <ProductList
               products={ this.state.products }
@@ -123,6 +130,7 @@ export default class App extends React.Component {
               cart={ this.state.cart }
               goBack={ this.setView }
               placeOrder={ this.placeOrder }
+              total={ this.state.view.params.totalAmount }
             />
 
           }

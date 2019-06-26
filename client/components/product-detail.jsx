@@ -37,11 +37,11 @@ class ProductDetails extends React.Component {
         <div className="goBackSection">
           <div className='backText mb-4' onClick={ this.clickHandler } ><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
         </div>
-        <div className="productDetailContainer row">
+        <div className="productDetailContainer border-bottom border-secondary row">
           <div className="col-lg-6 col-md-8 mb-3 d-flex align-items-center justify-content-center productImgContainer">
               <img className="productImg img-fluid d-flex align-items-center" src={ this.state.product.image}/>
           </div>
-          <div className="productInfo col-lg-6 col-md-4 mt-2 mb-4">
+          <div className="productInfo col-lg-6 col-md-4 mt-2 mb-3">
             <h2 className='mb-4'>{this.state.product.name}</h2>
             <h4 className='productPrice mb-4'>${ (parseInt(this.state.product.price) / 100).toFixed(2)}</h4>
             { this.state.product.shortDescription }
@@ -49,7 +49,7 @@ class ProductDetails extends React.Component {
           </div>
 
         </div>
-        <div className="productDescription mt-2 mb-4">
+        <div className="productDescription mt-3 mb-4">
           { this.state.product.longDescription }
         </div>
 

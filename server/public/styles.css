@@ -5,7 +5,7 @@ body {
 
 
 .appContainer {
-  height: 100vh !important;
+  height: 88vh !important;
 }
 .fakeCard {
   border-radius: .25rem;
@@ -18,7 +18,7 @@ body {
 
 .cartImg {
   object-fit: contain;
-  border-right: 1px solid rgba(199, 199, 199, 0.5)
+  border: 1px solid rgba(199, 199, 199, 0.5)
 }
 
 .shoppingCart {
@@ -114,6 +114,11 @@ body {
 .productImgContainer {
   background-color: white;
 }
+
+.checkout-footer {
+  bottom: 0;
+  width: 100%;
+}
 @media screen and (max-width: 375px) {
 
 
@@ -123,7 +128,7 @@ body {
 
 .checkoutBtn {
   display: flex;
-  position: absolute;
+  position: relative;
   right: 0;
   align-items: center;
 }
