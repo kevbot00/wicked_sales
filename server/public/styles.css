@@ -76,6 +76,55 @@ body {
   opacity: .4
 }
 
+.snackbarContainer {
+  position: absolute;
+  right: 2%;
+  height: 100vh;
+}
+
+.snackbar {
+  visibility: hidden;
+  position: sticky;
+  top: 10px;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  z-index: 1; 
+}
+
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 10px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {top: 10px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;} 
+  to {top: 10px; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {top: 10px; opacity: 0;}
+}
 
 .cardContainer:hover {
   box-shadow: 3px 3px rgb(213, 213, 213);
@@ -115,10 +164,39 @@ body {
   background-color: white;
 }
 
+.checkoutCartContainer {
+  margin-top: 48px; /* place it under navbar */
+  height: 36vh;
+  overflow: scroll;
+  padding-bottom: 48px;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important; 
+  padding-bottom: 0 !important;
+}
+
 .checkout-footer {
   bottom: 0;
   width: 100%;
+  border-bottom-left-radius: .25rem !important;
+  border-bottom-right-radius: .25rem !important;
+  border: 1px solid rgba(0,0,0,.125); 
 }
+
+.delete-btn {
+  /* position: absolute;
+  right: 3%;
+  bottom: 3%; */
+}
+
+@media screen and (max-width:480px) {
+  .delete-btn { 
+    width: 100vw; 
+    display:block; 
+    position: relative;
+    right: 0;
+    bottom: 0;
+  }
+}   
 @media screen and (max-width: 375px) {
 
 

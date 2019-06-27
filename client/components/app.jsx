@@ -15,7 +15,7 @@ export default class App extends React.Component {
         params: {}
       },
       cart: [],
-      updated: false
+      added: ''
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
@@ -28,9 +28,8 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(){
-    if ( !this.state.updated ){
-      this.getProducts();
-      this.getCartItems();
+    if ( this.state.added ){
+      setTimeout( () => this.setState({added: ''}), 2000);
     }
   }
 
@@ -53,11 +52,10 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(cart => this.setState({ cart, updated: true }));
+      .then(cart => this.setState({ cart }));
   }
 
   setView(name, params) {
-    console.log( 'params', params )
     this.setState({
       view: {
         name,
@@ -67,6 +65,7 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
+    console.log( 'addedtocart', product)
     fetch('/api/cart.php', {
       method: 'POST',
       body: JSON.stringify(product),
@@ -75,7 +74,7 @@ export default class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(data => this.setState({ cart: [...this.state.cart, product], updated: false }));
+      .then(data => this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems ))
   }
 
   placeOrder(custInfo) {
@@ -96,15 +95,24 @@ export default class App extends React.Component {
       }));
   }
 
+  snackbar() {
+    setTimeout( () => {
+      return 'snackbar show'
+    })
+    return 'snackbar show'
+  }
+
 
   render() {
-    this.state
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
         <div className="container appContainer p-0">
+        <div className="snackbarContainer">
+          <div className={'snackbar ' + this.state.added}>Added to Cart</div>
+        </div>
           { (this.state.view.name === 'catalog') &&
             <ProductList
               products={ this.state.products }

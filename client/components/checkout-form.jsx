@@ -116,12 +116,12 @@ class CheckoutForm extends React.Component {
           </div>
           {/* Cart */}
           <div className="col-lg-4">
-            <div className="card" style={{'width': '18rem', 'min-height': '45vh'}}>
-              <ul className="list-group list-group-flush">
+            <div className="card checkoutCartContainer">
+              <ul className="list-group list-group-flush ">
                 { cart }
               </ul>
-            <div className="card-footer checkout-footer">Total (USD) <span className="float-right text-dark">${ this.props.total }</span></div>
             </div>
+            <div className="card-footer checkout-footer">Total (USD) <span className="float-right text-dark">${ this.props.total }</span></div>
             <button type="button" className="mt-4 btn btn-primary btn-lg btn-block">Checkout</button>
           </div>
         </div>

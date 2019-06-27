@@ -10,7 +10,7 @@ class CartSummary extends React.Component {
   }
 
   viewCart() {
-    const shoppingCart = this.props.cart.map((item, itemId) => <CartSummaryItem key={ itemId } item={item}/>);
+    const shoppingCart = this.props.cart.map((item, itemId) => <CartSummaryItem key={ itemId } item={item} />);
     return shoppingCart;
   }
 
@@ -29,7 +29,6 @@ class CartSummary extends React.Component {
 
   placeOrder() {
     if (this.props.cart.length) {
-      console.log( this.addTotal() );
       this.props.goBack('checkout', {totalAmount: this.addTotal()});
     }
   }
