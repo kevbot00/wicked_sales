@@ -3,10 +3,14 @@ body {
   padding-bottom: 5px;
 }
 
-
 .appContainer {
   height: 88vh !important;
 }
+
+.cart-icon:hover {
+  color: rgb(158, 177, 240);
+}
+
 .fakeCard {
   border-radius: .25rem;
   background-color: #fff;
@@ -85,7 +89,7 @@ body {
 .snackbarContainer {
   position: absolute;
   right: 2%;
-  height: 100vh;
+  height: 87vh;
 }
 
 .snackbar {
@@ -152,7 +156,12 @@ body {
 
 .backText {
   font-size: 20px;
-  
+}
+
+.continue-shop-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0
 }
 .backText:hover {
   color: rgb(165, 165, 165);

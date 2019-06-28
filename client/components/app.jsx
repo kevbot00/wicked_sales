@@ -4,6 +4,7 @@ import ProductList from './product-list';
 import ProductDetails from './product-detail';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
+import Confirmation from './confirmation';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export default class App extends React.Component {
     this.state = {
       products: [],
       view: {
-        name: 'catalog',
+        // name: 'catalog',
+        name: 'confirmation',
         params: {}
       },
       cart: [],
@@ -108,21 +110,22 @@ export default class App extends React.Component {
   }
 
   placeOrder(custInfo) {
-    fetch('/api/orders.php', {
-      method: 'POST',
-      body: JSON.stringify(custInfo),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(() => this.setState({
-        view: {
-          name: 'catalog',
-          params: {}
-        },
-        cart: []
-      }));
+    // fetch('/api/orders.php', {
+    //   method: 'POST',
+    //   body: JSON.stringify(custInfo),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    //   .then(res => res.json())
+    //   // ROUTE BACK TO CONFIRMATION PAGE
+    //   .then( data => {
+    //     if ( data.success ){
+    //       console.log( data );
+    //       this.getCartItems();
+          this.setView( 'confirmation' );
+      //   }
+      // })
   }
 
   snackbar() {
@@ -173,7 +176,9 @@ export default class App extends React.Component {
               placeOrder={ this.placeOrder }
               total={ this.state.view.params.totalAmount }
             />
-
+          }
+          {(this.state.view.name === 'confirmation') &&
+            <Confirmation />
           }
 
         </div>

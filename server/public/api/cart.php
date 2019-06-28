@@ -1,6 +1,9 @@
 <?php
-
+require_once 'functions.php';
+require_once 'db_connection.php';
+  
 header('Content-Type: application/json');
+session_start();
 $method = $_SERVER['REQUEST_METHOD'];
 $item = file_get_contents('php://input');
 
@@ -54,7 +57,7 @@ if ( $method === 'POST'){
     } else {
       $count = 1;
       $query = "INSERT INTO `carts`
-                VALUES ( null, '$id', $count )";
+                VALUES ( null, '$id', $count, '$_SESSION[user]' )";
     }
   
     $output = mysqli_query( $conn, $query );

@@ -12,9 +12,15 @@ class CartSummaryItem extends React.Component {
   }
 
   updateQuantity(evt) {
-    const { id } = this.props.item
+    const { id } = this.props.item;
+    // const numRegex = /\b^\d+$/g;
     const quantity = evt.target.value;
-    this.setState({ quantity, edit: true })
+    // console.log( numRegex.test( quantity ));
+    // console.log( quantity );
+    // if ( numRegex.test( quantity )){
+      // console.log( 'passed');
+      this.setState({ quantity, edit: true })
+    // }
   }
 
   saveHandler(){
@@ -46,12 +52,12 @@ class CartSummaryItem extends React.Component {
             <div className='d-inline-block float-right'>
               <p className="text-right d-inline w-50 align-middle">
                 Quantity:
-                <input type='text' className="ml-3 text-center quantity-input" value={this.state.quantity} onChange={ this.updateQuantity}/>
+                <input type='text' className="ml-2 text-center quantity-input" value={this.state.quantity} onChange={ this.updateQuantity}/>
               </p>
-              { this.state.edit && <button className="w-15 ml-2 text-center rounded btn btn-outline-secondary" onClick={this.saveHandler }>
+            </div>
+              { this.state.edit && <button className="w-25 ml-2 mt-2 text-center rounded btn btn-outline-secondary" onClick={this.saveHandler }>
                 Save
               </button>}
-            </div>
           </div>
         </div>
       </div>

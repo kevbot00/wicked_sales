@@ -2,9 +2,13 @@
 
   require_once 'functions.php';
   require_once 'db_connection.php';
-
+  
   set_exception_handler( "error_handler" );
   startUp();
+  session_start();
+  if ( empty( $_SESSION['user'] ) ){
+    $_SESSION['user'] = uniqid();
+  }
 
   if (!$conn){
     throw new Exception('Error' . mysqli_connect_error($conn));
