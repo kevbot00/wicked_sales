@@ -20,6 +20,8 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
+    this.saveItemQuantity = this.saveItemQuantity.bind( this );
+    this.deleteItem = this.deleteItem.bind( this );
   }
 
   componentDidMount() {
@@ -55,6 +57,35 @@ export default class App extends React.Component {
       .then(cart => this.setState({ cart }));
   }
 
+  saveItemQuantity( productId, quantity ){
+    let cart = this.state.cart.map( item => {
+      if ( item.id === productId ){
+        item.quantity = quantity;
+      }
+      return item;
+    })
+    fetch(`api/cart.php?id=${productId}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        quantity
+      })
+    })
+    .then( res => res.json() )
+    .then( data => this.setState({ cart }))
+  
+  }
+
+  deleteItem( productId ){
+    let cart = this.state.cart.filter( item => {
+      if ( item.id !== productId ) return item
+    })
+    fetch(`api/cart.php?id=${productId}`, {
+      method: "DELETE",
+      })
+    .then( res => res.json() )
+    .then( data => this.setState({ cart }, this.getProducts ));
+  }
+
   setView(name, params) {
     this.setState({
       view: {
@@ -65,7 +96,6 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
-    console.log( 'addedtocart', product)
     fetch('/api/cart.php', {
       method: 'POST',
       body: JSON.stringify(product),
@@ -104,6 +134,7 @@ export default class App extends React.Component {
 
 
   render() {
+
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
@@ -131,6 +162,8 @@ export default class App extends React.Component {
             <CartSummary
               cart={ this.state.cart }
               goBack={ this.setView }
+              save={ this.saveItemQuantity }
+              delete={ this.deleteItem }
             />
           }
           {(this.state.view.name === 'checkout') &&

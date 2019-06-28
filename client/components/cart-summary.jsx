@@ -10,7 +10,7 @@ class CartSummary extends React.Component {
   }
 
   viewCart() {
-    const shoppingCart = this.props.cart.map((item, itemId) => <CartSummaryItem key={ itemId } item={item} />);
+    const shoppingCart = this.props.cart.map( item => <CartSummaryItem key={ item.id } item={item} save={ this.props.save } delete={ this.props.delete}/>);
     return shoppingCart;
   }
 
@@ -22,7 +22,7 @@ class CartSummary extends React.Component {
     const { cart } = this.props;
     let total = 0;
     for (var item of cart) {
-      total += parseInt(item.price);
+      total += item.price * item.quantity;
     }
     return (total / 100).toFixed(2);
   }
@@ -41,7 +41,7 @@ class CartSummary extends React.Component {
         { this.viewCart() }
         <div className='checkoutContainer mx-2 my-4 d-flex justify-content-between'>
           <h3 className='itemDisplay'>Item Total: ${ this.addTotal() }</h3>
-          <button className='checkoutBtn btn-outline-primary btn btn-lg d-block' onClick={ this.placeOrder } >Checkout</button>
+          <button style={{'zIndex': '1'}} className='checkoutBtn btn-outline-primary btn btn-lg d-block' onClick={ this.placeOrder } >Checkout</button>
         </div>
       </div>
     );

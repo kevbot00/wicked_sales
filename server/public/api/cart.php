@@ -79,6 +79,12 @@ if ( $method === "PATCH"){
   $output = mysqli_query( $conn, $query );
   print_r( json_encode( ['quantity' => $quantity] ));
 }
+if ( $method === "DELETE"){
+  $productId = $_GET['id'];
+  $query = "DELETE FROM `carts` WHERE products_id = $productId";
+  $output = mysqli_query( $conn, $query );
+  print_r( json_encode( ['status' => true]));
+}
 
 
 ?>
