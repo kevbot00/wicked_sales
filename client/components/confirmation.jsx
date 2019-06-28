@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 
 class Confirmation extends React.Component {
   constructor(props) {
@@ -65,7 +65,7 @@ class Confirmation extends React.Component {
               </div>
             </div>
             <div className="row w-100 d-flex justify-content-center m-0 mt-4">
-              <button className='btn btn-primary'>Continue Shopping</button>
+              <button className='btn btn-primary' onClick={ this.props.goBack.bind( this, 'catalog' )} >Continue Shopping</button>
             </div>
           </div>
           <div className="col-lg-6">

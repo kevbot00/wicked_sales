@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 import CreditModal from './credit-card-modal';
 
 class CheckoutForm extends React.Component {
@@ -145,7 +145,7 @@ class CheckoutForm extends React.Component {
           </div>
           {/* Cart */}
           <div className="col-lg-4">
-            <div className="card checkoutCartContainer">
+            <div className="card checkoutCartContainer mt-3">
               <ul className="list-group list-group-flush ">
                 { cart }
               </ul>

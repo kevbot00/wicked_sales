@@ -1,4 +1,4 @@
-import React from './node_modules/react';
+import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-detail';
@@ -180,7 +180,10 @@ export default class App extends React.Component {
             />
           }
           {(this.state.view.name === 'confirmation') &&
-            <Confirmation order={this.state.view.params } />
+            <Confirmation 
+              order={this.state.view.params } 
+              goBack={ this.setView }
+            />
           }
 
         </div>
