@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 
 class CartSummaryItem extends React.Component {
   constructor(props) {
@@ -49,13 +49,13 @@ class CartSummaryItem extends React.Component {
             <p className="pt-2">${((item.price) / 100).toFixed(2)}</p>
           </div>
           <div className="col-7 d-inline-block text-right px-0 w-100">
-            <div className='d-inline-block float-right'>
+            <div className='d-inline-block'>
               <p className="text-right d-inline w-50 align-middle">
                 Quantity:
                 <input type='text' className="ml-2 text-center quantity-input" value={this.state.quantity} onChange={ this.updateQuantity}/>
               </p>
             </div>
-              { this.state.edit && <button className="w-25 ml-2 mt-2 text-center rounded btn btn-outline-secondary" onClick={this.saveHandler }>
+              { this.state.edit && <button className="w-25-sm ml-2 text-center float-right rounded btn btn-outline-secondary" onClick={this.saveHandler }>
                 Save
               </button>}
           </div>

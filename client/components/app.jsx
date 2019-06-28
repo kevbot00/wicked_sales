@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-detail';
@@ -13,7 +13,7 @@ export default class App extends React.Component {
       products: [],
       view: {
         // name: 'catalog',
-        name: 'confirmation',
+        name: 'checkout',
         params: {}
       },
       cart: [],
@@ -35,6 +35,15 @@ export default class App extends React.Component {
     if ( this.state.added ){
       setTimeout( () => this.setState({added: ''}), 2000);
     }
+  }
+
+  setView(name, params) {
+    this.setState({
+      view: {
+        name,
+        params
+      }
+    });
   }
 
   getProducts() {
@@ -88,14 +97,7 @@ export default class App extends React.Component {
     .then( data => this.setState({ cart }, this.getProducts ));
   }
 
-  setView(name, params) {
-    this.setState({
-      view: {
-        name,
-        params
-      }
-    });
-  }
+
 
   addToCart(product) {
     fetch('/api/cart.php', {
@@ -110,22 +112,22 @@ export default class App extends React.Component {
   }
 
   placeOrder(custInfo) {
-    // fetch('/api/orders.php', {
-    //   method: 'POST',
-    //   body: JSON.stringify(custInfo),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
-    //   .then(res => res.json())
-    //   // ROUTE BACK TO CONFIRMATION PAGE
-    //   .then( data => {
-    //     if ( data.success ){
-    //       console.log( data );
-    //       this.getCartItems();
-          this.setView( 'confirmation' );
-      //   }
-      // })
+    fetch('/api/orders.php', {
+      method: 'POST',
+      body: JSON.stringify(custInfo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      // ROUTE BACK TO CONFIRMATION PAGE
+      .then( data => {
+        if ( data.success ){
+          console.log( data );
+          this.getCartItems();
+          this.setView( 'confirmation', { 'cart': custInfo.cart, custInfo} );
+        }
+      })
   }
 
   snackbar() {
@@ -143,7 +145,7 @@ export default class App extends React.Component {
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container appContainer p-0">
+        <div className="container appContainer p-2">
         <div className="snackbarContainer">
           <div className={'snackbar ' + this.state.added}>Added to Cart</div>
         </div>
@@ -178,7 +180,7 @@ export default class App extends React.Component {
             />
           }
           {(this.state.view.name === 'confirmation') &&
-            <Confirmation />
+            <Confirmation order={this.state.view.params } />
           }
 
         </div>

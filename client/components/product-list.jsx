@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import ProductListItem from './product-list-item';
 
 export default function ProductList(props) {

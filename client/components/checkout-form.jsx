@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import CreditModal from './credit-card-modal';
 
 class CheckoutForm extends React.Component {
@@ -43,6 +43,7 @@ class CheckoutForm extends React.Component {
     if (target.name === "firstName") return this.setState({ firstName: target.value });
     if (target.name === "lastName") return this.setState({ lastName: target.value });
     if (target.name === "email") return this.setState({ email: target.value });
+    // FOR DEMO PURPOSES
     // if (target.name === "card") return this.setState({ card: target.value });
     if (target.name === "street") return this.setState({ street: target.value });
     if (target.name === "city") return this.setState({ city: target.value});
@@ -54,25 +55,35 @@ class CheckoutForm extends React.Component {
     this.props.goBack('catalog', {});
   }
 
-  placeOrder() {
-    console.log( this.props.cart );
-    const order = {
-      name: `${this.state.firstName} ${this.state.lastName}`,
-      email: this.state.email,
-      card: this.state.card,
-      street: this.state.street,
-      city: this.state.city,
-      usState: this.state.usState,
-      zip: this.state.zip,
-      cart: this.props.cart
-
+  checkInputValidity() {
+    const name = /^[a-z,.'-]+$/i;
+    if ( !name.test( this.state.firstName) || !name.test( this.state.lastName) || !name.test( this.state.city )){
+      return false;
     }
-    this.props.placeOrder( order );
+    return true;
+  }
+
+  placeOrder() {
+    if ( this.checkInputValidity() ) {
+      const order = {
+        name: `${this.state.firstName} ${this.state.lastName}`,
+        email: this.state.email,
+        card: this.state.card,
+        street: this.state.street,
+        city: this.state.city,
+        usState: this.state.usState,
+        zip: this.state.zip,
+        cart: this.props.cart
+
+      }
+      return this.props.placeOrder( order );
+    }
+    console.log( 'Something wrong with the input field')
   }
 
   render() {
     const cart = this.props.cart.map( ( item, id ) => {
-      return <li className="list-group-item" key={id}>
+      return <li className="list-group-item checkout-list-item" key={id}>
         {item.name} 
         <span className="text-primary">{ item.quantity ? ` x ${item.quantity}` : null}</span>
         <span className="float-right text-muted">
@@ -140,7 +151,7 @@ class CheckoutForm extends React.Component {
               </ul>
             </div>
             <div className="card-footer checkout-footer">Total (USD) <span className="float-right text-dark">${ this.props.total }</span></div>
-            <button type="button" className="mt-sm-4 mb-4 mb-0-sm btn btn-primary btn-lg btn-block" onClick={ this.placeOrder } >Checkout</button>
+            <button type="button" className="mt-4 mb-4 mb-0-sm btn btn-primary btn-lg btn-block" onClick={ this.placeOrder } >Checkout</button>
           </div>
         </div>
         {/* Modal */}
