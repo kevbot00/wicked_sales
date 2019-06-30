@@ -31,7 +31,7 @@ class Confirmation extends React.Component {
   }
 
   render() {
-    const { custInfo } = this.props.order;
+    const { custInfo, orderId } = this.props.order;
     return (
       <div className='container-fluid h-100'>
         <div className="row d-flex align-items-end">
@@ -46,7 +46,7 @@ class Confirmation extends React.Component {
               </div>
               <div className="row w-100 d-flex justify-content-center text-center h-50 mt-2">
                 Thank you for your purchase!<br /><br />
-                Order #9
+                Order #{orderId.toUpperCase()}
               </div>
             </div>
             <div className="col-lg-12 row d-flex justify-content-center p-0 mx-3 mb-3">

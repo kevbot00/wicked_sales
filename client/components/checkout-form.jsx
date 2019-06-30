@@ -8,7 +8,7 @@ class CheckoutForm extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      card: '1234 4567 8910 1112',
+      card: '7273 8269 3277 6949',
       street: '',
       city: '',
       usState: '',
@@ -24,12 +24,16 @@ class CheckoutForm extends React.Component {
         zip: false,
       }
     };
-    this.states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
+    this.states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
     this.clickHandler = this.clickHandler.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     
+  }
+
+  componentDidMount(){
+    this.toggleModal();
   }
 
   toggleModal() { 
@@ -97,12 +101,11 @@ class CheckoutForm extends React.Component {
         zip: !Boolean( zip),
       }
     })
-    console.log( 'Something went wrong with the input field')
+    console.error( 'Something went wrong with the input field')
   }
 
   render() {
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
-    console.log( firstName, lastName, email, street, city, usState, zip  )
     const cart = this.props.cart.map( ( item, id ) => {
       return <li className="list-group-item checkout-list-item" key={id}>
         {item.name} 
@@ -143,7 +146,7 @@ class CheckoutForm extends React.Component {
             </div>
             <div className="form-group mb-3">
               <label htmlFor="creditCard">Credit Card</label>
-              <input type="text" name="card" className='form-control' id="creditCard" onChange={ this.changeHandler } onClick={this.toggleModal} value={this.state.card}/>
+              <input type="text" name="card" className='form-control' id="creditCard" onChange={ this.changeHandler } value={this.state.card}/>
             </div>
             <div className="form-group mb-3">
               <label htmlFor="address">Address</label>

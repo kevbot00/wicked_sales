@@ -12,7 +12,7 @@ export default class App extends React.Component {
     this.state = {
       products: [],
       view: {
-        name: 'catalog',
+        name: 'cart',
         params: {}
       },
       cart: [],
@@ -37,6 +37,7 @@ export default class App extends React.Component {
   }
 
   setView(name, params) {
+    console.log( params );
     this.setState({
       view: {
         name,
@@ -119,10 +120,15 @@ export default class App extends React.Component {
       .then(res => res.json())
       // ROUTE BACK TO CONFIRMATION PAGE
       .then( data => {
-        if ( data.success ){
-          this.getCartItems();
-          this.setView( 'confirmation', { 'cart': custInfo.cart, custInfo} );
-        }
+        console.log( data );
+        this.getCartItems();
+        this.setView( 
+          'confirmation', 
+          {
+            'cart': custInfo.cart, 
+            custInfo, 
+            'orderId': data.id
+          });
       })
   }
 

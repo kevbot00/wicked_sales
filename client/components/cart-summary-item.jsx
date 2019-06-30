@@ -47,6 +47,7 @@ class CartSummaryItem extends React.Component {
 
 
   render() {
+    console.log( this.props.item.shortDescription )
     const { item } = this.props;
     return (
       <div className="mt-2 row fakeCard">
@@ -54,11 +55,12 @@ class CartSummaryItem extends React.Component {
           <img src={item.image} className="cartImg" />
         </div>
         <div className="col-sm-9 pt-4 pl-0">
-          <div className="col-6 d-inline-block align-top h-100 pl-2 pr-0">
-            <h5 className="d-inline border-bottom text-primary border-primary cart-product-redirect" onClick={ this.getProductInfo }>{item.name}</h5>
-            <p className="pt-2">${((item.price) / 100).toFixed(2)}</p>
+          <div className="col-7 d-inline-block align-top h-100 pl-2 pr-0">
+            <h5 className="d-inline-block border-bottom align-top mt-1 text-primary border-primary cart-product-redirect" onClick={ this.getProductInfo }>{item.name}</h5>
+            <p className="d-inline-block mt-1 float-right">${((item.price) / 100).toFixed(2)}</p>
+            <p>{this.props.item.shortDescription}</p>
           </div>
-          <div className="col-6 d-inline-block text-right px-0 w-100 h-100">
+          <div className="col-5 d-inline-block text-right px-0 w-100 h-100">
             <div className='d-inline-block'>
               <p className="text-right d-inline w-50 align-middle">
                 Quantity:

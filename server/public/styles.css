@@ -7,10 +7,6 @@ body {
   height: 88vh !important;
 }
 
-.cart-icon:hover {
-  color: rgb(158, 177, 240);
-}
-
 .fakeCard {
   border-radius: .25rem;
   background-color: #fff;
@@ -25,7 +21,7 @@ body {
 }
 
 
-input {
+input, .overlay:focus {
   outline: none;
 }
 
@@ -52,9 +48,7 @@ input {
   width: 100%;
 }
 
-.overlay:focus {
-  outline: none;
-}
+
 
 .overlay {
   position: absolute;
@@ -83,6 +77,15 @@ input {
   align-items: center;
   background-color: rgb(18, 23, 60);
   color: white
+}
+
+.cart-icon:hover {
+  transform: scale( 1.1 );
+  color: rgba(255, 255, 255, 0.697);
+}
+
+#minus:hover, #plus:hover {
+  transform: scale( 1.1 );
 }
 
 .addBtn {
@@ -114,7 +117,9 @@ input {
   z-index: 1; 
 }
 
-
+.credit-modal {
+  background-color: blue;
+}
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
 .snackbar.show {
