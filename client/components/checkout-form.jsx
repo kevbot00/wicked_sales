@@ -13,7 +13,16 @@ class CheckoutForm extends React.Component {
       city: '',
       usState: '',
       zip: '',
-      showModal: false
+      showModal: false,
+      errorHandler: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        street: false,
+        city: false,
+        usState: false,
+        zip: false,
+      }
     };
     this.states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
     this.clickHandler = this.clickHandler.bind(this);
@@ -56,32 +65,44 @@ class CheckoutForm extends React.Component {
   }
 
   checkInputValidity() {
-    const name = /^[a-z,.'-]+$/i;
-    if ( !name.test( this.state.firstName) || !name.test( this.state.lastName) || !name.test( this.state.city )){
-      return false;
-    }
-    return true;
+    const { firstName, lastName, email, street, city, usState, zip } = this.state;
+    if (firstName && lastName && email && street && city && usState && zip ) return true;
+    return false;
+
   }
 
   placeOrder() {
+    const { firstName, lastName, email, card, street, city, usState, zip } = this.state;
     if ( this.checkInputValidity() ) {
       const order = {
-        name: `${this.state.firstName} ${this.state.lastName}`,
-        email: this.state.email,
-        card: this.state.card,
-        street: this.state.street,
-        city: this.state.city,
-        usState: this.state.usState,
-        zip: this.state.zip,
+        name: `${firstName} ${lastName}`,
+        email: email,
+        card: card,
+        street: street,
+        city: city,
+        usState: usState,
+        zip: zip,
         cart: this.props.cart
-
       }
       return this.props.placeOrder( order );
     }
-    console.log( 'Something wrong with the input field')
+    this.setState({
+      errorHandler: {
+        firstName: !Boolean( firstName),
+        lastName: !Boolean( lastName),
+        email: !Boolean( email),
+        street: !Boolean( street),
+        city: !Boolean( city),
+        usState: !Boolean( usState),
+        zip: !Boolean( zip),
+      }
+    })
+    console.log( 'Something went wrong with the input field')
   }
 
   render() {
+    const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
+    console.log( firstName, lastName, email, street, city, usState, zip  )
     const cart = this.props.cart.map( ( item, id ) => {
       return <li className="list-group-item checkout-list-item" key={id}>
         {item.name} 
@@ -94,8 +115,8 @@ class CheckoutForm extends React.Component {
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''}`}>
-        <div className='backText mb-2' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
-        <h3 className="d-block">Checkout</h3>
+        <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
+        <h3 className="d-block mt-2">Checkout</h3>
         <div className="row">
           <h4 className="d-inline-block col-lg-8">Billing Address</h4>
           <h4 className="d-inline-block col-lg-4">Your cart</h4>
@@ -106,40 +127,47 @@ class CheckoutForm extends React.Component {
             <div className="form-row">
               <div className="form-group col-md-6">
                 <label htmlFor="firstName">First Name</label>
-                <input type="text" name="firstName" className="form-control" id="firstName" placeholder="First Name" onChange={ this.changeHandler } value={this.state.firstName}/>
+                <input type="text" name="firstName" className={ 'form-control ' + ( firstName ? 'border border-danger' : '')} id="firstName" placeholder="First Name" onChange={ this.changeHandler } value={this.state.firstName}/>
+                { firstName && <small className='text-danger ml-2' >First Name is Required</small>}
               </div>
               <div className="form-group col-md-6">
                 <label htmlFor="lastName">Last Name</label>
-                <input type="text" name="lastName" className="form-control" id="lastName" placeholder="Last Name" onChange={ this.changeHandler } value={this.state.lastName}/>
+                <input type="text" name="lastName" className={ 'form-control ' + ( lastName ? 'border border-danger' : '')} id="lastName" placeholder="Last Name" onChange={ this.changeHandler } value={this.state.lastName}/>
+                { lastName && <small className='text-danger ml-2' >Last Name is Required</small>}
               </div>
             </div>
             <div className="form-group mb-3">
               <label htmlFor="email">Email address</label>
-              <input type="email" name="email" className="form-control" id="email" placeholder="you@example.com" onChange={ this.changeHandler } value={this.state.email}/>
+              <input type="email" name="email" className={ 'form-control ' + ( email ? 'border border-danger' : '')} id="email" placeholder="you@example.com" onChange={ this.changeHandler } value={this.state.email}/>
+              { email && <small className='text-danger ml-2' >Email is Required</small>}
             </div>
             <div className="form-group mb-3">
               <label htmlFor="creditCard">Credit Card</label>
-              <input type="text" name="card" className="form-control" id="creditCard" onChange={ this.changeHandler } onClick={this.toggleModal} value={this.state.card}/>
+              <input type="text" name="card" className='form-control' id="creditCard" onChange={ this.changeHandler } onClick={this.toggleModal} value={this.state.card}/>
             </div>
             <div className="form-group mb-3">
               <label htmlFor="address">Address</label>
-              <input type="text" name="street" className="form-control" id="address" placeholder="1234 Main Street" onChange={ this.changeHandler } value={this.state.street}/>
+              <input type="text" name="street" className={ 'form-control ' + ( street ? 'border border-danger' : '')} id="address" placeholder="1234 Main Street" onChange={ this.changeHandler } value={this.state.street}/>
+              { street && <small className='text-danger ml-2' >Address is Required</small>}
             </div>
             <div className="form-row">
               <div className="form-group col-md-6">
                 <label htmlFor="inputCity">City</label>
-                <input type="text" name="city" className="form-control" id="inputCity" onChange={ this.changeHandler } value={this.state.city}/>
+                <input type="text" name="city" className={ 'form-control ' + ( city ? 'border border-danger' : '')} id="inputCity" onChange={ this.changeHandler } value={this.state.city}/>
+                { city && <small className='text-danger ml-2' >City is Required</small>}
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="inputState">State</label>
-                <select id="inputState"  className="form-control" name="state" onChange={ this.changeHandler }>
+                <select id="inputState"  className={ 'form-control ' + ( usState ? 'border border-danger' : '')} name="state" onChange={ this.changeHandler }>
                   <option>Choose...</option>
                   {states}
                 </select>
+                { usState && <small className='text-danger ml-2' >State is Required</small>}
               </div>
               <div className="form-group col-md-2">
-                <label htmlFor="inputZip">Zip</label>
-                <input type="text" name="zip" className="form-control" id="inputZip" onChange={ this.changeHandler } value={this.state.zip}/>
+                <label htmlFor="inputZip">ZIP</label>
+                <input type="text" name="zip" className={ 'form-control ' + ( zip ? 'border border-danger' : '')} id="inputZip" onChange={ this.changeHandler } value={this.state.zip}/>
+                { zip && <small className='text-danger ml-2' >ZIP is Required</small>}
               </div>
             </div>
           </div>

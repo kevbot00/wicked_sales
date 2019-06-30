@@ -1,20 +1,20 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
+import image from '../images/empty.png';
 
 class CartSummary extends React.Component {
   constructor(props) {
     super(props);
     this.clickHandler = this.clickHandler.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
-
   }
 
   viewCart() {
-    const shoppingCart = this.props.cart.map( item => <CartSummaryItem key={ item.id } item={item} save={ this.props.save } delete={ this.props.delete}/>);
+    const shoppingCart = this.props.cart.map( item => <CartSummaryItem key={ item.id } item={item} save={ this.props.save } delete={ this.props.delete} getDetail={ this.props.goBack }/>);
     return shoppingCart;
   }
 
-  clickHandler() {
+  clickHandler( evt ) {
     this.props.goBack('catalog', {});
   }
 
@@ -34,11 +34,10 @@ class CartSummary extends React.Component {
   }
 
   render() {
-    console.log( this.props.cart )
     return (
       <>
-        <div className='backText mb-2 ml-0-sm' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left"></i> Back to catalog</div>
-        <h3>My Cart</h3>
+        <span className='backText' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
+        <h3 className="mt-2">My Cart</h3>
         { this.viewCart() }
         { this.props.cart.length 
           ? <div className='checkoutContainer mx-2 my-4 d-flex justify-content-between'>
@@ -46,7 +45,7 @@ class CartSummary extends React.Component {
               <button style={{'zIndex': '1'}} className='checkoutBtn btn-outline-primary btn btn-lg d-block ml-2' onClick={ this.placeOrder } >Checkout</button>
             </div>
           : <div className="text-center">
-              <img className="h-50 w-50 mb-4" style={{'WebkitUserSelect': 'none'}} src="https://www.themagicofmyname.com/img/name_images/empty_cart.png" />
+              <img className="h-50 w-50 mb-4" style={{'WebkitUserSelect': 'none'}} src={image} />
               <h5 className="mt-4">No Items Found!</h5>
               <i>Sorry, mate, no items found inside your cart</i>
             </div>

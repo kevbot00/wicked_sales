@@ -5,10 +5,6 @@
   
   set_exception_handler( "error_handler" );
   startUp();
-  session_start();
-  if ( empty( $_SESSION['user'] ) ){
-    $_SESSION['user'] = uniqid();
-  }
 
   if (!$conn){
     throw new Exception('Error' . mysqli_connect_error($conn));

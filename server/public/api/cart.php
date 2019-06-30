@@ -3,37 +3,23 @@ require_once 'functions.php';
 require_once 'db_connection.php';
   
 header('Content-Type: application/json');
-session_start();
-$method = $_SERVER['REQUEST_METHOD'];
-$item = file_get_contents('php://input');
-
-// if ($method == 'GET') {
-//   readfile('dummy-cart-items.json');
-// } else if ($method == 'POST') {
-//   http_response_code(201);
-//   print($item);
-// } else {
-//   http_response_code(404);
-//   print(json_encode([
-//     'error' => 'Not Found',
-//     'message' => "Cannot $method /api/cart.php"
-//   ]));
-// }
-
-require_once 'functions.php';
-require_once 'db_connection.php';
-
 set_exception_handler( "error_handler" );
 startUp();
+$method = $_SERVER['REQUEST_METHOD'];
 $product = file_get_contents('php://input');
 $product = json_decode( $product, true );
+
 if (!$conn){
   throw new Exception('Error' . mysqli_connect_error($conn));
 }
 
 if ( $method === "GET"){
+  $whereClause = "";
+  if ( isset( $_SESSION['user']) ){
+    $whereClause = "WHERE c.user_id = '$_SESSION[user]'";
+  }
   $query = "SELECT p.id, p.name, p.price, p.image, p.shortDescription, c.quantity FROM `carts` AS c 
-  JOIN `products` AS p ON c.products_id = p.id";
+  JOIN `products` AS p ON c.products_id = p.id $whereClause";
   $result = mysqli_query( $conn, $query );
   $output = [];
   while ( $row = mysqli_fetch_assoc( $result )){
@@ -43,21 +29,24 @@ if ( $method === "GET"){
 }
 
 if ( $method === 'POST'){
-  if ( isset( $product['id'])) {
-    $id = $product['id'];
-    $doesExist = "SELECT quantity FROM `carts` WHERE products_id = $id";
+
+  if ( isset( $product['product']['id'] )) {
+    $id = $product['product']['id'];
+    $doesExist = "SELECT quantity FROM `carts` WHERE products_id = $id AND user_id = '$_SESSION[user]'";
     $result = mysqli_query( $conn, $doesExist );
-    $quantity = mysqli_fetch_assoc( $result );
+    $item = mysqli_fetch_assoc( $result );
   
     if ( mysqli_num_rows( $result ) ){
-      $count = $quantity['quantity'] + 1;
+      $requestedQuantity = isset( $product['quantity'] ) ? $product['quantity'] : 1;
+      $quantity = $item['quantity'] + $requestedQuantity;
       $query = "UPDATE carts 
-                SET quantity = $count
+                SET quantity = $quantity
                 WHERE products_id = $id";
     } else {
-      $count = 1;
+
+      $quantity = isset( $product['quantity'] ) ? $product['quantity'] : 1;
       $query = "INSERT INTO `carts`
-                VALUES ( null, '$id', $count, '$_SESSION[user]' )";
+                VALUES ( null, '$id', $quantity, '$_SESSION[user]' )";
     }
   
     $output = mysqli_query( $conn, $query );

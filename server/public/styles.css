@@ -20,8 +20,17 @@ body {
   margin-right: 0 !important;
 }
 
+#minus, #plus, .cart-product-redirect, .backText, .header-cart, .overlay, .addBtn, .cart-icon {
+  cursor: pointer;
+}
+
+
+input {
+  outline: none;
+}
+
 .quantity-input {
-  width: 15% !important;
+  width: 20% !important;
 }
 
 .cartImg {
@@ -104,6 +113,7 @@ body {
   padding: 16px;
   z-index: 1; 
 }
+
 
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */

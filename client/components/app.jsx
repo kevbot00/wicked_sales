@@ -12,8 +12,7 @@ export default class App extends React.Component {
     this.state = {
       products: [],
       view: {
-        // name: 'catalog',
-        name: 'checkout',
+        name: 'catalog',
         params: {}
       },
       cart: [],
@@ -97,12 +96,10 @@ export default class App extends React.Component {
     .then( data => this.setState({ cart }, this.getProducts ));
   }
 
-
-
-  addToCart(product) {
+  addToCart(product , quantity ) {
     fetch('/api/cart.php', {
       method: 'POST',
-      body: JSON.stringify(product),
+      body: JSON.stringify({ product, quantity }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -123,7 +120,6 @@ export default class App extends React.Component {
       // ROUTE BACK TO CONFIRMATION PAGE
       .then( data => {
         if ( data.success ){
-          console.log( data );
           this.getCartItems();
           this.setView( 'confirmation', { 'cart': custInfo.cart, custInfo} );
         }
@@ -139,7 +135,6 @@ export default class App extends React.Component {
 
 
   render() {
-
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
