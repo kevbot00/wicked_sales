@@ -37,7 +37,7 @@ class CartSummary extends React.Component {
     return (
       <>
         <span className='backText' onClick={ this.clickHandler }><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
-        <h3 className="mt-2">My Cart</h3>
+        <h3 className="mt-2">Cart</h3>
         { this.viewCart() }
         { this.props.cart.length 
           ? <div className='checkoutContainer mx-2 my-4 d-flex justify-content-between'>

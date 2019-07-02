@@ -41,6 +41,16 @@ class ProductDetails extends React.Component {
       : data === 'plus' && this.setState( { quantity: this.state.quantity + 1 });
   }
 
+  existInCart(){
+    if ( this.state.product ) {
+      for ( let item of this.props.cart ){
+        console.log( this.state.product.id , item.id )
+        if ( item.id == this.state.product.id ) return true
+      }
+      return false;
+    }
+  }
+
   render() {
     return this.state.product ? (
       <div className='detailContainer container-fluid'>
@@ -65,6 +75,7 @@ class ProductDetails extends React.Component {
               </div>
             </div>
           </div>
+          { this.existInCart() ? <small className="ml-3 mt-1 text-secondary">Already exist in cart</small> : null}
         </div>
 
         </div>

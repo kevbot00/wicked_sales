@@ -107,7 +107,7 @@ class CheckoutForm extends React.Component {
   render() {
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
     const cart = this.props.cart.map( ( item, id ) => {
-      return <li className="list-group-item checkout-list-item" key={id}>
+      return <li className="list-group-item checkout-list-item px-3" key={id}>
         {item.name} 
         <span className="text-primary">{ item.quantity ? ` x ${item.quantity}` : null}</span>
         <span className="float-right text-muted">
@@ -175,7 +175,7 @@ class CheckoutForm extends React.Component {
             </div>
           </div>
           {/* Cart */}
-          <div className="col-lg-4">
+          <div className="col-lg-4 p-3 p-sm-2">
             <div className="card checkoutCartContainer mt-3">
               <ul className="list-group list-group-flush ">
                 { cart }

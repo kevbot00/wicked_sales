@@ -7,6 +7,11 @@ body {
   height: 88vh !important;
 }
 
+.cart-icon-container {
+  position: relative; 
+
+}
+
 .fakeCard {
   border-radius: .25rem;
   background-color: #fff;
@@ -26,14 +31,15 @@ input, .overlay:focus {
 }
 
 .quantity-input {
-  width: 20% !important;
+
+  width: 50px !important;
 }
 
 .cartImg {
   object-fit: contain;
   width: 100%;
   height: 20vh;
-  border: 1px solid rgba(199, 199, 199, 0.5)
+  /* border: 1px solid rgba(199, 199, 199, 0.5) */
 }
 
 .shoppingCart {
@@ -79,10 +85,20 @@ input, .overlay:focus {
   color: white
 }
 
+
+
+.cart-icon-badge {
+  background-color: red; 
+  position: absolute; 
+  bottom: -5px; 
+  right: -5px
+}
+
 .cart-icon:hover {
   transform: scale( 1.1 );
   color: rgba(255, 255, 255, 0.697);
 }
+
 
 #minus:hover, #plus:hover {
   transform: scale( 1.1 );
@@ -221,7 +237,7 @@ input, .overlay:focus {
   right: 3%;
   bottom: 3%; */
 }
-
+/* 
 @media screen and (max-width:480px) {
   .delete-btn { 
     width: 100vw; 
@@ -263,4 +279,4 @@ input, .overlay:focus {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
-}
+} */

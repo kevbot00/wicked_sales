@@ -25,7 +25,7 @@ class Confirmation extends React.Component {
     const { cart } = this.props.order;
     let total = 0;
     for (let item of cart) {
-      total += parseInt(item.price);
+      total += parseInt(item.price) * item.quantity;
     }
     return (total / 100).toFixed(2);
   }
@@ -36,7 +36,6 @@ class Confirmation extends React.Component {
       <div className='container-fluid h-100'>
         <div className="row d-flex align-items-end">
           <h4 className="col-lg-6"></h4>
-
         </div>
         <div className="row d-flex h-100 pb-4-sm">
           <div className="col-lg-6 p-0 m-0">

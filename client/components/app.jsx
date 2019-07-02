@@ -162,6 +162,7 @@ export default class App extends React.Component {
               id={ this.state.view.params }
               goBack={ this.setView }
               addHandler={ this.addToCart }
+              cart={ this.state.cart }
             />
           }
           {(this.state.view.name === 'cart') &&
@@ -186,7 +187,6 @@ export default class App extends React.Component {
               goBack={ this.setView }
             />
           }
-
         </div>
       </div>
     );
