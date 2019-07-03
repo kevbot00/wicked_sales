@@ -104,6 +104,16 @@ class CheckoutForm extends React.Component {
     console.error( 'Something went wrong with the input field')
   }
 
+  productPrice( itemPrice ){
+    let price = String(itemPrice)
+    if ( price.length > 6 ){
+      const firstSlice = price.slice(0 , price.length - 6 );
+      const secondSlice = price.slice( price.length - 6 );
+      price = firstSlice + ',' + secondSlice;
+    }
+    return price;
+  }
+
   render() {
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
     const cart = this.props.cart.map( ( item, id ) => {
@@ -111,7 +121,7 @@ class CheckoutForm extends React.Component {
         {item.name} 
         <span className="text-primary">{ item.quantity ? ` x ${item.quantity}` : null}</span>
         <span className="float-right text-muted">
-          ${ (item.price * item.quantity / 100 ).toFixed(2) }
+          ${ this.productPrice((item.price * item.quantity / 100 ).toFixed(2) )}
         </span>
       </li> 
       });
@@ -181,7 +191,7 @@ class CheckoutForm extends React.Component {
                 { cart }
               </ul>
             </div>
-            <div className="card-footer checkout-footer">Total (USD) <span className="float-right text-dark">${ this.props.total }</span></div>
+            <div className="card-footer checkout-footer">Total (USD) <span className="float-right text-dark">${ this.productPrice(this.props.total) }</span></div>
             <button type="button" className="mt-4 mb-4 mb-0-sm btn btn-primary btn-lg btn-block" onClick={ this.placeOrder } >Checkout</button>
           </div>
         </div>

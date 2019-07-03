@@ -7,7 +7,7 @@ export default function Header(props) {
         <h1 className='text-left ml-sm-4 ml-2 header-cart'><i className="fas fa-dice mr-3 d-sm-inline-block d-none header-cart" ></i>BoredGame</h1>
       </div>
       <div className='shoppingCart'>
-        <span className='itemCount mr-4 d-none d-sm-block'>{ props.cartItemCount ? `${props.cartItemCount} items` : null }</span>
+        <span className='itemCount mr-2 d-none d-sm-block'>{ props.cartItemCount ? `${props.cartItemCount} items` : null }</span>
         <span>
           <div className="cart-icon-container">
             <i className="fas fa-shopping-cart fa-2x ml-2 cart-icon" onClick={ () => props.setView('cart', {})}></i>

@@ -94,4 +94,3 @@ class ProductCarousel extends React.Component {
 
 
 export default ProductCarousel;
-

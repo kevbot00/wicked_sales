@@ -120,7 +120,6 @@ export default class App extends React.Component {
       .then(res => res.json())
       // ROUTE BACK TO CONFIRMATION PAGE
       .then( data => {
-        console.log( data );
         this.getCartItems();
         this.setView( 
           'confirmation', 
@@ -141,13 +140,12 @@ export default class App extends React.Component {
 
 
   render() {
-    console.log( this.state )
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container appContainer">
+        <div className="container-fluid appContainer">
         <div className="snackbarContainer">
           <div className={'snackbar ' + this.state.added}>Added to Cart</div>
         </div>

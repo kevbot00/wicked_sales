@@ -46,8 +46,17 @@ class CartSummary extends React.Component {
     for (var item of cart) {
       total += item.price * item.quantity;
     }
-    // parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + this.state.shipping
     return (total / 100).toFixed(2);
+  }
+
+  productPrice( itemPrice ){
+    let price = String(itemPrice)
+    if ( price.length > 6 ){
+      const firstSlice = price.slice(0 , price.length - 6 );
+      const secondSlice = price.slice( price.length - 6 );
+      price = firstSlice + ',' + secondSlice;
+    }
+    return price;
   }
 
   placeOrder() {
@@ -57,26 +66,34 @@ class CartSummary extends React.Component {
   }
 
   render() {
+    console.log( parseInt( this.addTotal()) );
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''}`}>
-        <span className='backText pl-3' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
-        <h3 className="mt-2 pl-3">Cart</h3>
-        <div className="container-fluid p-0 p-sm-3">
+      {/* <div className="row"> */}
+        <div className="container-fluid mb-2 p-0">
+          <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
+        </div>
+        <div className="container-fluid p-0">
+          <h3 className="mt-2">Cart</h3>
+        </div>
+
+      {/* </div> */}
+        <div className="container-fluid">
           { this.props.cart.length ? 
           <div className="row">
-            <div className="col-12 col-sm-8 col-md-9">
+            <div className="col-12 col-sm-7 col-md-8  p-0">
               {this.viewCart()}
             </div>
             { this.props.cart.length &&
-              <div className="col-12 col-sm-4 col-md-3 p-3 p-sm-0">
-                <div className="cart-summary-body p-3">
+              <div className="col-12 col-sm-5 col-md-4 p-0 mt-2 mt-sm-0">
+                <div className="cart-summary-body ml-0 ml-sm-2 p-3">
                   <div className="cart-summary-header">
                     <h6>SUMMARY</h6>
                   </div>
                   <div className="cart-summary-detail">
                     <div className="cart-subtotal d-flex justify-content-between px-2">
                       <p>Subtotal</p>
-                      <p>${ this.addTotal() }</p>
+                      <p>${ this.productPrice(this.addTotal()) }</p>
                     </div>
                     <div className="cart-shipping d-flex justify-content-between px-2">
                       <p>Shipping</p>
@@ -84,11 +101,11 @@ class CartSummary extends React.Component {
                     </div>
                     <div className="cart-tax d-flex justify-content-between px-2">
                       <p>Estimated Tax</p>
-                      <p>${( parseInt(this.addTotal()) * .09).toFixed(2)}</p>
+                      <p>${ this.productPrice((parseInt(this.addTotal()) * .09).toFixed(2)) }</p>
                     </div>
                     <div className="total d-flex justify-content-between pt-2 px-2">
                       <b><p>TOTAL</p></b>
-                      <b><p>${ (parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + 10).toFixed(2) }</p></b>
+                      <b><p>${ this.productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + 10).toFixed(2)) }</p></b>
                     </div>
                   </div>
                   <button type="button" className="mt-2 mb-0-sm btn btn-light btn-lg btn-block" onClick={this.placeOrder} >Checkout</button>

@@ -15,7 +15,7 @@ class Confirmation extends React.Component {
               <span className="p-2">{item.name}</span>
               <span className="text-primary"> x {item.quantity} </span>
               <span className="text-muted ml-auto p-1">
-                ${ (item.price * item.quantity / 100 ).toFixed(2) }
+                ${ this.productPrice((item.price * item.quantity / 100 ).toFixed(2)) }
               </span>
             </div>
           </div>
@@ -33,6 +33,16 @@ class Confirmation extends React.Component {
       total += parseInt(item.price) * item.quantity;
     }
     return (total / 100).toFixed(2);
+  }
+
+  productPrice( itemPrice ){
+    let price = String(itemPrice)
+    if ( price.length > 6 ){
+      const firstSlice = price.slice(0 , price.length - 6 );
+      const secondSlice = price.slice( price.length - 6 );
+      price = firstSlice + ',' + secondSlice;
+    }
+    return price;
   }
 
   render() {
@@ -76,7 +86,7 @@ class Confirmation extends React.Component {
                 {this.getOrder()}
               </ul>
             </div>
-            <div className="card-footer checkout-footer mb-4">Total (USD) <span className="float-right text-dark">${this.addTotal()}</span></div>
+            <div className="card-footer checkout-footer mb-4">Total (USD) <span className="float-right text-dark">${this.productPrice(this.addTotal())}</span></div>
           </div>
         </div>
       </div>
