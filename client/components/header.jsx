@@ -10,9 +10,9 @@ export default function Header(props) {
         <span className='itemCount mr-4 d-none d-sm-block'>{ props.cartItemCount ? `${props.cartItemCount} items` : null }</span>
         <span>
           <div className="cart-icon-container">
-            <i className="fas fa-shopping-cart fa-2x ml-2  cart-icon" onClick={ () => props.setView('cart', {})}></i>
+            <i className="fas fa-shopping-cart fa-2x ml-2 cart-icon" onClick={ () => props.setView('cart', {})}></i>
             { props.cartItemCount 
-              ? <span className="badge badge-notify d-sm-none d-block cart-icon-badge">{props.cartItemCount}</span>
+              ? <span className="badge badge-notify d-sm-none d-block cart-icon-badge" onClick={ () => props.setView('cart', {})}>{props.cartItemCount}</span>
               : null
             }
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Landing from './landing-page';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-detail';
@@ -12,7 +13,7 @@ export default class App extends React.Component {
     this.state = {
       products: [],
       view: {
-        name: 'cart',
+        name: 'catalog',
         params: {}
       },
       cart: [],
@@ -37,7 +38,6 @@ export default class App extends React.Component {
   }
 
   setView(name, params) {
-    console.log( params );
     this.setState({
       view: {
         name,
@@ -141,15 +141,19 @@ export default class App extends React.Component {
 
 
   render() {
+    console.log( this.state )
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container appContainer p-2">
+        <div className="container appContainer">
         <div className="snackbarContainer">
           <div className={'snackbar ' + this.state.added}>Added to Cart</div>
         </div>
+          { (this.state.view.name === 'landing') &&
+            <Landing />
+          }
           { (this.state.view.name === 'catalog') &&
             <ProductList
               products={ this.state.products }

@@ -38,6 +38,8 @@
   while ( $row = mysqli_fetch_assoc( $result )){
     $row['price'] = intval( $row['price']);
     $row['id'] = intval( $row['id'] );
+    $row['images'] = json_decode( $row['images'],true );
+    $row['specifications'] = json_decode( $row['specifications'] , true );
     array_push( $output, $row );
   }
 

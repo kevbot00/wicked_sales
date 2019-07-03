@@ -121,8 +121,8 @@ class CheckoutForm extends React.Component {
         <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         <h3 className="d-block mt-2">Checkout</h3>
         <div className="row">
-          <h4 className="d-inline-block col-lg-8">Billing Address</h4>
-          <h4 className="d-inline-block col-lg-4">Your cart</h4>
+          <h4 className="col-lg-8">Billing Address</h4>
+          <h4 className="col-lg-4">Your cart</h4>
           {/* Add badge */}
         </div>
         <div className="row">

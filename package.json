@@ -19,10 +19,12 @@
     ]
   },
   "dependencies": {
+    "bootstrap": "4.3.1",
     "css-loader": "3.0.0",
     "file-loader": "4.0.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "reactstrap": "8.0.0",
     "style-loader": "0.23.1",
     "url-loader": "2.0.1"
   },

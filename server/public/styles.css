@@ -1,15 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black|Oswald|Source+Sans+Pro&display=swap');
+
 body {
   background-color: #F9F8FF !important;
   padding-bottom: 5px;
 }
 
 .appContainer {
-  height: 88vh !important;
+  height: 100% !important;
 }
 
 .cart-icon-container {
   position: relative; 
 
+}
+
+.cart-img {
+  object-fit: contain;
+  width: 100%;
+  height: 15vh;
+}
+
+.cart-summary-body {
+  background-color: rgb(18, 23, 60);;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+}
+
+.cart-summary-detail {
+  font-size: 12px
+}
+
+select {
+  margin: 0;
+  background: #fff;
+  color:#888;
+  border:none;
+  outline:none;
+  display: inline-block;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  cursor:pointer;
+  width: 65px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select {padding-right:18px}
+}
+
+.cart-select-quantity {
+  position: relative;
+}
+.cart-select-quantity:after {
+  content:"\f078";   
+  font-family: "FontAwesome";
+  font-size: 11px;
+  /* color:#aaa; */
+  right:8px; 
+  top:4px;
+  /* padding:0 0 2px; */
+  position:absolute;
+  pointer-events:none;
+}
+.cart-select-quantity:before {
+  content:'';
+  right:4px; 
+  top:0px;
+  width:10px; 
+  height:18px;
+  background:#fff;
+  position:absolute;
+  pointer-events:none;
+  display:block;
+}
+.cart-select-quantity-dropdown {
+  width: 16px;
+}
+
+.total {
+  border-top: 1px solid white;
+  font-size: 15px;
+}
+
+.delete-modal-container {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.242);
+  /* opacity: .5; */
+  /* z-index: -1 */
+}
+
+.delete-modal {
+  /* z-index: 1; */
+  opacity: 1;
+  position: absolute !important;
+  width: 320px !important;
+  /* height: 125px !important; */
+  top: 50%;
+  left: 50%;
+  transform: translate( -50% , -50% );
+}
+
+.delete-modal button {
+  width: 80px;
 }
 
 .fakeCard {
@@ -31,8 +126,11 @@ input, .overlay:focus {
 }
 
 .quantity-input {
-
-  width: 50px !important;
+  font-size: 16px;
+  width: 40px !important;
+  height: 25px !important;
+  color:#888;
+  border-radius: 2.5px;
 }
 
 .cartImg {
@@ -53,8 +151,6 @@ input, .overlay:focus {
   position: relative;
   width: 100%;
 }
-
-
 
 .overlay {
   position: absolute;
@@ -91,7 +187,8 @@ input, .overlay:focus {
   background-color: red; 
   position: absolute; 
   bottom: -5px; 
-  right: -5px
+  right: -5px;
+  cursor: pointer;
 }
 
 .cart-icon:hover {
@@ -117,7 +214,7 @@ input, .overlay:focus {
 .snackbarContainer {
   position: absolute;
   right: 2%;
-  height: 87vh;
+  height: 100%;
 }
 
 .snackbar {
@@ -136,6 +233,8 @@ input, .overlay:focus {
 .credit-modal {
   background-color: blue;
 }
+
+
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
 .snackbar.show {
@@ -210,9 +309,6 @@ input, .overlay:focus {
   width: 50% !important;
 }
 
-.productImgContainer {
-  background-color: white;
-}
 
 .checkoutCartContainer {
   margin-top: 48px; /* place it under navbar */
@@ -232,51 +328,35 @@ input, .overlay:focus {
   border: 1px solid rgba(0,0,0,.125); 
 }
 
-.delete-btn {
-  /* position: absolute;
-  right: 3%;
-  bottom: 3%; */
-}
-/* 
-@media screen and (max-width:480px) {
-  .delete-btn { 
-    width: 100vw; 
-    display:block; 
-    position: relative;
-    right: 0;
-    bottom: 0;
-  }
-}   
-@media screen and (max-width: 375px) {
-
-
-.productPrice {
-  color: rgb(97, 97, 97)
+.order-summary-img {
+  object-fit: contain;
+  width: 120px;
+  height: 100px;
 }
 
-.checkoutBtn {
-  display: flex;
-  position: relative;
-  right: 0;
-  align-items: center;
+/* PRODUCT DETAIL */
+.product-price {
+  font-size: 18px;
+}
+.product-short-description {
+  font-size: 14px;
 }
 
-.itemDisplay {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
+.product-specs {
+  font-size: 14px;
 }
 
-.checkoutContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
+/* PRODUCT LIST ITEM */
+
+.product-item-card-title {
+  font-family: 'Archivo Black', sans-serif;
 }
 
-.appContainer {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+.product-item-card-text {
+  font-family: 'Source Sans Pro', sans-serif;
 }
-} */
+
+/* Image Carousel */
+.img-carousel {
+  width: 90% !important;
+}

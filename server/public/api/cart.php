@@ -18,11 +18,12 @@ if ( $method === "GET"){
   if ( isset( $_SESSION['user']) ){
     $whereClause = "WHERE c.user_id = '$_SESSION[user]'";
   }
-  $query = "SELECT p.id, p.name, p.price, p.image, p.shortDescription, c.quantity FROM `carts` AS c 
+  $query = "SELECT p.id, p.name, p.price, p.image, p.specifications, c.quantity FROM `carts` AS c 
   JOIN `products` AS p ON c.products_id = p.id $whereClause";
   $result = mysqli_query( $conn, $query );
   $output = [];
   while ( $row = mysqli_fetch_assoc( $result )){
+    $row['specifications'] = json_decode( $row['specifications'], true );
     $output[] = $row;
   }
   print_r( json_encode( $output ) );
