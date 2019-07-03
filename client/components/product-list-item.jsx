@@ -3,8 +3,13 @@ import React from 'react';
 class ProductListItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      img: this.props.product.images[0]
+    }
     this.clickHandler = this.clickHandler.bind(this);
     this.addHandler = this.addHandler.bind(this);
+    this.mouseEnterHandler = this.mouseEnterHandler.bind(this);
+    this.mouseLeaveHandler = this.mouseLeaveHandler.bind(this);
 
   }
 
@@ -27,13 +32,22 @@ class ProductListItem extends React.Component {
     return price;
   }
 
+  mouseEnterHandler(){
+    this.setState({ img: this.props.product.images[1] });
+  }
+
+  mouseLeaveHandler() {
+    this.setState({ img: this.props.product.images[0] })
+  }
+
   render() {
+    console.log( this.props.product.images)
     // this.productPrice()
     return (
       <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } >
         <div className='card mb-2 pb-2 cardContainer'>
           <div className="overlayContainer">
-            <img className='card-img cardImg product-img' style={{ 'backgroundImage': `url(${this.props.product.image})` }} />
+            <img className='card-img cardImg product-img' style={{ 'backgroundImage': 'url(' + this.state.img + ')' }} onMouseEnter={ this.mouseEnterHandler } onMouseLeave={ this.mouseLeaveHandler }/>
             <button className="overlay" onClick={ this.addHandler }>Add to Cart</button>
           </div>
 
