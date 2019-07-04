@@ -18,7 +18,6 @@ class DeleteItemModal extends React.Component {
   }
 
   render() {
-    console.log( this.props );
     return (
       <div
         className={`modal delete-modal-container border border-dark ${this.props.showModal ? 'show' : ''}`}

@@ -72,10 +72,9 @@ class ProductDetails extends React.Component {
             <div className="row">
               <div className="col-12 col-sm-12 col-md-7 p-0 text-center">
                 {/* <img className="productImg img-fluid d-flex align-items-center" src={ this.state.product.image}/> */}
-                <div className="d-flex justify-content-center text-center mb-4">
-                  <ProductCarousel images={this.state.product.images} />
-                </div>
-
+                  <div className="d-flex justify-content-center text-center mb-4">
+                    <ProductCarousel images={this.state.product.images} />
+                  </div>
               </div>
               <div className="col-12 col-sm-12 col-md-5 mb-3">
                 <h2 className='mb-2'>{this.state.product.name}</h2>

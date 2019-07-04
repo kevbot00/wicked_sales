@@ -51,7 +51,7 @@ class Confirmation extends React.Component {
       <div className='container-fluid h-100'>
         <div className="row d-flex h-100 pb-4-sm">
           <div className="col-lg-7 p-0 m-0">
-            <div className="col-lg-12 row d-flex justify-content-center h-50 p-0 m-0">
+            <div className="col-lg-12 row d-flex justify-content-center p-0 m-0">
               <div className="row w-100 d-flex justify-content-center h-50 mb-2">
                 <i className="far fa-check-circle text-primary" style={{ 'fontSize': '110px' }}></i>
               </div>

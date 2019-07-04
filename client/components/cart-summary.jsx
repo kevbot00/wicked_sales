@@ -66,7 +66,6 @@ class CartSummary extends React.Component {
   }
 
   render() {
-    console.log( parseInt( this.addTotal()) );
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''}`}>
       {/* <div className="row"> */}
@@ -87,20 +86,20 @@ class CartSummary extends React.Component {
             { this.props.cart.length &&
               <div className="col-12 col-sm-5 col-md-4 p-0 mt-2 mt-sm-0">
                 <div className="cart-summary-body ml-0 ml-sm-2 p-3">
-                  <div className="cart-summary-header">
+                  <div className="cart-summary-header mb-3">
                     <h6>SUMMARY</h6>
                   </div>
                   <div className="cart-summary-detail">
                     <div className="cart-subtotal d-flex justify-content-between px-2">
-                      <p>Subtotal</p>
+                      <p>SUBTOTAL</p>
                       <p>${ this.productPrice(this.addTotal()) }</p>
                     </div>
                     <div className="cart-shipping d-flex justify-content-between px-2">
-                      <p>Shipping</p>
+                      <p>ESTIMATED SHIPPING</p>
                       <p>$10.00</p>
                     </div>
                     <div className="cart-tax d-flex justify-content-between px-2">
-                      <p>Estimated Tax</p>
+                      <p>ESTIMATED TAX</p>
                       <p>${ this.productPrice((parseInt(this.addTotal()) * .09).toFixed(2)) }</p>
                     </div>
                     <div className="total d-flex justify-content-between pt-2 px-2">
