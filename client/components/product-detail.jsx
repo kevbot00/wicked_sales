@@ -75,7 +75,7 @@ class ProductDetails extends React.Component {
                     <ProductCarousel images={this.state.product.images} />
               </div>
               <div className="col-12 col-sm-12 col-md-5 mb-3">
-                <h2 className='mb-2'>{this.state.product.name}</h2>
+                <h2 className='mb-2 product-detail-name'>{this.state.product.name}</h2>
                 <h4 className='product-price'>${ this.productPrice() }</h4>
                 <hr />
                 <div className="product-short-description">{this.state.product.shortDescription}</div>

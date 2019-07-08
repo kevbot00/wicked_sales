@@ -92,7 +92,7 @@ class CartSummaryItem extends React.Component {
             <div className="cart-item-body row">
               <div className="col-7 cart-item-summary">
                 <div className="cart-item-title">
-                  <span className=" border-bottom text-primary border-primary cursor" onClick={ this.getProductInfo }>{item.name}</span>
+                  <span className=" border-bottom text-primary border-primary cursor cart-summary-item-name" onClick={ this.getProductInfo }>{item.name}</span>
                 </div>
                 <div className="cart-item-description product-specs">
                   <span className="d-block d-sm-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 

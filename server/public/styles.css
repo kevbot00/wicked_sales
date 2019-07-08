@@ -10,6 +10,10 @@ body {
   cursor: pointer;
 }
 
+.font-oswald {
+  font-family: 'Oswald', sans-serif;
+}
+
 .appContainer {
   height: 100% !important;
 }
@@ -343,7 +347,11 @@ input, .overlay:focus {
 }
 
 /* PRODUCT DETAIL */
+.product-detail-name {
+  font-family: 'Archivo Black', sans-serif;
+}
 .product-price {
+  font-family: 'Source Sans Pro', sans-serif;
   font-size: 18px;
 }
 .product-short-description {
@@ -391,11 +399,15 @@ input, .overlay:focus {
   padding-left: 15px !important;
 }
 .cart-summary-body {
-  background-color: rgb(18, 23, 60);;
-  font-family: 'Oswald', sans-serif;
+  background-color: rgb(18, 23, 60);
   color: white;
   position: sticky;
   top: 5%;
+}
+
+.cart-summary-item-name {
+  font-size: 'Source Sans Pro', sans-serif;
+
 }
 
 /* Checkout */

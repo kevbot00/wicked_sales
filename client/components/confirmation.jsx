@@ -56,7 +56,6 @@ class Confirmation extends React.Component {
   }
 
   render() {
-    console.log('from confirmation form', this.props);
     const { custInfo, orderId } = this.props.order;
     const { subTotal, tax, totalAmount } = this.props.order.orderDetail;
     return (
@@ -92,23 +91,23 @@ class Confirmation extends React.Component {
             </div>
           </div>
           <div className="col-lg-5">
-            <h4 className="mt-4 mb-2 mt-md-0">ORDER SUMMARY</h4>
+            <h4 className="mt-4 mb-2 mt-md-0">Order Summary</h4>
             <div className="card-footer checkout-footer container-fluid">
               <div className="checkout-subtotal">
-                SUBTOTAL
+                Subtotal
                   <span className="float-right">${subTotal}</span>
               </div>
               <div className="checkout-shipping">
-                SHIPPING
+                Shipping
                   <span className="float-right">$10</span>
               </div>
               <div className="checkout-tax">
-                TAX
+                Tax
                   <span className="float-right">${tax}</span>
               </div>
               <hr />
               <div className="checkout-total">
-                TOTAL
+                Total
                   <span className="float-right">${totalAmount}</span>
               </div>
             </div>

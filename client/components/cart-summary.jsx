@@ -91,23 +91,23 @@ class CartSummary extends React.Component {
               <div className="col-12 col-sm-5 col-md-4 p-0 mt-2 mt-sm-0">
                 <div className="cart-summary-body ml-0 ml-sm-2 p-3">
                   <div className="cart-summary-header mb-3">
-                    <h6>SUMMARY</h6>
+                    <h6>Summary</h6>
                   </div>
                   <div className="cart-summary-detail">
                     <div className="cart-subtotal d-flex justify-content-between px-2">
-                      <p>SUBTOTAL</p>
+                      <p>Subtotal</p>
                       <p>${ this.productPrice(this.addTotal()) }</p>
                     </div>
                     <div className="cart-shipping d-flex justify-content-between px-2">
-                      <p>ESTIMATED SHIPPING</p>
+                      <p>Estimated Shipping</p>
                       <p>$10.00</p>
                     </div>
                     <div className="cart-tax d-flex justify-content-between px-2">
-                      <p>ESTIMATED TAX</p>
+                      <p>Estimated Tax</p>
                       <p>${ this.productPrice((parseInt(this.addTotal()) * .09).toFixed(2)) }</p>
                     </div>
                     <div className="total d-flex justify-content-between pt-2 px-2">
-                      <b><p>TOTAL</p></b>
+                      <b><p>Total</p></b>
                       <b><p>${ this.productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + 10).toFixed(2)) }</p></b>
                     </div>
                   </div>

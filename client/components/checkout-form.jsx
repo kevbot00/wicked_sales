@@ -156,47 +156,47 @@ class CheckoutForm extends React.Component {
     return (
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
         <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
-        <h3 className="d-block mt-2">CHECKOUT</h3>
+        <h3 className="d-block mt-2">Checkout</h3>
         <div className="row">
-          <h4 className="col-12 col-sm-6 col-lg-7">BILLING ADDRESS</h4>
-          <h4 className="col-12 col-sm-6 col-lg-5">ORDER SUMMARY</h4>
+          <h4 className="col-12 col-sm-6 col-lg-7">Billing Address</h4>
+          <h4 className="col-12 col-sm-6 col-lg-5">Order Summary</h4>
         </div>
         <div className="row">
           <div className="col-12 col-sm-6 col-lg-7">
             <div className="form-row">
               <div className="form-group col-md-6">
-                <label htmlFor="firstName">NAME</label>
+                <label htmlFor="firstName">Name</label>
                 <input type="text" name="firstName" className={'form-control ' + (firstName ? 'border border-danger' : '')} id="firstName" placeholder="First Name" onChange={this.changeHandler} value={this.state.firstName} />
                 {firstName && <small className='text-danger ml-2' >First Name is Required</small>}
               </div>
               <div className="form-group col-md-6">
-                <label htmlFor="lastName">LAST NAME</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input type="text" name="lastName" className={'form-control ' + (lastName ? 'border border-danger' : '')} id="lastName" placeholder="Last Name" onChange={this.changeHandler} value={this.state.lastName} />
                 {lastName && <small className='text-danger ml-2' >Last Name is Required</small>}
               </div>
             </div>
             <div className="form-group mb-3">
-              <label htmlFor="email">EMAIL ADDRESS</label>
+              <label htmlFor="email">Email Address</label>
               <input type="email" name="email" className={'form-control ' + (email ? 'border border-danger' : '')} id="email" placeholder="you@example.com" onChange={this.changeHandler} value={this.state.email} />
               {email && <small className='text-danger ml-2' >Email is Required</small>}
             </div>
             <div className="form-group mb-3">
-              <label htmlFor="creditCard">CREDIT CARD</label>
+              <label htmlFor="creditCard">Credit Card</label>
               <input type="text" name="card" className='form-control' id="creditCard" onChange={this.changeHandler} value={this.state.card} />
             </div>
             <div className="form-group mb-3">
-              <label htmlFor="address">ADDRESS</label>
+              <label htmlFor="address">Address</label>
               <input type="text" name="street" className={'form-control ' + (street ? 'border border-danger' : '')} id="address" placeholder="STREET ADDRESS, PO BOX" onChange={this.changeHandler} value={this.state.street} />
               {street && <small className='text-danger ml-2' >Address is Required</small>}
             </div>
             <div className="form-row">
               <div className="form-group col-md-6">
-                <label htmlFor="inputCity">CITY</label>
+                <label htmlFor="inputCity">City</label>
                 <input type="text" name="city" className={'form-control ' + (city ? 'border border-danger' : '')} id="inputCity" onChange={this.changeHandler} value={this.state.city} />
                 {city && <small className='text-danger ml-2' >City is Required</small>}
               </div>
               <div className="form-group col-md-4">
-                <label htmlFor="inputState">STATE</label>
+                <label htmlFor="inputState">State</label>
                 <select id="inputState" className={'form-control ' + (usState ? 'border border-danger' : '')} name="state" onChange={this.changeHandler}>
                   <option>Choose...</option>
                   {states}
@@ -212,13 +212,13 @@ class CheckoutForm extends React.Component {
             <hr/>
             <div className="container-fluid">
               <div className="row">
-                <h4>DELIVERY METHOD</h4>
+                <h4>Delivery Method</h4>
               </div>
               <div className="container-fluid pl-3">
                 <div className="row d-flex justify-content-between">
                   <Label check>
                     <Input type="radio" name="radio1" defaultChecked/>{' '}
-                    <span>SHIPPING</span>
+                    <span>Shipping</span>
                   </Label>
                   <div className="">
                     <span>$10</span>
@@ -240,20 +240,20 @@ class CheckoutForm extends React.Component {
             <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
             <div className="card-footer checkout-footer container-fluid">
               <div className="checkout-subtotal">
-                SUBTOTAL
+                Subtotal
                   <span className="float-right">${ subTotal }</span>
               </div>
               <div className="checkout-shipping">
-                SHIPPING
+                Shipping
                   <span className="float-right">$10</span>
               </div>
               <div className="checkout-tax">
-                TAX
+                Tax
                   <span className="float-right">${ tax }</span>
               </div>
               <hr />
               <div className="checkout-total">
-                TOTAL
+                Total
                   <span className="float-right">${ totalAmount }</span>
               </div>
             </div>
