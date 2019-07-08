@@ -30,13 +30,25 @@ module.exports = {
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
       },
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        test: /\.(png|jpg|mp4|gif|svg|eot|ttf|woff|woff2)$/,
         use: [
           { 
             loader: 'url-loader',
             options: { limit: 10000 }
           }]
-      }
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader?attrs[]=video:src'
+      }, 
+      {
+        test: /\.mp4$/,
+        loader: 'url-loader?limit=100000&mimetype=video/mp4'
+      },
+      {
+        test: /\.mp4$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+      },
     ]
   },
   devtool: 'source-map',

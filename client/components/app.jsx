@@ -12,7 +12,7 @@ export default class App extends React.Component {
     this.state = {
       products: [],
       view: {
-        name: 'cart',
+        name: 'catalog',
         params: {}
       },
       cart: [],
@@ -37,7 +37,6 @@ export default class App extends React.Component {
   }
 
   setView(name, params) {
-    console.log( params );
     this.setState({
       view: {
         name,
@@ -109,7 +108,7 @@ export default class App extends React.Component {
       .then(data => this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems ))
   }
 
-  placeOrder(custInfo) {
+  placeOrder(custInfo , orderDetail ) {
     fetch('/api/orders.php', {
       method: 'POST',
       body: JSON.stringify(custInfo),
@@ -120,14 +119,14 @@ export default class App extends React.Component {
       .then(res => res.json())
       // ROUTE BACK TO CONFIRMATION PAGE
       .then( data => {
-        console.log( data );
         this.getCartItems();
         this.setView( 
           'confirmation', 
           {
             'cart': custInfo.cart, 
             custInfo, 
-            'orderId': data.id
+            'orderId': data.id,
+            orderDetail
           });
       })
   }
@@ -146,7 +145,7 @@ export default class App extends React.Component {
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container appContainer p-2">
+        <div className="container-fluid appContainer px-0">
         <div className="snackbarContainer">
           <div className={'snackbar ' + this.state.added}>Added to Cart</div>
         </div>
@@ -178,7 +177,7 @@ export default class App extends React.Component {
               cart={ this.state.cart }
               goBack={ this.setView }
               placeOrder={ this.placeOrder }
-              total={ this.state.view.params.totalAmount }
+              total={ this.state.view.params }
             />
           }
           {(this.state.view.name === 'confirmation') &&
