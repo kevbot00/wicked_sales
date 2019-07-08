@@ -9,58 +9,135 @@ class CartSummaryItem extends React.Component {
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.saveHandler = this.saveHandler.bind( this );
+    this.getProductInfo = this.getProductInfo.bind( this );
+    this.handleBlur = this.handleBlur.bind( this );
+    this.quantityHandler = this.quantityHandler.bind( this );
+    this.deleteHandler = this.deleteHandler.bind( this );
+
+
+  }
+
+  quantityHandler( evt ){
+    if ( evt.target.value === '10' ){
+      this.setState({edit: true})
+    } else {
+      this.setState({quantity: evt.target.value}, () => this.props.save( this.props.item.id, this.state.quantity ));
+    }
   }
 
   updateQuantity(evt) {
     const { id } = this.props.item;
-    // const numRegex = /\b^\d+$/g;
-    const quantity = evt.target.value;
-    // console.log( numRegex.test( quantity ));
-    // console.log( quantity );
-    // if ( numRegex.test( quantity )){
-      // console.log( 'passed');
-      this.setState({ quantity, edit: true })
-    // }
+    const numRegex = /^[0-9]*$/g
+    let quantity = evt.target.value
+    if ( numRegex.test( quantity ) ){
+      if ( quantity === ''){
+        quantity = '';
+      } else {
+        quantity = parseInt( quantity );
+      }
+      this.setState({ quantity: quantity , edit: true })
+    } 
   }
 
-  saveHandler(){
+  saveHandler( evt ){
+    evt.stopPropagation();
     const { id } = this.props.item
+    if ( this.state.quantity === "" ){
+      this.setState( {quantity: this.props.item.quantity })
+    } else if ( parseInt(this.state.quantity) ){
+      this.props.save( id, this.state.quantity )
+    } else if ( this.state.quantity === 0 ){
+      this.setState( {quantity: this.props.item.quantity })
+      this.deleteHandler();
+    }
     this.setState({edit: false });
-    if ( this.state.quantity.trim() === "" ){
-      return this.setState( {quantity: this.props.item.quantity, edit: false})
+  }
+
+  deleteHandler() {
+    this.props.toggleModal( this.props.item.id )
+  }
+
+  getProductInfo(){
+    this.props.getDetail( 'details', this.props.item )
+  }
+
+  handleBlur( evt ) {
+    if ( this.state.quantity === "" ){
+      this.setState( {quantity: this.props.item.quantity, edit: false})
     }
-    if ( parseInt(this.state.quantity) ){
-      return this.props.save( id, this.state.quantity )
+    return this.state.edit;
+  }
+
+  productPrice(){
+    let price = String((this.props.item.price / 100).toFixed(2))
+    if ( price.length > 6 ){
+      const firstSlice = price.slice(0 , price.length - 6 );
+      const secondSlice = price.slice( price.length - 6 );
+      price = firstSlice + ',' + secondSlice;
     }
-    this.props.delete( id )
+    return price;
   }
 
 
   render() {
+
     const { item } = this.props;
     return (
-      <div className="mt-2 row fakeCard">
-        <div className="col-sm-3 col-md-3 px-0">
-          <img src={item.image} className="cartImg" />
-        </div>
-        <div className="col-sm-9 pt-4 pl-4">
-          <div className="col-5 d-inline-block align-top h-100">
-            <h5 className="d-inline">{item.name}</h5>
-            <p className="pt-2">${((item.price) / 100).toFixed(2)}</p>
+      <div className="container-fluid mb-1 pb-3 card">
+        <div className="row p-0">
+          <div className="col-12 col-sm-3 p-0 d-flex justify-content-center align-items-center cart-img-container">
+            <img className="cart-img" src={ item.image } width="100%" height="100%" alt=""/>
           </div>
-          <div className="col-7 d-inline-block text-right px-0 w-100">
-            <div className='d-inline-block'>
-              <p className="text-right d-inline w-50 align-middle">
-                Quantity:
-                <input type='text' className="ml-2 text-center quantity-input" value={this.state.quantity} onChange={ this.updateQuantity}/>
-              </p>
+          <div className="container col-12 col-sm-9 pt-2">
+            <div className="cart-item-body row">
+              <div className="col-7 cart-item-summary">
+                <div className="cart-item-title">
+                  <span className=" border-bottom text-primary border-primary cursor cart-summary-item-name" onClick={ this.getProductInfo }>{item.name}</span>
+                </div>
+                <div className="cart-item-description product-specs">
+                  <span className="d-block d-sm-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 
+                  <span className="d-none d-md-inline"> | </span> 
+                  <span className="d-block d-sm-inline"> Size / <span className="text-secondary">{this.props.item.specifications.size}</span></span>
+                </div>
+                <div className="cart-item-quantity d-flex justify-content-start">
+                  <div className="">Quantity</div>
+                  { this.state.edit || this.state.quantity > 9
+                    ? <input 
+                        onBlur={ this.handleBlur } 
+                        type='text' 
+                        className="ml-2 text-center quantity-input border border-secondary" 
+                        value={this.state.quantity} 
+                        onClick={ evt => evt.stopPropagation() } 
+                        onChange={ this.updateQuantity}
+                      />
+                    : <div className="cart-select-quantity">
+                        <select className="cart-item-quantity-dropdown text-center pl-3" name="quantity" id="quantity" value={ this.state.quantity} onChange={ this.quantityHandler }>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                      
+                          <option className="border-top" value="10">10+</option>
+                        </select>
+                      </div>
+                  }
+                </div>
+                <span className="border-bottom border-secondary mr-2 cursor" onClick={ this.deleteHandler }>Remove</span>
+                { this.state.edit && <span className="border-bottom border-secondary ml-1" onClick={ this.saveHandler }>Save</span> }
+              </div>
+              <div className="col-5 cart-item-price p-0 text-right pr-2 h-50">
+                <span>${ this.productPrice() }</span>
+              </div>
             </div>
-              { this.state.edit && <button className="w-25-sm ml-2 text-center float-right rounded btn btn-outline-secondary" onClick={this.saveHandler }>
-                Save
-              </button>}
           </div>
         </div>
       </div>
+
     );
   }
 }

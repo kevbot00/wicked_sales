@@ -13,7 +13,6 @@ export default class App extends React.Component {
       products: [],
       view: {
         name: 'catalog',
-        // name: 'checkout',
         params: {}
       },
       cart: [],
@@ -97,12 +96,10 @@ export default class App extends React.Component {
     .then( data => this.setState({ cart }, this.getProducts ));
   }
 
-
-
-  addToCart(product) {
+  addToCart(product , quantity ) {
     fetch('/api/cart.php', {
       method: 'POST',
-      body: JSON.stringify(product),
+      body: JSON.stringify({ product, quantity }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -111,7 +108,7 @@ export default class App extends React.Component {
       .then(data => this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems ))
   }
 
-  placeOrder(custInfo) {
+  placeOrder(custInfo , orderDetail ) {
     fetch('/api/orders.php', {
       method: 'POST',
       body: JSON.stringify(custInfo),
@@ -122,11 +119,15 @@ export default class App extends React.Component {
       .then(res => res.json())
       // ROUTE BACK TO CONFIRMATION PAGE
       .then( data => {
-        if ( data.success ){
-          console.log( data );
-          this.getCartItems();
-          this.setView( 'confirmation', { 'cart': custInfo.cart, custInfo} );
-        }
+        this.getCartItems();
+        this.setView( 
+          'confirmation', 
+          {
+            'cart': custInfo.cart, 
+            custInfo, 
+            'orderId': data.id,
+            orderDetail
+          });
       })
   }
 
@@ -139,13 +140,12 @@ export default class App extends React.Component {
 
 
   render() {
-
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container appContainer p-2">
+        <div className="container-fluid appContainer px-0">
         <div className="snackbarContainer">
           <div className={'snackbar ' + this.state.added}>Added to Cart</div>
         </div>
@@ -161,6 +161,7 @@ export default class App extends React.Component {
               id={ this.state.view.params }
               goBack={ this.setView }
               addHandler={ this.addToCart }
+              cart={ this.state.cart }
             />
           }
           {(this.state.view.name === 'cart') &&
@@ -176,7 +177,7 @@ export default class App extends React.Component {
               cart={ this.state.cart }
               goBack={ this.setView }
               placeOrder={ this.placeOrder }
-              total={ this.state.view.params.totalAmount }
+              total={ this.state.view.params }
             />
           }
           {(this.state.view.name === 'confirmation') &&
@@ -185,7 +186,6 @@ export default class App extends React.Component {
               goBack={ this.setView }
             />
           }
-
         </div>
       </div>
     );

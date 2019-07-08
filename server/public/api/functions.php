@@ -1,5 +1,10 @@
 <?php
 
+  session_start();
+  if ( empty( $_SESSION['user'] ) ){
+    $_SESSION['user'] = uniqid();
+  }
+
   function error_handler( $error ){
     $output = [
       'success' => false,
