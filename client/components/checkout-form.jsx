@@ -149,7 +149,6 @@ class CheckoutForm extends React.Component {
 
 
   render() {
-    console.log( this.props.total );
     const cartSummaryItem = this.getOrder()
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
     const { subTotal, tax, totalAmount } = this.props.total;
