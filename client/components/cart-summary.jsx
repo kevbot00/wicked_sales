@@ -61,13 +61,17 @@ class CartSummary extends React.Component {
 
   placeOrder() {
     if (this.props.cart.length) {
-      this.props.goBack('checkout', { totalAmount: this.addTotal() });
+      this.props.goBack('checkout', { 
+        subTotal: this.productPrice(this.addTotal()),
+        tax: this.productPrice((parseInt(this.addTotal()) * .09).toFixed(2)),
+        totalAmount: this.productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + 10).toFixed(2)) 
+      });
     }
   }
 
   render() {
     return (
-      <div className={`${this.state.showModal ? 'modal-open' : ''}`}>
+      <div className={`${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
       {/* <div className="row"> */}
         <div className="container-fluid mb-2 p-0">
           <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>

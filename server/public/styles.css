@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Archivo+Black|Oswald|Source+Sans+Pro&display=swap');
-/* @import '~video-react/dist/video-react.css';  */
+
 
 body {
   background-color: #F9F8FF !important;
   padding-bottom: 5px;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 .appContainer {
@@ -306,13 +310,7 @@ input, .overlay:focus {
   width: 50% !important;
 }
 
-.checkout-footer {
-  bottom: 0;
-  width: 100%;
-  border-bottom-left-radius: .25rem !important;
-  border-bottom-right-radius: .25rem !important;
-  border: 1px solid rgba(0,0,0,.125); 
-}
+
 
 .order-summary-img {
   object-fit: contain;
@@ -320,6 +318,29 @@ input, .overlay:focus {
   height: 100px;
 }
 
+/* PRODUCT LIST */
+.product-list-header-img {
+  background-size: 100% 100%;
+  width: 100vw;
+  height: 60vh;
+  position: relative;
+}
+
+.product-list-header-title {
+  color:white; 
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate( -50%, -50% );
+  font-size: 2.5rem;
+  line-height: 1;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+.product-list-section {
+  width: 100vw;
+}
 
 /* PRODUCT DETAIL */
 .product-price {
@@ -331,6 +352,10 @@ input, .overlay:focus {
 
 .product-specs {
   font-size: 14px;
+}
+
+.carousel-side-img {
+  cursor: pointer;
 }
 
 
@@ -346,11 +371,25 @@ input, .overlay:focus {
 }
 
 /* Image Carousel */
-.img-carousel {
-  width: 90% !important;
+.product-carousel-section {
+  height: 65vh;
 }
 
+.carousel-img {
+ width: 100%;
+ height: 100%;
+ background-size: contain;
+ background-repeat: no-repeat;
+ background-position: center;
+}
+
+
+
 /* Cart */
+.cart-summary-section {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+}
 .cart-summary-body {
   background-color: rgb(18, 23, 60);;
   font-family: 'Oswald', sans-serif;
@@ -360,14 +399,14 @@ input, .overlay:focus {
 }
 
 /* Checkout */
-
-.checkoutCartContainer {
+.checkout-cart-container {
   margin-top: 48px; /* place it under navbar */
   /* height: 36vh; */
   overflow: scroll;
   padding-bottom: 48px;
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important; 
+  border-radius: 0 !important;
+  border-bottom-left-radius: .25rem !important;
+  border-bottom-right-radius: .25rem !important;
   padding-bottom: 0 !important;
 }
 
@@ -378,6 +417,11 @@ input, .overlay:focus {
 
 .checkout-cart-item-name {
   font-size: 16px;
-  /* font-weight: bold; */
+}
+
+.checkout-footer {
+  bottom: 0;
+  width: 100%;
+  border: 1px solid rgba(0,0,0,.125); 
 }
 

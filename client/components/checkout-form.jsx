@@ -90,7 +90,7 @@ class CheckoutForm extends React.Component {
         zip: zip,
         cart: this.props.cart
       }
-      return this.props.placeOrder(order);
+      return this.props.placeOrder(order , this.props.total );
     }
     this.setState({
       errorHandler: {
@@ -117,10 +117,10 @@ class CheckoutForm extends React.Component {
   }
   // CHECKOUT ORDER SUMMARY TEST
   getOrder() {
-    const order = this.props.cart.map(item => {
+    const order = this.props.cart.map(( item, index ) => {
       return (
-        <li className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
-        <img src='https://bit.ly/3064zw7' className="d-sm-block order-summary-img mr-3" alt="" />
+        <li key={index} className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
+        <img src={item.image} className="d-sm-block order-summary-img mr-3" alt="" />
         <div className="container-fluid checkout-cart ">
           <div className="row pl-1">
             <div className="checkout-cart-item-name pt-2">{item.name}</div>
@@ -137,7 +137,7 @@ class CheckoutForm extends React.Component {
           </div>
           <div className="row pl-1">
             <div className="checkout-cart-item-price text-secondary">
-              ${ this.productPrice( this.addTotal() )}
+              ${ this.productPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
             </div>
           </div>
         </div>
@@ -146,14 +146,16 @@ class CheckoutForm extends React.Component {
     })
     return order;
   }
-  // 
+
 
   render() {
+    console.log( this.props.total );
     const cartSummaryItem = this.getOrder()
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
+    const { subTotal, tax, totalAmount } = this.props.total;
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
-      <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''}`}>
+      <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
         <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         <h3 className="d-block mt-2">CHECKOUT</h3>
         <div className="row">
@@ -213,7 +215,7 @@ class CheckoutForm extends React.Component {
               <div className="row">
                 <h4>DELIVERY METHOD</h4>
               </div>
-              <div className="container-fluid">
+              <div className="container-fluid pl-3">
                 <div className="row d-flex justify-content-between">
                   <Label check>
                     <Input type="radio" name="radio1" defaultChecked/>{' '}
@@ -229,37 +231,34 @@ class CheckoutForm extends React.Component {
                 
               </div>
             </div>
-            <div className="container mt-2">
+            <div className="container mt-4">
               <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-sm-block" onClick={this.placeOrder} >Checkout</button>
             </div>
 
           </div>
 
-          <div className="col-12 col-sm-6 col-lg-5 p-3 p-sm-2">
+          <div className="col-12 col-sm-6 col-lg-5 px-3 pb-3 pt-0 p-sm-2">
             <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
             <div className="card-footer checkout-footer container-fluid">
-              <div className="row pl-1 mb-1">
-                7 PRODUCTS
-              </div>
               <div className="checkout-subtotal">
-                Subtotal:
-                  <span className="float-right">$10000</span>
+                SUBTOTAL
+                  <span className="float-right">${ subTotal }</span>
               </div>
               <div className="checkout-shipping">
-                Shipping:
+                SHIPPING
                   <span className="float-right">$10</span>
               </div>
               <div className="checkout-tax">
-                Tax:
-                  <span className="float-right">$100</span>
+                TAX
+                  <span className="float-right">${ tax }</span>
               </div>
               <hr />
               <div className="checkout-total">
-                Total
-                  <span className="float-right">$10110</span>
+                TOTAL
+                  <span className="float-right">${ totalAmount }</span>
               </div>
             </div>
-            <div className="card checkoutCartContainer mt-0">
+            <div className="card checkout-cart-container mt-0">
               <ul className="list-group list-group-flush ">
                 { cartSummaryItem }
               </ul>

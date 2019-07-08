@@ -24,7 +24,9 @@
     "file-loader": "4.0.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
+    "react-slick": "0.24.0",
     "reactstrap": "8.0.0",
+    "slick-carousel": "1.8.1",
     "style-loader": "0.23.1",
     "url-loader": "2.0.1"
   },

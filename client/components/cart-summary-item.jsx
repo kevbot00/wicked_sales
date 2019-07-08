@@ -80,23 +80,24 @@ class CartSummaryItem extends React.Component {
 
 
   render() {
+
     const { item } = this.props;
     return (
       <div className="container-fluid mb-1 pb-3 card">
         <div className="row p-0">
           <div className="col-12 col-sm-3 p-0 d-flex justify-content-center align-items-center cart-img-container">
-            <img className="cart-img" src="https://bit.ly/2J7n8KT" width="100%" height="100%" alt=""/>
+            <img className="cart-img" src={ item.image } width="100%" height="100%" alt=""/>
           </div>
           <div className="container col-12 col-sm-9 pt-2">
             <div className="cart-item-body row">
               <div className="col-7 cart-item-summary">
                 <div className="cart-item-title">
-                  <span className=" border-bottom text-primary border-primary" onClick={ this.getProductInfo }>{item.name}</span>
+                  <span className=" border-bottom text-primary border-primary cursor" onClick={ this.getProductInfo }>{item.name}</span>
                 </div>
                 <div className="cart-item-description product-specs">
-                  <span>Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 
+                  <span className="d-block d-sm-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 
                   <span className="d-none d-md-inline"> | </span> 
-                  <span> Size / <span className="text-secondary">{this.props.item.specifications.size}</span></span>
+                  <span className="d-block d-sm-inline"> Size / <span className="text-secondary">{this.props.item.specifications.size}</span></span>
                 </div>
                 <div className="cart-item-quantity d-flex justify-content-start">
                   <div className="">Quantity</div>
@@ -126,7 +127,7 @@ class CartSummaryItem extends React.Component {
                       </div>
                   }
                 </div>
-                <span className="border-bottom border-secondary mr-2" onClick={ this.deleteHandler }>Remove</span>
+                <span className="border-bottom border-secondary mr-2 cursor" onClick={ this.deleteHandler }>Remove</span>
                 { this.state.edit && <span className="border-bottom border-secondary ml-1" onClick={ this.saveHandler }>Save</span> }
               </div>
               <div className="col-5 cart-item-price p-0 text-right pr-2 h-50">

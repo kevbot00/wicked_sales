@@ -1,96 +1,50 @@
 import React from 'react';
-import {
-  Carousel,
-  CarouselItem,
-  CarouselControl,
-  CarouselIndicators,
-  CarouselCaption
-} from 'reactstrap';
+import { Button, Fade } from 'reactstrap';
 
-
-class ProductCarousel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
+class ProductCarousel extends React.Component{
+  constructor( props ){
+    super( props );
+    this.state = {
+      images: this.props.images,
       activeIndex: 0,
-      items: [] 
-    };
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
-    this.goToIndex = this.goToIndex.bind(this);
-    this.onExiting = this.onExiting.bind(this);
-    this.onExited = this.onExited.bind(this);
-    this.imageItems = this.imageItems.bind( this );
-  }
-  componentDidMount() {
-    this.imageItems()
+      fadeIn: true
+    }
+    this.clickHandler = this.clickHandler.bind( this );
   }
 
-  imageItems() {
-    const items = this.props.images.map( (item, index) => {
-      const image = {
-        src: item
-      }
-      return image;
-    })
-    this.setState( { items });
+  clickHandler( evt ) {
+    this.setState( { 
+      activeIndex: this.state.images.indexOf( evt.currentTarget.src ),
+      fadeIn: !this.state.fadeIn
+    }, () => this.setState( { fadeIn: true}));
   }
 
-  onExiting() {
-    this.animating = true;
-  }
-
-  onExited() {
-    this.animating = false;
-  }
-
-  next() {
-    if (this.animating) return;
-    const nextIndex = this.state.activeIndex === this.state.items.length - 1 ? 0 : this.state.activeIndex + 1;
-    this.setState({ activeIndex: nextIndex });
-  }
-
-  previous() {
-    if (this.animating) return;
-    const nextIndex = this.state.activeIndex === 0 ? this.state.items.length - 1 : this.state.activeIndex - 1;
-    this.setState({ activeIndex: nextIndex });
-  }
-
-  goToIndex(newIndex) {
-    if (this.animating) return;
-    this.setState({ activeIndex: newIndex });
-  }
-
-  render() {
-    const { activeIndex } = this.state;
-
-    const slides = this.state.items.map((item) => {
+  renderThumbnail(){
+    return this.props.images.map( (image, index ) => {
       return (
-        <CarouselItem
-          onExiting={this.onExiting}
-          onExited={this.onExited}
-          key={item.src}
-        >
-          <img width="100%" src={item.src} alt={item.altText} />
-        </CarouselItem>
-      );
+        <img key={index} className="carousel-side-img img-thumbnail m-1" src={image} alt="product image" width="100vw" onClick={ this.clickHandler }/>
+      )
     });
 
+  }
+
+
+  render() {
     return (
-      <Carousel
-        className="img-carousel"
-        activeIndex={activeIndex}
-        next={this.next}
-        previous={this.previous}
-      >
-        <CarouselIndicators items={this.state.items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
-        {slides}
-        <CarouselControl direction="prev" directionText="Previous" onClickHandler={this.previous} />
-        <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-      </Carousel>
-    );
+      <div className="container-fluid">
+          <div className="row h-75">
+              <div className="col-12 carousel-img-container mb-1">
+                {/* <Fade in={this.state.fadeIn} tag="img" className="carousel-img" style={{'backgroundImage': `url(${this.state.images[this.state.activeIndex]}`}} /> */}
+                <div className="carousel-img" style={{'backgroundImage': `url(${this.state.images[this.state.activeIndex]}`}} alt=""/>
+              </div>
+
+          </div>
+          <div className="row justify-content-center">
+            { this.renderThumbnail() }
+          </div>
+      </div>
+    )
   }
 }
-
 
 export default ProductCarousel;

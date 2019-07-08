@@ -33,7 +33,9 @@ class ProductListItem extends React.Component {
   }
 
   mouseEnterHandler(){
-    this.setState({ img: this.props.product.images[1] });
+    if ( this.props.product.images[1]){
+      this.setState({ img: this.props.product.images[1] });
+    }
   }
 
   mouseLeaveHandler() {

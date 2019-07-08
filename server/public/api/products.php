@@ -36,6 +36,7 @@
   
   $output = [];
   while ( $row = mysqli_fetch_assoc( $result )){
+    // print_r( $row['longDescription'] );
     $row['price'] = intval( $row['price']);
     $row['id'] = intval( $row['id'] );
     $row['images'] = json_decode( $row['images'],true );

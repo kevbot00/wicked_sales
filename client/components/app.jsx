@@ -1,5 +1,4 @@
 import React from 'react';
-import Landing from './landing-page';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-detail';
@@ -13,7 +12,7 @@ export default class App extends React.Component {
     this.state = {
       products: [],
       view: {
-        name: 'checkout',
+        name: 'catalog',
         params: {}
       },
       cart: [],
@@ -109,7 +108,7 @@ export default class App extends React.Component {
       .then(data => this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems ))
   }
 
-  placeOrder(custInfo) {
+  placeOrder(custInfo , orderDetail ) {
     fetch('/api/orders.php', {
       method: 'POST',
       body: JSON.stringify(custInfo),
@@ -126,7 +125,8 @@ export default class App extends React.Component {
           {
             'cart': custInfo.cart, 
             custInfo, 
-            'orderId': data.id
+            'orderId': data.id,
+            orderDetail
           });
       })
   }
@@ -145,13 +145,10 @@ export default class App extends React.Component {
     return (
       <div className="col-12 px-0">
         <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container-fluid appContainer">
+        <div className="container-fluid appContainer px-0">
         <div className="snackbarContainer">
           <div className={'snackbar ' + this.state.added}>Added to Cart</div>
         </div>
-          { (this.state.view.name === 'landing') &&
-            <Landing />
-          }
           { (this.state.view.name === 'catalog') &&
             <ProductList
               products={ this.state.products }
@@ -180,7 +177,7 @@ export default class App extends React.Component {
               cart={ this.state.cart }
               goBack={ this.setView }
               placeOrder={ this.placeOrder }
-              total={ this.state.view.params.totalAmount }
+              total={ this.state.view.params }
             />
           }
           {(this.state.view.name === 'confirmation') &&
