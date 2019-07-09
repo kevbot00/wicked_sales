@@ -178,9 +178,10 @@ class CheckoutForm extends React.Component {
     const { subTotal, tax, totalAmount } = this.props.total;
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
-      <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4 p-2`}>
+      <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
         <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         <h3 className="d-block mt-2">Checkout</h3>
+        <hr/>
         <div className="row">
           <h4 className="col-12 col-sm-6 col-lg-7">Billing Address</h4>
           <h4 className="col-12 col-sm-6 col-lg-5">Order Summary</h4>
@@ -218,7 +219,7 @@ class CheckoutForm extends React.Component {
               </div>
               <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2">
                 <label htmlFor="cvv">CVV</label>
-                <input type="text" name="cvv" className='form-control' id="cvv" onChange={this.changeHandler} value={this.state.cvv} />
+                <input type="text" name="cvv" className='form-control' id="cvv" placeholder="000" onChange={this.changeHandler} value={this.state.cvv} />
               </div>
             </div>
 

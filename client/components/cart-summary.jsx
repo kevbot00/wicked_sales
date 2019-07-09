@@ -78,6 +78,7 @@ class CartSummary extends React.Component {
         </div>
         <div className="container-fluid p-0">
           <h3 className="mt-2">Cart</h3>
+          <hr/>
         </div>
 
       {/* </div> */}

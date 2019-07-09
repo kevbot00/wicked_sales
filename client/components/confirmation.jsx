@@ -71,19 +71,24 @@ class Confirmation extends React.Component {
                 Order #{orderId.toUpperCase()}
               </div>
             </div>
-            <div className="col-lg-12 row d-flex justify-content-center p-0 mx-3 mb-3">
-              <h6 className="col-lg-12 row m-0 mb-sm p-0">Customer Information</h6>
-              <div className="col-6">
-                Shipping Address<br />
-                <i>{custInfo.name}</i><br />
-                <i>{custInfo.street}</i><br />
-                <i>{custInfo.city}, {custInfo.usState}, {custInfo.zip}</i><br />
+            {/* <div className="col-lg-12 row d-flex justify-content-center p-0 mx-3 mb-3"> */}
+            <div className="container-fluid">
+              <div className="row">
+                <h6 className="col-lg-12 m-2 p-0">Customer Information</h6>
               </div>
-              <div className="col-6">
-                Billing Address<br />
-                <i>{custInfo.name}</i><br />
-                <i>{custInfo.street}</i><br />
-                <i>{custInfo.city}, {custInfo.usState}, {custInfo.zip}</i><br />
+              <div className="row">
+                <div className="col-6">
+                  Shipping Address<br />
+                  <i>{custInfo.name}</i><br />
+                  <i>{custInfo.street}</i><br />
+                  <i>{custInfo.city}, {custInfo.usState}, {custInfo.zip}</i><br />
+                </div>
+                <div className="col-6">
+                  Billing Address<br />
+                  <i>{custInfo.name}</i><br />
+                  <i>{custInfo.street}</i><br />
+                  <i>{custInfo.city}, {custInfo.usState}, {custInfo.zip}</i><br />
+                </div>
               </div>
             </div>
             <div className="row w-100 d-flex justify-content-center m-0 mt-4">

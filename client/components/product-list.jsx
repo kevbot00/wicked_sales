@@ -25,10 +25,14 @@ class ProductList extends React.Component {
     return (
       <div className="p-0">
           <div className="product-list-header-img mb-4"  style={{'backgroundImage': `url(${Image})`}} alt="">
-            <div className="product-list-header-title">
-              Ride bikes. Have fun. Feel Good.
-              <div className="row d-flex justify-content-center">
-                <button className="product-list-header-button btn btn-light mt-3" onClick={ this.clickHandler }>SEE THE BIKES</button>
+            <div className="container-fluid">
+              <div className="product-list-header-title">
+                Ride bikes. Have fun. Feel Good.
+                <div className="container-fluid">
+                  <div className="row d-flex justify-content-center">
+                    <button className="product-list-header-button btn btn-light mt-3" onClick={ this.clickHandler }>SEE THE BIKES</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
