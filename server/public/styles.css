@@ -322,11 +322,13 @@ input, .overlay:focus {
   height: 100px;
 }
 
-/* PRODUCT LIST */
+/* Product List*/
 .product-list-header-img {
-  background-size: 100% 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
   width: 100vw;
-  height: 60vh;
+  height: 65vh;
   position: relative;
 }
 
@@ -342,8 +344,30 @@ input, .overlay:focus {
   width: 100%;
   text-align: center;
 }
+
+.product-list-header-button {
+  font-size: 12px !important;
+  font-weight: bold !important;
+  outline: none !important;
+  border: none !important;
+
+}
 .product-list-section {
   width: 100vw;
+}
+
+@media screen and ( max-width: 400px ){
+  .product-list-header-img {
+    height: 40vh;
+  }
+
+  .product-list-header-title {
+    font-size: 2rem;
+  }
+
+  .product-list-header-button {
+    display: none !important;
+  }
 }
 
 /* PRODUCT DETAIL */
@@ -436,4 +460,3 @@ input, .overlay:focus {
   width: 100%;
   border: 1px solid rgba(0,0,0,.125); 
 }
-
