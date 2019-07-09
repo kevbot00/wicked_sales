@@ -11,6 +11,8 @@ class CheckoutForm extends React.Component {
       lastName: '',
       email: '',
       card: '7273 8269 3277 6949',
+      expiration: '',
+      cvv: '',
       street: '',
       city: '',
       usState: '',
@@ -31,7 +33,8 @@ class CheckoutForm extends React.Component {
     this.placeOrder = this.placeOrder.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
-
+    this.expirationCheck = this.expirationCheck.bind(this);
+    this.cvvCheck = this.cvvCheck.bind( this );
   }
 
   componentDidMount() {
@@ -60,10 +63,31 @@ class CheckoutForm extends React.Component {
     if (target.name === "email") return this.setState({ email: target.value });
     // FOR DEMO PURPOSES
     // if (target.name === "card") return this.setState({ card: target.value });
+    if (target.name === "expiration") return this.expirationCheck( evt.key );
+    if (target.name === 'cvv') return this.cvvCheck( evt.target.value );
     if (target.name === "street") return this.setState({ street: target.value });
     if (target.name === "city") return this.setState({ city: target.value });
     if (target.name === "state") return this.setState({ usState: target.value });
     if (target.name === "zip") return this.setState({ zip: target.value });
+  }
+
+  expirationCheck( value ){
+    if ( this.state.expiration.length >= 7) return;
+    if ( !isNaN( value ) ){
+      this.state.expiration.length === 2
+      ? this.setState({expiration: this.state.expiration + '/' + value })
+      : this.setState({expiration: this.state.expiration + value })
+    } else if ( value === 'Backspace'){
+      this.state.expiration.length === 4 
+      ? this.setState({expiration: this.state.expiration.slice( 0, this.state.expiration.length -2 )})
+      : this.setState({expiration: this.state.expiration.slice( 0, this.state.expiration.length-1) })  
+    }
+  }
+
+  cvvCheck( value ){
+
+    if ( value.length > 3 ) return;
+    if ( !isNaN( value ) ) return this.setState({ cvv: value });
   }
 
   clickHandler() {
@@ -90,7 +114,7 @@ class CheckoutForm extends React.Component {
         zip: zip,
         cart: this.props.cart
       }
-      return this.props.placeOrder(order , this.props.total );
+      return this.props.placeOrder(order, this.props.total);
     }
     this.setState({
       errorHandler: {
@@ -115,33 +139,33 @@ class CheckoutForm extends React.Component {
     }
     return price;
   }
-  // CHECKOUT ORDER SUMMARY TEST
+  
   getOrder() {
-    const order = this.props.cart.map(( item, index ) => {
+    const order = this.props.cart.map((item, index) => {
       return (
         <li key={index} className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
-        <img src={item.image} className="d-sm-block order-summary-img mr-3" alt="" />
-        <div className="container-fluid checkout-cart ">
-          <div className="row pl-1">
-            <div className="checkout-cart-item-name pt-2">{item.name}</div>
-          </div>
-          <div className="row pl-1 ">
-            <div className="checkout-cart-item-specs text-secondary">
-              <span className="d-sm-block d-md-inline">Color / {item.specifications.color}</span>
-              <span className='d-none d-sm-none d-md-inline px-2'>|</span>
-              <span className="d-sm-block d-md-inline">Size / {item.specifications.size}</span>
+          <img src={item.image} className="d-sm-block order-summary-img mr-3" alt="" />
+          <div className="container-fluid checkout-cart ">
+            <div className="row pl-1">
+              <div className="checkout-cart-item-name pt-2">{item.name}</div>
+            </div>
+            <div className="row pl-1 ">
+              <div className="checkout-cart-item-specs text-secondary">
+                <span className="d-sm-block d-md-inline">Color / {item.specifications.color}</span>
+                <span className='d-none d-sm-none d-md-inline px-2'>|</span>
+                <span className="d-sm-block d-md-inline">Size / {item.specifications.size}</span>
+              </div>
+            </div>
+            <div className="row pl-1">
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${this.productPrice((item.price / 100).toFixed(2))}</div>
+            </div>
+            <div className="row pl-1">
+              <div className="checkout-cart-item-price text-secondary">
+                ${this.productPrice(((item.price * item.quantity) / 100).toFixed(2))}
+              </div>
             </div>
           </div>
-          <div className="row pl-1">
-            <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${this.productPrice( ( item.price / 100 ).toFixed(2) )}</div>
-          </div>
-          <div className="row pl-1">
-            <div className="checkout-cart-item-price text-secondary">
-              ${ this.productPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
-            </div>
-          </div>
-        </div>
-      </li>
+        </li>
       )
     })
     return order;
@@ -157,12 +181,14 @@ class CheckoutForm extends React.Component {
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
         <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         <h3 className="d-block mt-2">Checkout</h3>
+        <hr/>
         <div className="row">
           <h4 className="col-12 col-sm-6 col-lg-7">Billing Address</h4>
           <h4 className="col-12 col-sm-6 col-lg-5">Order Summary</h4>
         </div>
         <div className="row">
           <div className="col-12 col-sm-6 col-lg-7">
+
             <div className="form-row">
               <div className="form-group col-md-6">
                 <label htmlFor="firstName">Name</label>
@@ -175,15 +201,30 @@ class CheckoutForm extends React.Component {
                 {lastName && <small className='text-danger ml-2' >Last Name is Required</small>}
               </div>
             </div>
+
             <div className="form-group mb-3">
               <label htmlFor="email">Email Address</label>
               <input type="email" name="email" className={'form-control ' + (email ? 'border border-danger' : '')} id="email" placeholder="you@example.com" onChange={this.changeHandler} value={this.state.email} />
               {email && <small className='text-danger ml-2' >Email is Required</small>}
             </div>
-            <div className="form-group mb-3">
-              <label htmlFor="creditCard">Credit Card</label>
-              <input type="text" name="card" className='form-control' id="creditCard" onChange={this.changeHandler} value={this.state.card} />
+
+            <div className="form-row">
+              <div className="form-group mb-3 col-sm-12 col-md-6 col-lg-8">
+                <label htmlFor="creditCard">Credit Card</label>
+                <input type="text" name="card" className='form-control' id="creditCard" onChange={this.changeHandler} value={this.state.card} />
+              </div>
+              <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2 ">
+                <label htmlFor="expiration">Expiration</label>
+                <input type="text" name="expiration" className='form-control' id="expiration-month" placeholder="00/00" onKeyDown={ this.changeHandler}  value={this.state.expiration}/>
+              </div>
+              <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2">
+                <label htmlFor="cvv">CVV</label>
+                <input type="text" name="cvv" className='form-control' id="cvv" placeholder="000" onChange={this.changeHandler} value={this.state.cvv} />
+              </div>
             </div>
+
+
+
             <div className="form-group mb-3">
               <label htmlFor="address">Address</label>
               <input type="text" name="street" className={'form-control ' + (street ? 'border border-danger' : '')} id="address" placeholder="STREET ADDRESS, PO BOX" onChange={this.changeHandler} value={this.state.street} />
@@ -209,15 +250,15 @@ class CheckoutForm extends React.Component {
                 {zip && <small className='text-danger ml-2' >ZIP is Required</small>}
               </div>
             </div>
-            <hr/>
+            <hr />
             <div className="container-fluid">
               <div className="row">
                 <h4>Delivery Method</h4>
               </div>
-              <div className="container-fluid pl-3">
+              <div className="container-fluid pl-4">
                 <div className="row d-flex justify-content-between">
                   <Label check>
-                    <Input type="radio" name="radio1" defaultChecked/>{' '}
+                    <Input type="radio" name="radio1" defaultChecked />{' '}
                     <span>Shipping</span>
                   </Label>
                   <div className="">
@@ -227,7 +268,7 @@ class CheckoutForm extends React.Component {
                 <div className="row">
                   <small>Standard (5-7 Day Delivery)</small>
                 </div>
-                
+
               </div>
             </div>
             <div className="container mt-4">
@@ -241,7 +282,7 @@ class CheckoutForm extends React.Component {
             <div className="card-footer checkout-footer container-fluid">
               <div className="checkout-subtotal">
                 Subtotal
-                  <span className="float-right">${ subTotal }</span>
+                  <span className="float-right">${subTotal}</span>
               </div>
               <div className="checkout-shipping">
                 Shipping
@@ -249,17 +290,17 @@ class CheckoutForm extends React.Component {
               </div>
               <div className="checkout-tax">
                 Tax
-                  <span className="float-right">${ tax }</span>
+                  <span className="float-right">${tax}</span>
               </div>
               <hr />
               <div className="checkout-total">
                 Total
-                  <span className="float-right">${ totalAmount }</span>
+                  <span className="float-right">${totalAmount}</span>
               </div>
             </div>
             <div className="card checkout-cart-container mt-0">
               <ul className="list-group list-group-flush ">
-                { cartSummaryItem }
+                {cartSummaryItem}
               </ul>
             </div>
           </div>

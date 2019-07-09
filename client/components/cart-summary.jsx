@@ -72,15 +72,13 @@ class CartSummary extends React.Component {
   render() {
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
-      {/* <div className="row"> */}
         <div className="container-fluid mb-2 p-0">
           <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         </div>
         <div className="container-fluid p-0">
           <h3 className="mt-2">Cart</h3>
+          <hr/>
         </div>
-
-      {/* </div> */}
         <div className="container-fluid">
           { this.props.cart.length ? 
           <div className="row">
