@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Fade } from 'reactstrap';
 
 class ProductCarousel extends React.Component{
   constructor( props ){
@@ -34,7 +33,6 @@ class ProductCarousel extends React.Component{
       <div className="container-fluid">
           <div className="row h-75">
               <div className="col-12 carousel-img-container mb-1">
-                {/* <Fade in={this.state.fadeIn} tag="img" className="carousel-img" style={{'backgroundImage': `url(${this.state.images[this.state.activeIndex]}`}} /> */}
                 <div className="carousel-img" style={{'backgroundImage': `url(${this.state.images[this.state.activeIndex]}`}} alt=""/>
               </div>
 

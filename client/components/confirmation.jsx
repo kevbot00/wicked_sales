@@ -71,7 +71,6 @@ class Confirmation extends React.Component {
                 Order #{orderId.toUpperCase()}
               </div>
             </div>
-            {/* <div className="col-lg-12 row d-flex justify-content-center p-0 mx-3 mb-3"> */}
             <div className="container-fluid">
               <div className="row">
                 <h6 className="col-lg-12 m-2 p-0">Customer Information</h6>

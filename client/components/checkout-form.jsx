@@ -139,7 +139,7 @@ class CheckoutForm extends React.Component {
     }
     return price;
   }
-  // CHECKOUT ORDER SUMMARY TEST
+  
   getOrder() {
     const order = this.props.cart.map((item, index) => {
       return (
