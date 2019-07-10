@@ -4,12 +4,15 @@ class ProductListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      img: this.props.product.images[0]
+      img: this.props.product.images[0],
+      touch: false
     }
     this.clickHandler = this.clickHandler.bind(this);
     this.addHandler = this.addHandler.bind(this);
     this.mouseEnterHandler = this.mouseEnterHandler.bind(this);
     this.mouseLeaveHandler = this.mouseLeaveHandler.bind(this);
+    this.touchStartHandler = this.touchStartHandler.bind(this);
+    this.touchEndHandler = this.touchEndHandler.bind(this);
 
   }
 
@@ -42,13 +45,21 @@ class ProductListItem extends React.Component {
     this.setState({ img: this.props.product.images[0] })
   }
 
+  touchStartHandler(){
+    this.setState({ touch: true})
+  }
+
+  touchEndHandler(){
+    this.setState({touch: false})
+  }
+
   render() {
     return (
-      <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } >
+      <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } onTouchStart={ this.touchStartHandler} onTouchEnd={ this.touchEndHandler}>
         <div className='card mb-2 pb-2 cardContainer'>
           <div className="overlayContainer">
             <img className='card-img cardImg product-img' style={{ 'backgroundImage': 'url(' + this.state.img + ')' }} onMouseEnter={ this.mouseEnterHandler } onMouseLeave={ this.mouseLeaveHandler }/>
-            <button className="overlay" onMouseUp={ this.addHandler } onTouchEnd={ this.addHandler } >Add to Cart</button>
+            <button className={'overlay' + `${this.state.touch ? 'touch' : ''}`} onClick={ this.state.touch && this.addHandler }>Add to Cart</button>
           </div>
 
           <div className='card-body text-center px-2 pt-2 pb-0'>

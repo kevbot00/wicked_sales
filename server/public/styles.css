@@ -177,6 +177,10 @@ input, .overlay:focus {
   opacity: 1;
 }
 
+.touch {
+  opacity: 1;
+}
+
 .header-container {
   height: 12vh;
   display: flex;
