@@ -129,7 +129,7 @@ class CartSummaryItem extends React.Component {
                   }
                 </div>
                 <span className="border-bottom border-secondary mr-2 cursor" onClick={ this.deleteHandler }>Remove</span>
-                { this.state.edit && <span className="border-bottom border-secondary ml-1" onClick={ this.saveHandler }>Save</span> }
+                { this.state.edit && <span className="border-bottom border-secondary ml-1 cursor" onClick={ this.saveHandler }>Save</span> }
               </div>
               <div className="col-5 cart-item-price p-0 text-right pr-2 h-50">
                 <span>${ this.productPrice() }</span>
