@@ -82,7 +82,7 @@ class ProductDetails extends React.Component {
                 <div className="mt-3 product-specs">
                   Color / <span className="text-secondary">{this.state.product.specifications.color}</span> | Size / <span className="text-secondary">{this.state.product.specifications.size}</span> 
                 </div>
-                <div className="container">
+                <div className="container-fluid">
                   <div className="row d-flex align-items-center mt-4">
                     <button className="addBtn btn-lg btn-outline-dark d-inline-block mr-2 mr-sm-4" onClick={this.addHandler} >Add to Cart</button>
                     <div className="d-flex align-items-center ml-4 ml-sm-0">

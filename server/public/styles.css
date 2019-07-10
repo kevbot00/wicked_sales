@@ -392,8 +392,8 @@ input, .overlay:focus {
 }
 
 .carousel-side-img {
-  width: 80px !important;
-  height: 70px !important;
+  width: 100px !important;
+  height: 80px !important;
 }
 
 
@@ -414,7 +414,7 @@ input, .overlay:focus {
 }
 
 .product-detail-carousel-container {
-  height: 70px;
+  height: 85px;
 }
 
 .carousel-img {
