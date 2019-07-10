@@ -29,6 +29,7 @@ class CartSummaryItem extends React.Component {
     const { id } = this.props.item;
     const numRegex = /^[0-9]*$/g
     let quantity = evt.target.value
+    if ( quantity.length > 3 ) return;
     if ( numRegex.test( quantity ) ){
       if ( quantity === ''){
         quantity = '';

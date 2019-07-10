@@ -404,7 +404,11 @@ input, .overlay:focus {
 
 /* Image Carousel */
 .product-carousel-section {
-  height: 65vh;
+  height: 70vh;
+}
+
+.product-detail-carousel-container {
+  height: 70px;
 }
 
 .carousel-img {
