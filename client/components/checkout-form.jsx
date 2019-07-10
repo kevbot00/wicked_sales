@@ -143,7 +143,7 @@ class CheckoutForm extends React.Component {
             <div className="row pl-1 ">
               <div className="checkout-cart-item-specs text-secondary">
                 <span className="d-sm-block d-md-inline">Color / {item.specifications.color}</span>
-                <span className='d-none d-sm-none d-md-inline px-2'>|</span>
+                <span className='d-sm-none d-md-inline px-2'>|</span>
                 <span className="d-sm-block d-md-inline">Size / {item.specifications.size}</span>
               </div>
             </div>

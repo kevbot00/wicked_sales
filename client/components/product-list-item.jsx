@@ -59,7 +59,7 @@ class ProductListItem extends React.Component {
         <div className='card mb-2 pb-2 cardContainer'>
           <div className="overlayContainer">
             <img className='card-img cardImg product-img' style={{ 'backgroundImage': 'url(' + this.state.img + ')' }} onMouseEnter={ this.mouseEnterHandler } onMouseLeave={ this.mouseLeaveHandler }/>
-            <button className={'overlay'} onClick={ this.addHandler } onTouchEnd={ this.state.touch && this.addHandler } >Add to Cart</button>
+            <button className={'overlay'} onClick={ this.addHandler } onTouchEnd={ this.state.touch ? this.addHandler : undefined } >Add to Cart</button>
           </div>
 
           <div className='card-body text-center px-2 pt-2 pb-0'>

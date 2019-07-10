@@ -103,9 +103,9 @@ class CartSummaryItem extends React.Component {
                   <span className=" border-bottom text-primary border-primary cursor cart-summary-item-name" onClick={ this.getProductInfo }>{item.name}</span>
                 </div>
                 <div className="cart-item-description product-specs">
-                  <span className="d-block d-sm-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 
+                  <span className="d-sm-block d-md-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 
                   <span className="d-none d-md-inline"> | </span> 
-                  <span className="d-block d-sm-inline"> Size / <span className="text-secondary">{this.props.item.specifications.size}</span></span>
+                  <span className="d-sm-block d-md-inline"> Size / <span className="text-secondary">{this.props.item.specifications.size}</span></span>
                 </div>
                 <div className="cart-item-quantity d-flex justify-content-start">
                   <div className="">Quantity</div>
