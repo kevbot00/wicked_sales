@@ -99,7 +99,7 @@ class ProductDetails extends React.Component {
         </div>
 
 
-        <div className="container mt-3 mb-4">
+        <div className="container-fluid mt-3 mb-4">
           <h3>Product Details</h3>
           {this.state.product.longDescription}
         </div>
