@@ -143,7 +143,7 @@ class CheckoutForm extends React.Component {
   getOrder() {
     const order = this.props.cart.map((item, index) => {
       return (
-        <li key={index} className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
+        <li key={index} className="list-group-item px-0 py-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
           <img src={item.image} className="d-sm-block order-summary-img mr-3" alt="" />
           <div className="container-fluid checkout-cart ">
             <div className="row pl-1">

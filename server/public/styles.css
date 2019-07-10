@@ -224,6 +224,7 @@ input, .overlay:focus {
 
 .snackbar {
   visibility: hidden;
+  position: -webkit-sticky;
   position: sticky;
   top: 10px;
   width: 200px;
@@ -387,7 +388,7 @@ input, .overlay:focus {
 }
 
 .carousel-side-img {
-  width: 90px !important;
+  width: 80px !important;
   height: 70px !important;
 }
 
