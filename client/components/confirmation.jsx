@@ -1,4 +1,5 @@
 import React from 'react';
+import productPrice from './product-price';
 
 class Confirmation extends React.Component {
   constructor(props) {
@@ -7,6 +8,7 @@ class Confirmation extends React.Component {
 
   getOrder() {
     const order = this.props.order.cart.map(( item, index ) => {
+      console.log( 'get order', item );
       return (
         <li key={index} className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
           <img src={ item.image } className="d-sm-block order-summary-img mr-3" alt="" />
@@ -22,11 +24,11 @@ class Confirmation extends React.Component {
               </div>
             </div>
             <div className="row pl-1">
-              <div className="checkout-cart-item-quantity text-secondary"> Qty: { item.quantity } @ ${ this.productPrice(item.price) }</div>
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: { item.quantity } @ ${ productPrice(item.price / 100) }</div>
             </div>
             <div className="row pl-1">
               <div className="checkout-cart-item-price text-secondary">
-                ${ this.productPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
+                ${ productPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
               </div>
             </div>
           </div>
@@ -46,10 +48,17 @@ class Confirmation extends React.Component {
   }
 
   productPrice(itemPrice) {
-    let price = String(itemPrice)
-    if (price.length > 6) {
-      const firstSlice = price.slice(0, price.length - 6);
-      const secondSlice = price.slice(price.length - 6);
+    let price = String(itemPrice);
+    let firstSlice;
+    let secondSlice;
+    if ( price.length > 9 ) {
+      firstSlice = price.slice(0, price.length - 9 );
+      secondSlice = price.slice( price.length - 9 );
+      price = firstSlice + ',' + secondSlice;
+    } 
+    if ( price.length > 6 ){
+      firstSlice = price.slice(0 , price.length - 6 );
+      secondSlice = price.slice( price.length - 6 );
       price = firstSlice + ',' + secondSlice;
     }
     return price;
@@ -94,7 +103,7 @@ class Confirmation extends React.Component {
               <button className='btn btn-primary' onClick={this.props.goBack.bind(this, 'catalog')} >Continue Shopping</button>
             </div>
           </div>
-          <div className="col-lg-5">
+          <div className="col-lg-5 p-0">
             <h4 className="mt-4 mb-2 mt-md-0">Order Summary</h4>
             <div className="card-footer checkout-footer container-fluid">
               <div className="checkout-subtotal">

@@ -2,6 +2,7 @@ import React from 'react';
 import CartSummaryItem from './cart-summary-item';
 import image from '../images/empty.png';
 import DeleteItemModal from './delete-item-modal';
+import productPrice from './product-price';
 
 class CartSummary extends React.Component {
   constructor(props) {
@@ -50,10 +51,17 @@ class CartSummary extends React.Component {
   }
 
   productPrice( itemPrice ){
-    let price = String(itemPrice)
+    let price = String((itemPrice ));
+    let firstSlice;
+    let secondSlice;
+    if ( price.length > 9 ) {
+      firstSlice = price.slice(0, price.length - 9 );
+      secondSlice = price.slice( price.length - 9 );
+      price = firstSlice + ',' + secondSlice;
+    } 
     if ( price.length > 6 ){
-      const firstSlice = price.slice(0 , price.length - 6 );
-      const secondSlice = price.slice( price.length - 6 );
+      firstSlice = price.slice(0 , price.length - 6 );
+      secondSlice = price.slice( price.length - 6 );
       price = firstSlice + ',' + secondSlice;
     }
     return price;
@@ -62,9 +70,9 @@ class CartSummary extends React.Component {
   placeOrder() {
     if (this.props.cart.length) {
       this.props.goBack('checkout', { 
-        subTotal: this.productPrice(this.addTotal()),
-        tax: this.productPrice((parseInt(this.addTotal()) * .09).toFixed(2)),
-        totalAmount: this.productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + 10).toFixed(2)) 
+        subTotal: productPrice(this.addTotal()),
+        tax: productPrice((parseInt(this.addTotal()) * .08).toFixed(2)),
+        totalAmount: productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .08 ) + 10).toFixed(2)) 
       });
     }
   }
@@ -94,7 +102,7 @@ class CartSummary extends React.Component {
                   <div className="cart-summary-detail">
                     <div className="cart-subtotal d-flex justify-content-between px-2">
                       <p>Subtotal</p>
-                      <p>${ this.productPrice(this.addTotal()) }</p>
+                      <p>${ productPrice(this.addTotal()) }</p>
                     </div>
                     <div className="cart-shipping d-flex justify-content-between px-2">
                       <p>Estimated Shipping</p>
@@ -102,11 +110,11 @@ class CartSummary extends React.Component {
                     </div>
                     <div className="cart-tax d-flex justify-content-between px-2">
                       <p>Estimated Tax</p>
-                      <p>${ this.productPrice((parseInt(this.addTotal()) * .09).toFixed(2)) }</p>
+                      <p>${ productPrice((parseInt(this.addTotal()) * .08).toFixed(2)) }</p>
                     </div>
                     <div className="total d-flex justify-content-between pt-2 px-2">
                       <b><p>Total</p></b>
-                      <b><p>${ this.productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .09 ) + 10).toFixed(2)) }</p></b>
+                      <b><p>${ productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .08 ) + 10).toFixed(2)) }</p></b>
                     </div>
                   </div>
                   <button type="button" className="mt-2 mb-0-sm btn btn-light btn-lg btn-block" onClick={this.placeOrder} >Checkout</button>

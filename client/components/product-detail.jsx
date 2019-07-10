@@ -37,6 +37,7 @@ class ProductDetails extends React.Component {
   }
 
   updateQuantity(evt, data) {
+    if ( this.state.quantity > 999 ) return;
     (data === 'minus' && this.state.quantity !== 1)
       ? this.setState({ quantity: this.state.quantity - 1 })
       : data === 'plus' && this.setState({ quantity: this.state.quantity + 1 });

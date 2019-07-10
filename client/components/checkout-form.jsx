@@ -1,6 +1,7 @@
 import React from 'react';
 import CreditModal from './credit-card-modal';
 import { Label, Input } from 'reactstrap';
+import productPrice from './product-price';
 
 
 class CheckoutForm extends React.Component {
@@ -132,9 +133,16 @@ class CheckoutForm extends React.Component {
 
   productPrice(itemPrice) {
     let price = String(itemPrice)
-    if (price.length > 6) {
-      const firstSlice = price.slice(0, price.length - 6);
-      const secondSlice = price.slice(price.length - 6);
+    let firstSlice;
+    let secondSlice;
+    if ( price.length > 9 ) {
+      firstSlice = price.slice(0, price.length - 9 );
+      secondSlice = price.slice( price.length - 9 );
+      price = firstSlice + ',' + secondSlice;
+    } 
+    if ( price.length > 6 ){
+      firstSlice = price.slice(0 , price.length - 6 );
+      secondSlice = price.slice( price.length - 6 );
       price = firstSlice + ',' + secondSlice;
     }
     return price;
@@ -157,11 +165,11 @@ class CheckoutForm extends React.Component {
               </div>
             </div>
             <div className="row pl-1">
-              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${this.productPrice((item.price / 100).toFixed(2))}</div>
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${productPrice((item.price / 100).toFixed(2))}</div>
             </div>
             <div className="row pl-1">
               <div className="checkout-cart-item-price text-secondary">
-                ${this.productPrice(((item.price * item.quantity) / 100).toFixed(2))}
+                ${productPrice(((item.price * item.quantity) / 100).toFixed(2))}
               </div>
             </div>
           </div>
@@ -182,126 +190,132 @@ class CheckoutForm extends React.Component {
         <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         <h3 className="d-block mt-2">Checkout</h3>
         <hr/>
-        <div className="row">
-          <h4 className="col-12 col-sm-6 col-lg-7">Billing Address</h4>
-          <h4 className="col-12 col-sm-6 col-lg-5">Order Summary</h4>
-        </div>
-        <div className="row">
-          <div className="col-12 col-sm-6 col-lg-7">
-
-            <div className="form-row">
-              <div className="form-group col-md-6">
-                <label htmlFor="firstName">Name</label>
-                <input type="text" name="firstName" className={'form-control ' + (firstName ? 'border border-danger' : '')} id="firstName" placeholder="First Name" onChange={this.changeHandler} value={this.state.firstName} />
-                {firstName && <small className='text-danger ml-2' >First Name is Required</small>}
-              </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="lastName">Last Name</label>
-                <input type="text" name="lastName" className={'form-control ' + (lastName ? 'border border-danger' : '')} id="lastName" placeholder="Last Name" onChange={this.changeHandler} value={this.state.lastName} />
-                {lastName && <small className='text-danger ml-2' >Last Name is Required</small>}
-              </div>
-            </div>
-
-            <div className="form-group mb-3">
-              <label htmlFor="email">Email Address</label>
-              <input type="email" name="email" className={'form-control ' + (email ? 'border border-danger' : '')} id="email" placeholder="you@example.com" onChange={this.changeHandler} value={this.state.email} />
-              {email && <small className='text-danger ml-2' >Email is Required</small>}
-            </div>
-
-            <div className="form-row">
-              <div className="form-group mb-3 col-sm-12 col-md-6 col-lg-8">
-                <label htmlFor="creditCard">Credit Card</label>
-                <input type="text" name="card" className='form-control' id="creditCard" onChange={this.changeHandler} value={this.state.card} />
-              </div>
-              <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2 ">
-                <label htmlFor="expiration">Expiration</label>
-                <input type="text" name="expiration" className='form-control' id="expiration-month" placeholder="00/00" onKeyDown={ this.changeHandler}  value={this.state.expiration}/>
-              </div>
-              <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2">
-                <label htmlFor="cvv">CVV</label>
-                <input type="text" name="cvv" className='form-control' id="cvv" placeholder="000" onChange={this.changeHandler} value={this.state.cvv} />
-              </div>
-            </div>
-
-
-
-            <div className="form-group mb-3">
-              <label htmlFor="address">Address</label>
-              <input type="text" name="street" className={'form-control ' + (street ? 'border border-danger' : '')} id="address" placeholder="STREET ADDRESS, PO BOX" onChange={this.changeHandler} value={this.state.street} />
-              {street && <small className='text-danger ml-2' >Address is Required</small>}
-            </div>
-            <div className="form-row">
-              <div className="form-group col-md-6">
-                <label htmlFor="inputCity">City</label>
-                <input type="text" name="city" className={'form-control ' + (city ? 'border border-danger' : '')} id="inputCity" onChange={this.changeHandler} value={this.state.city} />
-                {city && <small className='text-danger ml-2' >City is Required</small>}
-              </div>
-              <div className="form-group col-md-4">
-                <label htmlFor="inputState">State</label>
-                <select id="inputState" className={'form-control ' + (usState ? 'border border-danger' : '')} name="state" onChange={this.changeHandler}>
-                  <option>Choose...</option>
-                  {states}
-                </select>
-                {usState && <small className='text-danger ml-2' >State is Required</small>}
-              </div>
-              <div className="form-group col-md-2">
-                <label htmlFor="inputZip">ZIP</label>
-                <input type="text" name="zip" className={'form-control ' + (zip ? 'border border-danger' : '')} id="inputZip" onChange={this.changeHandler} value={this.state.zip} />
-                {zip && <small className='text-danger ml-2' >ZIP is Required</small>}
-              </div>
-            </div>
-            <hr />
-            <div className="container-fluid">
-              <div className="row">
-                <h4>Delivery Method</h4>
-              </div>
-              <div className="container-fluid pl-4">
-                <div className="row d-flex justify-content-between">
-                  <Label check>
-                    <Input type="radio" name="radio1" defaultChecked />{' '}
-                    <span>Shipping</span>
-                  </Label>
-                  <div className="">
-                    <span>$10</span>
-                  </div>
-                </div>
-                <div className="row">
-                  <small>Standard (5-7 Day Delivery)</small>
-                </div>
-
-              </div>
-            </div>
-            <div className="container mt-4">
-              <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-sm-block" onClick={this.placeOrder} >Checkout</button>
-            </div>
-
+        <div className="container-fluid">
+          <div className="row">
+            <h4 className="col-12 col-sm-6 col-lg-7 p-0">Billing Address</h4>
+            <h4 className="col-12 col-sm-6 col-lg-5 d-none d-sm-block">Order Summary</h4>
           </div>
+        </div>
 
-          <div className="col-12 col-sm-6 col-lg-5 px-3 pb-3 pt-0 p-sm-2">
-            <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
-            <div className="card-footer checkout-footer container-fluid">
-              <div className="checkout-subtotal">
-                Subtotal
-                  <span className="float-right">${subTotal}</span>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12 col-sm-6 col-lg-7 p-0">
+
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="firstName">Name</label>
+                  <input type="text" name="firstName" className={'form-control ' + (firstName ? 'border border-danger' : '')} id="firstName" placeholder="First Name" onChange={this.changeHandler} value={this.state.firstName} />
+                  {firstName && <small className='text-danger ml-2' >First Name is Required</small>}
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="lastName">Last Name</label>
+                  <input type="text" name="lastName" className={'form-control ' + (lastName ? 'border border-danger' : '')} id="lastName" placeholder="Last Name" onChange={this.changeHandler} value={this.state.lastName} />
+                  {lastName && <small className='text-danger ml-2' >Last Name is Required</small>}
+                </div>
               </div>
-              <div className="checkout-shipping">
-                Shipping
-                  <span className="float-right">$10</span>
+
+              <div className="form-group mb-3">
+                <label htmlFor="email">Email Address</label>
+                <input type="email" name="email" className={'form-control ' + (email ? 'border border-danger' : '')} id="email" placeholder="you@example.com" onChange={this.changeHandler} value={this.state.email} />
+                {email && <small className='text-danger ml-2' >Email is Required</small>}
               </div>
-              <div className="checkout-tax">
-                Tax
-                  <span className="float-right">${tax}</span>
+
+              <div className="form-row">
+                <div className="form-group mb-3 col-sm-12 col-md-6 col-lg-8">
+                  <label htmlFor="creditCard">Credit Card</label>
+                  <input type="text" name="card" className='form-control' id="creditCard" onChange={this.changeHandler} value={this.state.card} />
+                </div>
+                <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2 ">
+                  <label htmlFor="expiration">Expiration</label>
+                  <input type="text" name="expiration" className='form-control' id="expiration-month" placeholder="00/00" onKeyDown={ this.changeHandler}  value={this.state.expiration}/>
+                </div>
+                <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2">
+                  <label htmlFor="cvv">CVV</label>
+                  <input type="text" name="cvv" className='form-control' id="cvv" placeholder="000" onChange={this.changeHandler} value={this.state.cvv} />
+                </div>
+              </div>
+
+
+
+              <div className="form-group mb-3">
+                <label htmlFor="address">Address</label>
+                <input type="text" name="street" className={'form-control ' + (street ? 'border border-danger' : '')} id="address" placeholder="STREET ADDRESS, PO BOX" onChange={this.changeHandler} value={this.state.street} />
+                {street && <small className='text-danger ml-2' >Address is Required</small>}
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputCity">City</label>
+                  <input type="text" name="city" className={'form-control ' + (city ? 'border border-danger' : '')} id="inputCity" onChange={this.changeHandler} value={this.state.city} />
+                  {city && <small className='text-danger ml-2' >City is Required</small>}
+                </div>
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputState">State</label>
+                  <select id="inputState" className={'form-control ' + (usState ? 'border border-danger' : '')} name="state" onChange={this.changeHandler}>
+                    <option>Choose...</option>
+                    {states}
+                  </select>
+                  {usState && <small className='text-danger ml-2' >State is Required</small>}
+                </div>
+                <div className="form-group col-md-2">
+                  <label htmlFor="inputZip">ZIP</label>
+                  <input type="text" name="zip" className={'form-control ' + (zip ? 'border border-danger' : '')} id="inputZip" onChange={this.changeHandler} value={this.state.zip} />
+                  {zip && <small className='text-danger ml-2' >ZIP is Required</small>}
+                </div>
               </div>
               <hr />
-              <div className="checkout-total">
-                Total
-                  <span className="float-right">${totalAmount}</span>
+              <div className="container-fluid">
+                <div className="row">
+                  <h4>Delivery Method</h4>
+                </div>
+                <div className="container-fluid pl-4">
+                  <div className="row d-flex justify-content-between">
+                    <Label check>
+                      <Input type="radio" name="radio1" defaultChecked />{' '}
+                      <span>Shipping</span>
+                    </Label>
+                    <div className="">
+                      <span>$10</span>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <small>Standard (5-7 Day Delivery)</small>
+                  </div>
+
+                </div>
               </div>
+              <div className="container mt-4 p-0">
+                <h4 className="col-12 col-sm-6 col-lg-5 p-0 d-block d-sm-none">Order Summary</h4>
+                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-sm-block" onClick={this.placeOrder} >Checkout</button>
+              </div>
+
             </div>
-            <div className="card checkout-cart-container mt-0">
-              <ul className="list-group list-group-flush ">
-                {cartSummaryItem}
-              </ul>
+
+            <div className="col-12 col-sm-6 col-lg-5 px-0 px-sm-3 pb-3 pt-0 p-sm-2">
+              <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
+              <div className="card-footer checkout-footer container-fluid">
+                <div className="checkout-subtotal">
+                  Subtotal
+                    <span className="float-right">${subTotal}</span>
+                </div>
+                <div className="checkout-shipping">
+                  Shipping
+                    <span className="float-right">$10</span>
+                </div>
+                <div className="checkout-tax">
+                  Tax
+                    <span className="float-right">${tax}</span>
+                </div>
+                <hr />
+                <div className="checkout-total">
+                  Total
+                    <span className="float-right">${totalAmount}</span>
+                </div>
+              </div>
+              <div className="card checkout-cart-container mt-0">
+                <ul className="list-group list-group-flush ">
+                  {cartSummaryItem}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
