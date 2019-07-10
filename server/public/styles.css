@@ -177,7 +177,7 @@ input, .overlay:focus {
   opacity: 1;
 }
 
-.touch {
+.overlayContainer:active {
   opacity: 1;
 }
 
