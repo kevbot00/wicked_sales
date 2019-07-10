@@ -89,7 +89,7 @@ class CartSummaryItem extends React.Component {
           <div className="col-12 col-sm-3 p-0 d-flex justify-content-center align-items-center cart-img-container">
             <img className="cart-img" src={ item.image } width="100%" height="100%" alt=""/>
           </div>
-          <div className="container col-12 col-sm-9 pt-2">
+          <div className="container col-12 col-sm-9 pt-3">
             <div className="cart-item-body row">
               <div className="col-7 cart-item-summary">
                 <div className="cart-item-title">
