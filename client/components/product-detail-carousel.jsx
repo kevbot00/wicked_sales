@@ -21,7 +21,7 @@ class ProductCarousel extends React.Component{
   renderThumbnail(){
     return this.props.images.map( (image, index ) => {
       return (
-        <img key={index} className="carousel-side-img img-thumbnail m-1" src={image} alt="product image" width="70px" height="70px" onClick={ this.clickHandler }/>
+        <img key={index} className="carousel-side-img cursor img-thumbnail m-1" src={image} alt="product image" onClick={ this.clickHandler }/>
       )
     });
 

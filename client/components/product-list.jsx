@@ -30,7 +30,7 @@ class ProductList extends React.Component {
                 Ride bikes. Have fun. Feel Good.
                 <div className="container-fluid">
                   <div className="row d-flex justify-content-center">
-                    <button className="product-list-header-button btn btn-light mt-3" onClick={ this.clickHandler }>SEE THE BIKES</button>
+                    <button className="product-list-header-button btn btn-lg btn-light mt-3" onClick={ this.clickHandler }>SEE THE BIKES</button>
                   </div>
                 </div>
               </div>

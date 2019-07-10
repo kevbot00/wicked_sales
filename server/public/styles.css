@@ -387,7 +387,8 @@ input, .overlay:focus {
 }
 
 .carousel-side-img {
-  cursor: pointer;
+  width: 90px !important;
+  height: 70px !important;
 }
 
 
