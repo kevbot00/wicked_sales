@@ -72,8 +72,8 @@ class CheckoutForm extends React.Component {
   }
 
   expirationCheck( value ){
-    if ( this.state.expiration.length >= 7) return;
     if ( !isNaN( value ) ){
+      if ( this.state.expiration.length >= 7 ) return;
       this.state.expiration.length === 2
       ? this.setState({expiration: this.state.expiration + '/' + value })
       : this.setState({expiration: this.state.expiration + value })
@@ -156,7 +156,7 @@ class CheckoutForm extends React.Component {
                 <span className="d-sm-block d-md-inline">Size / {item.specifications.size}</span>
               </div>
             </div>
-            <div className="row pl-1">
+            <div className="row pl-1 border-bottom">
               <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${this.productPrice((item.price / 100).toFixed(2))}</div>
             </div>
             <div className="row pl-1">
