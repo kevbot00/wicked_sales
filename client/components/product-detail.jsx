@@ -63,16 +63,15 @@ class ProductDetails extends React.Component {
 
   render() {
     return this.state.product ? (
-      <div className='detailContainer container-fluid px-4 mt-4'>
+      <div className='detailContainer container-fluid px-1 px-sm-4 mt-4 '>
         <div className="goBackSection">
           <span className='backText' onClick={this.clickHandler} ><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
         </div>
-        <div className="border-bottom border-secondary row">
+        <div className="border-bottom border-secondary">
           <div className="container-fluid pt-2 pt-sm-4">
             <div className="row">
               <div className="col-12 col-sm-12 col-md-7 p-0 text-center d-flex justify-items-stretch product-carousel-section mb-2">
-                {/* <img className="productImg img-fluid d-flex align-items-center" src={ this.state.product.image}/> */}
-                    <ProductCarousel images={this.state.product.images} />
+                  <ProductCarousel images={this.state.product.images} />
               </div>
               <div className="col-12 col-sm-12 col-md-5 mb-3">
                 <h2 className='mb-2 product-detail-name'>{this.state.product.name}</h2>
@@ -100,7 +99,8 @@ class ProductDetails extends React.Component {
         </div>
 
 
-        <div className="productDescription mt-3 mb-4">
+        <div className="container-fluid mt-3 mb-4">
+          <h3>Product Details</h3>
           {this.state.product.longDescription}
         </div>
 

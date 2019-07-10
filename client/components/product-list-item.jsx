@@ -43,7 +43,6 @@ class ProductListItem extends React.Component {
   }
 
   render() {
-    // this.productPrice()
     return (
       <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } >
         <div className='card mb-2 pb-2 cardContainer'>
@@ -54,11 +53,9 @@ class ProductListItem extends React.Component {
 
           <div className='card-body text-center px-2 pt-2 pb-0'>
             <h5 className='card-title mb-1 product-item-card-title'>{ this.props.product.name }</h5>
-            {/* REMOVE ONCE DATABASE IS UPDATED */}
             { this.props.product.specifications && <p className="card-text mb-1 text-secondary product-item-card-text">{this.props.product.specifications.type}</p> }
             <p className='card-text text-secondary product-item-card-text'>${ this.productPrice() }</p>
-            {/* <p className='card-text'>{ this.props.product.shortDescription}</p> */}
-            {/* <button className="btn btn-outline-primary btn-block product-list-item">More Info</button> */}
+
           </div>
         </div>
       </div>

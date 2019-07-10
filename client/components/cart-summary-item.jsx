@@ -29,6 +29,7 @@ class CartSummaryItem extends React.Component {
     const { id } = this.props.item;
     const numRegex = /^[0-9]*$/g
     let quantity = evt.target.value
+    if ( quantity.length > 3 ) return;
     if ( numRegex.test( quantity ) ){
       if ( quantity === ''){
         quantity = '';
@@ -88,7 +89,7 @@ class CartSummaryItem extends React.Component {
           <div className="col-12 col-sm-3 p-0 d-flex justify-content-center align-items-center cart-img-container">
             <img className="cart-img" src={ item.image } width="100%" height="100%" alt=""/>
           </div>
-          <div className="container col-12 col-sm-9 pt-2">
+          <div className="container col-12 col-sm-9 pt-3">
             <div className="cart-item-body row">
               <div className="col-7 cart-item-summary">
                 <div className="cart-item-title">
@@ -128,7 +129,7 @@ class CartSummaryItem extends React.Component {
                   }
                 </div>
                 <span className="border-bottom border-secondary mr-2 cursor" onClick={ this.deleteHandler }>Remove</span>
-                { this.state.edit && <span className="border-bottom border-secondary ml-1" onClick={ this.saveHandler }>Save</span> }
+                { this.state.edit && <span className="border-bottom border-secondary ml-1 cursor" onClick={ this.saveHandler }>Save</span> }
               </div>
               <div className="col-5 cart-item-price p-0 text-right pr-2 h-50">
                 <span>${ this.productPrice() }</span>

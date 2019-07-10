@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Fade } from 'reactstrap';
 
 class ProductCarousel extends React.Component{
   constructor( props ){
@@ -22,7 +21,7 @@ class ProductCarousel extends React.Component{
   renderThumbnail(){
     return this.props.images.map( (image, index ) => {
       return (
-        <img key={index} className="carousel-side-img img-thumbnail m-1" src={image} alt="product image" width="100vw" onClick={ this.clickHandler }/>
+        <img key={index} className="carousel-side-img img-thumbnail m-1" src={image} alt="product image" width="70px" height="70px" onClick={ this.clickHandler }/>
       )
     });
 
@@ -34,12 +33,11 @@ class ProductCarousel extends React.Component{
       <div className="container-fluid">
           <div className="row h-75">
               <div className="col-12 carousel-img-container mb-1">
-                {/* <Fade in={this.state.fadeIn} tag="img" className="carousel-img" style={{'backgroundImage': `url(${this.state.images[this.state.activeIndex]}`}} /> */}
                 <div className="carousel-img" style={{'backgroundImage': `url(${this.state.images[this.state.activeIndex]}`}} alt=""/>
               </div>
 
           </div>
-          <div className="row justify-content-center">
+          <div className="row justify-content-center product-detail-carousel-container">
             { this.renderThumbnail() }
           </div>
       </div>
