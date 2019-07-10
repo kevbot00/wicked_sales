@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-detail';
@@ -6,54 +7,28 @@ import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
 import Confirmation from './confirmation';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       products: [],
-      view: {
-        name: 'catalog',
-        params: {}
-      },
       cart: [],
       added: ''
     };
-    this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
-    this.placeOrder = this.placeOrder.bind(this);
     this.saveItemQuantity = this.saveItemQuantity.bind( this );
     this.deleteItem = this.deleteItem.bind( this );
   }
 
   componentDidMount() {
-    this.getProducts();
     this.getCartItems();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate( prevProps, prevState ){
+    console.log( prevProps, prevState );
     if ( this.state.added ){
       setTimeout( () => this.setState({added: ''}), 2000);
     }
-  }
-
-  setView(name, params) {
-    this.setState({
-      view: {
-        name,
-        params
-      }
-    });
-  }
-
-  getProducts() {
-    fetch('/api/products.php', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then(data => this.setState({ products: data}));
   }
 
   getCartItems() {
@@ -108,28 +83,28 @@ export default class App extends React.Component {
       .then(data => this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems ))
   }
 
-  placeOrder(custInfo , orderDetail ) {
-    fetch('/api/orders.php', {
-      method: 'POST',
-      body: JSON.stringify(custInfo),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      // ROUTE BACK TO CONFIRMATION PAGE
-      .then( data => {
-        this.getCartItems();
-        this.setView( 
-          'confirmation', 
-          {
-            'cart': custInfo.cart, 
-            custInfo, 
-            'orderId': data.id,
-            orderDetail
-          });
-      })
-  }
+  // placeOrder(custInfo , orderDetail ) {
+  //   fetch('/api/orders.php', {
+  //     method: 'POST',
+  //     body: JSON.stringify(custInfo),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then(res => res.json())
+  //     // ROUTE BACK TO CONFIRMATION PAGE
+  //     .then( data => {
+  //       this.getCartItems();
+  //       this.setView( 
+  //         'confirmation', 
+  //         {
+  //           'cart': custInfo.cart, 
+  //           custInfo, 
+  //           'orderId': data.id,
+  //           orderDetail
+  //         });
+  //     })
+  // }
 
   snackbar() {
     setTimeout( () => {
@@ -143,51 +118,92 @@ export default class App extends React.Component {
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
-      <div className="col-12 px-0">
-        <Header cartItemCount={ count } setView={ this.setView } />
-        <div className="container-fluid appContainer px-0">
-        <div className="snackbarContainer">
-          <div className={'snackbar ' + this.state.added}>Added to Cart</div>
-        </div>
-          { (this.state.view.name === 'catalog') &&
-            <ProductList
-              products={ this.state.products }
-              view={ this.setView }
-              addHandler={ this.addToCart }
-            />
-          }
-          {(this.state.view.name === 'details') &&
-            <ProductDetails
-              id={ this.state.view.params }
-              goBack={ this.setView }
-              addHandler={ this.addToCart }
-              cart={ this.state.cart }
-            />
-          }
-          {(this.state.view.name === 'cart') &&
-            <CartSummary
-              cart={ this.state.cart }
-              goBack={ this.setView }
-              save={ this.saveItemQuantity }
-              delete={ this.deleteItem }
-            />
-          }
-          {(this.state.view.name === 'checkout') &&
-            <CheckoutForm
-              cart={ this.state.cart }
-              goBack={ this.setView }
-              placeOrder={ this.placeOrder }
-              total={ this.state.view.params }
-            />
-          }
-          {(this.state.view.name === 'confirmation') &&
-            <Confirmation 
-              order={this.state.view.params } 
-              goBack={ this.setView }
-            />
-          }
-        </div>
+      // <div className="col-12 px-0">
+      //   <Header cartItemCount={ count } setView={ this.setView } />
+      //   <div className="container-fluid appContainer px-0">
+      //   <div className="snackbarContainer">
+      //     <div className={'snackbar ' + this.state.added}>Added to Cart</div>
+      //   </div>
+// /*  Router Testing */
+<HashRouter>
+  <div className="col-12 px-0">
+    <Header cartItemCount={ count } />
+    <div className="container-fluid appContainer px-0">
+      <div className="snackbarContainer">
+        <div className={'snackbar ' + this.state.added}>Added to Cart</div>
       </div>
-    );
+      <Switch>
+        <Route 
+          exact
+          path="/"
+          render={ props => <ProductList addHandler={ this.addToCart }/>}
+        />
+        <Route
+          path="/product/:id"
+          render={ props => <ProductDetails {...props} addHandler={this.addToCart} cart={ this.state.cart } />}
+        />
+        <Route
+          path="/cart/"
+          render={ props => <CartSummary {...props} cart={this.state.cart} save={ this.saveItemQuantity } delete={ this.deleteItem }/>}
+        />
+        <Route
+          path="/checkout"
+          render={ props => <CheckoutForm {...props} cart={ this.state.cart } placeOrder={ this.placeOrder } total={ this.state.view.params }/>}
+        />
+        <Route
+          path="/confirmation"
+          render={ props => <Confirmation {...props} /> }
+          />
+
+          }}
+      </Switch>
+    </div>
+  </div>
+</HashRouter>
+
+
+
+      //     /* { (this.state.view.name === 'catalog') &&
+      //       <ProductList
+      //         products={ this.state.products }
+      //         view={ this.setView }
+      //         addHandler={ this.addToCart }
+      //       />
+      //     }
+      //     {(this.state.view.name === 'details') &&
+      //       <ProductDetails
+      //         id={ this.state.view.params }
+      //         goBack={ this.setView }
+      //         addHandler={ this.addToCart }
+      //         cart={ this.state.cart }
+      //       />
+      //     }
+      //     {(this.state.view.name === 'cart') &&
+      //       <CartSummary
+      //         cart={ this.state.cart }
+      //         goBack={ this.setView }
+      //         save={ this.saveItemQuantity }
+      //         delete={ this.deleteItem }
+      //       />
+      //     }
+      //     {(this.state.view.name === 'checkout') &&
+      //       <CheckoutForm
+      //         cart={ this.state.cart }
+      //         goBack={ this.setView }
+      //         placeOrder={ this.placeOrder }
+      //         total={ this.state.view.params }
+      //       />
+      //     }
+      //     {(this.state.view.name === 'confirmation') &&
+      //       <Confirmation 
+      //         order={this.state.view.params } 
+      //         goBack={ this.setView }
+      //       />
+      //     } */
+      //   /* </div>
+      // </div> */
+    )
   }
 }
+
+export default App;

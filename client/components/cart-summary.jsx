@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import CartSummaryItem from './cart-summary-item';
 import image from '../images/empty.png';
 import DeleteItemModal from './delete-item-modal';
@@ -38,7 +39,7 @@ class CartSummary extends React.Component {
   }
 
   clickHandler(evt) {
-    this.props.goBack('catalog', {});
+    // this.props.goBack('catalog', {});
   }
 
   addTotal() {
@@ -52,20 +53,28 @@ class CartSummary extends React.Component {
 
   placeOrder() {
     if (this.props.cart.length) {
-      this.props.goBack('checkout', { 
-        subTotal: productPrice(this.addTotal()),
-        tax: productPrice((parseInt(this.addTotal()) * .08).toFixed(2)),
-        totalAmount: productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .08 ) + 10).toFixed(2)) 
-      });
+      this.props.history.push({
+        pathname: '/checkout', 
+        state: {
+          total: {
+            subTotal: productPrice(this.addTotal()),
+            tax: productPrice((parseInt(this.addTotal()) * .08).toFixed(2)),
+            totalAmount: productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .08 ) + 10).toFixed(2))
+          }
+        }
+      })
+
+      // this.props.goBack('checkout', { 
+      // });
     }
   }
 
   render() {
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
-        <div className="container-fluid mb-2 p-0">
+        <Link className="container-fluid mb-2 p-0" to={'/'}>
           <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
-        </div>
+        </Link>
         <div className="container-fluid p-0">
           <h3 className="mt-2">Cart</h3>
           <hr/>
@@ -119,4 +128,4 @@ class CartSummary extends React.Component {
   }
 }
 
-export default CartSummary;
+export default withRouter(CartSummary);

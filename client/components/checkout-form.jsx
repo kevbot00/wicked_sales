@@ -1,6 +1,8 @@
 import React from 'react';
-import CreditModal from './credit-card-modal';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
+
+import CreditModal from './credit-card-modal';
 import productPrice from './product-price';
 
 
@@ -86,20 +88,36 @@ class CheckoutForm extends React.Component {
   }
 
   cvvCheck( value ){
-
     if ( value.length > 3 ) return;
     if ( !isNaN( value ) ) return this.setState({ cvv: value });
   }
 
-  clickHandler() {
-    this.props.goBack('catalog', {});
-  }
-
   checkInputValidity() {
     const { firstName, lastName, email, street, city, usState, zip } = this.state;
-    if (firstName && lastName && email && street && city && usState && zip) return true;
-    return false;
+    (firstName && lastName && email && street && city && usState && zip) ? true : false;
+  }
 
+  placeOrderToDB(custInfo , orderDetail ) {
+    fetch('/api/orders.php', {
+      method: 'POST',
+      body: JSON.stringify(custInfo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then( data => {
+        return this.props.history.push({
+          pathname: '/confirmation', 
+          state: {
+            'cart': custInfo.cart,
+            custInfo,
+            'orderId': data.id,
+            orderDetail
+          }
+        })
+      })
+      .catch( error => console.error( 'something went wrong', error))
   }
 
   placeOrder() {
@@ -115,7 +133,10 @@ class CheckoutForm extends React.Component {
         zip: zip,
         cart: this.props.cart
       }
-      return this.props.placeOrder(order, this.props.total);
+      return this.placeOrderToDB( order , this.props.location.state.total );
+
+      
+      // return this.props.placeOrder(order, this.props.total);
     }
     this.setState({
       errorHandler: {
@@ -170,7 +191,7 @@ class CheckoutForm extends React.Component {
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
-        <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
+        <Link className='backText' to={'/'}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</Link>
         <h3 className="d-block mt-2">Checkout</h3>
         <hr/>
         <div className="container-fluid">
@@ -309,4 +330,4 @@ class CheckoutForm extends React.Component {
   }
 }
 
-export default CheckoutForm;
+export default withRouter(CheckoutForm);

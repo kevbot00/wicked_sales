@@ -1,12 +1,44 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ProductListItem from './product-list-item';
 import Image from '../images/header.jpg';
 
 class ProductList extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      products: []
+    }
+  
     this.clickHandler = this.clickHandler.bind( this );
     this.focusToProductList = React.createRef();
+  }
+
+  componentDidMount() {
+    this.getProducts();
+    this.getCartItems();
+  }
+
+  getProducts() {
+    fetch('/api/products.php', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => this.setState({ products: data}));
+  }
+
+  getCartItems() {
+    fetch('/api/cart.php', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(cart => this.setState({ cart }));
   }
 
   clickHandler( evt ){
@@ -19,8 +51,17 @@ class ProductList extends React.Component {
   }
 
   render(){
-    const productArray = this.props.products.map(product => {
-      return <ProductListItem detail={ this.props.view } key={ product.id } product={ product } addHandler={ this.props.addHandler } />;
+    const productArray = this.state.products.map(product => {
+      // (
+      // <Router>
+      //   <Route 
+          
+      //     path={`/product?id=${product.id}`}
+      //     render={ props => <ProductListItem key={ product.id } addHandler={ this.props.addHandler } />}
+      //   />
+      // </Router>
+      // )
+      return <ProductListItem key={ product.id } product={ product } addHandler={ this.props.addHandler } />;
     });
     return (
       <div className="p-0">

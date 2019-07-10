@@ -1,4 +1,6 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
+
 
 class ProductListItem extends React.Component {
   constructor(props) {
@@ -16,8 +18,14 @@ class ProductListItem extends React.Component {
 
   }
 
+  getProductDetail() {
+    // fetch( '/product?id=' + 
+
+  }
+
   clickHandler() {
-    this.props.detail('details', { id: this.props.product.id });
+    // this.props.detail('details', { id: this.props.product.id });
+    this.props.history.push('/product/'+ this.props.product.id )
   }
 
   addHandler(event) {
@@ -54,12 +62,13 @@ class ProductListItem extends React.Component {
   }
 
   render() {
+    // console.log( this.props );
     return (
-      <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } onTouchStart={ this.touchStartHandler} onTouchEnd={ this.touchEndHandler}>
+      <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } onTouchStart={ this.touchStartHandler } onTouchEnd={ this.touchEndHandler } >
         <div className='card mb-2 pb-2 cardContainer'>
           <div className="overlayContainer">
             <img className='card-img cardImg product-img' style={{ 'backgroundImage': 'url(' + this.state.img + ')' }} onMouseEnter={ this.mouseEnterHandler } onMouseLeave={ this.mouseLeaveHandler }/>
-            <button className={'overlay'} onClick={ this.addHandler } onTouchEnd={ this.state.touch && this.addHandler } >Add to Cart</button>
+            <button className={'overlay'} onClick={ this.addHandler } onTouchEnd={ this.state.touch ? this.addHandler : undefined } >Add to Cart</button>
           </div>
 
           <div className='card-body text-center px-2 pt-2 pb-0'>
@@ -75,4 +84,4 @@ class ProductListItem extends React.Component {
 
 }
 
-export default ProductListItem;
+export default withRouter(ProductListItem);

@@ -1,5 +1,6 @@
 import React from 'react';
 import productPrice from './product-price';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 
 class Confirmation extends React.Component {
   constructor(props) {
@@ -7,8 +8,7 @@ class Confirmation extends React.Component {
   }
 
   getOrder() {
-    const order = this.props.order.cart.map(( item, index ) => {
-      console.log( 'get order', item );
+    const order = this.props.location.state.cart.map(( item, index ) => {
       return (
         <li key={index} className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
           <img src={ item.image } className="d-sm-block order-summary-img mr-3" alt="" />
@@ -48,8 +48,8 @@ class Confirmation extends React.Component {
   }
 
   render() {
-    const { custInfo, orderId } = this.props.order;
-    const { subTotal, tax, totalAmount } = this.props.order.orderDetail;
+    const { custInfo, orderId } = this.props.location.state;
+    const { subTotal, tax, totalAmount } = this.props.location.state.orderDetail;
     return (
       <div className='container-fluid h-100 px-4 mt-4'>
         <div className="row d-flex h-100 pb-4-sm">
@@ -83,7 +83,7 @@ class Confirmation extends React.Component {
               </div>
             </div>
             <div className="row w-100 d-flex justify-content-center m-0 mt-4">
-              <button className='btn btn-primary' onClick={this.props.goBack.bind(this, 'catalog')} >Continue Shopping</button>
+              <Link className='btn btn-primary' to={"/"} >Continue Shopping</Link>
             </div>
           </div>
           <div className="col-lg-5 p-0">

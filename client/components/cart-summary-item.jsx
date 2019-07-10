@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 
 class CartSummaryItem extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class CartSummaryItem extends React.Component {
   }
 
   getProductInfo(){
-    this.props.getDetail( 'details', this.props.item )
+    // this.props.getDetail( 'details', this.props.item )
   }
 
   handleBlur( evt ) {
@@ -100,7 +101,7 @@ class CartSummaryItem extends React.Component {
             <div className="cart-item-body row">
               <div className="col-7 cart-item-summary">
                 <div className="cart-item-title">
-                  <span className=" border-bottom text-primary border-primary cursor cart-summary-item-name" onClick={ this.getProductInfo }>{item.name}</span>
+                  <Link className=" border-bottom text-primary border-primary cursor cart-summary-item-name" to={`/product/${item.id}`}>{item.name}</Link>
                 </div>
                 <div className="cart-item-description product-specs">
                   <span className="d-block d-sm-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 
