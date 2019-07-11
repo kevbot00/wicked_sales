@@ -6,6 +6,7 @@ import ProductDetails from './product-detail';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
 import Confirmation from './confirmation';
+import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,10 +14,12 @@ class App extends React.Component {
     this.state = {
       products: [],
       cart: [],
-      added: ''
+      cartSummaryPrice: {},
+      added: '',
+      updated: false
     };
     this.addToCart = this.addToCart.bind(this);
-    this.saveItemQuantity = this.saveItemQuantity.bind( this );
+    this.updateItemQuantity = this.updateItemQuantity.bind( this );
     this.deleteItem = this.deleteItem.bind( this );
   }
 
@@ -25,12 +28,19 @@ class App extends React.Component {
   }
 
   componentDidUpdate( prevProps, prevState ){
-    console.log( prevProps, prevState );
     if ( this.state.added ){
       setTimeout( () => this.setState({added: ''}), 2000);
     }
   }
-
+  // Snackbar
+  snackbar() {
+    setTimeout( () => {
+      return 'snackbar show'
+    })
+    return 'snackbar show'
+  }
+  
+  // Fetch Calls
   getCartItems() {
     fetch('/api/cart.php', {
       method: 'GET',
@@ -39,10 +49,28 @@ class App extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(cart => this.setState({ cart }));
+      .then(cart => {
+        const cartSummaryPrice = getPrices( cart );
+        this.setState({ cart, cartSummaryPrice }, () => console.log( this.state.cartSummaryPrice))
+      });
   }
 
-  saveItemQuantity( productId, quantity ){
+  addToCart(product , quantity ) {
+    fetch('/api/cart.php', {
+      method: 'POST',
+      body: JSON.stringify({ product, quantity }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        
+        this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems )}
+      )
+  }
+
+  updateItemQuantity( productId, quantity ){
     let cart = this.state.cart.map( item => {
       if ( item.id === productId ){
         item.quantity = quantity;
@@ -57,7 +85,6 @@ class App extends React.Component {
     })
     .then( res => res.json() )
     .then( data => this.setState({ cart }))
-  
   }
 
   deleteItem( productId ){
@@ -71,137 +98,86 @@ class App extends React.Component {
     .then( data => this.setState({ cart }, this.getProducts ));
   }
 
-  addToCart(product , quantity ) {
-    fetch('/api/cart.php', {
+  placeOrder(custInfo , orderDetail ) {
+    fetch('/api/orders.php', {
       method: 'POST',
-      body: JSON.stringify({ product, quantity }),
+      body: JSON.stringify(custInfo),
       headers: {
         'Content-Type': 'application/json'
       }
     })
       .then(res => res.json())
-      .then(data => this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems ))
+      .then( data => {
+        this.getCartItems();
+        this.setState({ 'cart': custInfo.cart, custInfo, 'orderId': data.id, orderDetail });
+      })
   }
 
-  // placeOrder(custInfo , orderDetail ) {
-  //   fetch('/api/orders.php', {
-  //     method: 'POST',
-  //     body: JSON.stringify(custInfo),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then(res => res.json())
-  //     // ROUTE BACK TO CONFIRMATION PAGE
-  //     .then( data => {
-  //       this.getCartItems();
-  //       this.setView( 
-  //         'confirmation', 
-  //         {
-  //           'cart': custInfo.cart, 
-  //           custInfo, 
-  //           'orderId': data.id,
-  //           orderDetail
-  //         });
-  //     })
-  // }
-
-  snackbar() {
-    setTimeout( () => {
-      return 'snackbar show'
-    })
-    return 'snackbar show'
+  addTotal( cart ) {
+    let total = 0;
+    for (var item of cart) {
+      total += item.price * item.quantity;
+    }
+    return (total / 100).toFixed(2);
   }
-
-
+  
+  
+  productPrice( itemPrice ){
+    let price = String(itemPrice)
+    let firstSlice;
+    let secondSlice;
+    if ( price.length > 9 ) {
+      firstSlice = price.slice(0, price.length - 9 );
+      secondSlice = price.slice( price.length - 9 );
+      price = firstSlice + ',' + secondSlice;
+    } 
+    if ( price.length > 6 ){
+      firstSlice = price.slice(0 , price.length - 6 );
+      secondSlice = price.slice( price.length - 6 );
+      price = firstSlice + ',' + secondSlice;
+    }
+    return price;
+  }
+  
   render() {
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
-      // <div className="col-12 px-0">
-      //   <Header cartItemCount={ count } setView={ this.setView } />
-      //   <div className="container-fluid appContainer px-0">
-      //   <div className="snackbarContainer">
-      //     <div className={'snackbar ' + this.state.added}>Added to Cart</div>
-      //   </div>
-// /*  Router Testing */
-<HashRouter>
-  <div className="col-12 px-0">
-    <Header cartItemCount={ count } />
-    <div className="container-fluid appContainer px-0">
-      <div className="snackbarContainer">
-        <div className={'snackbar ' + this.state.added}>Added to Cart</div>
-      </div>
-      <Switch>
-        <Route 
-          exact
-          path="/"
-          render={ props => <ProductList addHandler={ this.addToCart }/>}
-        />
-        <Route
-          path="/product/:id"
-          render={ props => <ProductDetails {...props} addHandler={this.addToCart} cart={ this.state.cart } />}
-        />
-        <Route
-          path="/cart/"
-          render={ props => <CartSummary {...props} cart={this.state.cart} save={ this.saveItemQuantity } delete={ this.deleteItem }/>}
-        />
-        <Route
-          path="/checkout"
-          render={ props => <CheckoutForm {...props} cart={ this.state.cart } placeOrder={ this.placeOrder } total={ this.state.view.params }/>}
-        />
-        <Route
-          path="/confirmation"
-          render={ props => <Confirmation {...props} /> }
-          />
+      <HashRouter>
+        <div className="col-12 px-0">
+          <Header cartItemCount={ count } />
+          <div className="container-fluid appContainer px-0">
+            <div className="snackbarContainer">
+              <div className={'snackbar ' + this.state.added}>Added to Cart</div>
+            </div>
+            <Switch>
+              <Route 
+                exact
+                path="/"
+                render={ props => <ProductList addHandler={ this.addToCart }/>}
+              />
+              <Route
+                path="/product/:id"
+                render={ props => <ProductDetails {...props} addHandler={this.addToCart} cart={ this.state.cart } />}
+              />
+              <Route
+                path="/cart/"
+                render={ props => <CartSummary {...props} cart={this.state.cart} cartSummaryPrice={this.state.cartSummaryPrice} save={ this.updateItemQuantity } delete={ this.deleteItem } />}
+              />
+              <Route
+                path="/checkout"
+                render={ props => <CheckoutForm {...props} cart={ this.state.cart } placeOrder={ this.placeOrder } getCartItem={this.getCartItems} /> }
+              />
+              <Route
+                path="/confirmation"
+                render={ props => <Confirmation {...props} /> }
+                />
 
-          }}
-      </Switch>
-    </div>
-  </div>
-</HashRouter>
-
-
-
-      //     /* { (this.state.view.name === 'catalog') &&
-      //       <ProductList
-      //         products={ this.state.products }
-      //         view={ this.setView }
-      //         addHandler={ this.addToCart }
-      //       />
-      //     }
-      //     {(this.state.view.name === 'details') &&
-      //       <ProductDetails
-      //         id={ this.state.view.params }
-      //         goBack={ this.setView }
-      //         addHandler={ this.addToCart }
-      //         cart={ this.state.cart }
-      //       />
-      //     }
-      //     {(this.state.view.name === 'cart') &&
-      //       <CartSummary
-      //         cart={ this.state.cart }
-      //         goBack={ this.setView }
-      //         save={ this.saveItemQuantity }
-      //         delete={ this.deleteItem }
-      //       />
-      //     }
-      //     {(this.state.view.name === 'checkout') &&
-      //       <CheckoutForm
-      //         cart={ this.state.cart }
-      //         goBack={ this.setView }
-      //         placeOrder={ this.placeOrder }
-      //         total={ this.state.view.params }
-      //       />
-      //     }
-      //     {(this.state.view.name === 'confirmation') &&
-      //       <Confirmation 
-      //         order={this.state.view.params } 
-      //         goBack={ this.setView }
-      //       />
-      //     } */
-      //   /* </div>
-      // </div> */
+                }}
+            </Switch>
+          </div>
+        </div>
+      </HashRouter>
     )
   }
 }

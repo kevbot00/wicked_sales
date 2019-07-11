@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-
 import CreditModal from './credit-card-modal';
-import productPrice from './product-price';
+// import productPrice from './product-price';
 
 
 class CheckoutForm extends React.Component {
@@ -32,7 +31,7 @@ class CheckoutForm extends React.Component {
       }
     };
     this.states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
-    this.clickHandler = this.clickHandler.bind(this);
+    // this.clickHandler = this.clickHandler.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
@@ -133,10 +132,8 @@ class CheckoutForm extends React.Component {
         zip: zip,
         cart: this.props.cart
       }
-      return this.placeOrderToDB( order , this.props.location.state.total );
-
-      
-      // return this.props.placeOrder(order, this.props.total);
+      // return this.placeOrderToDB( order , this.props.location.state.total );
+      return this.props.placeOrder(order, this.props.total);
     }
     this.setState({
       errorHandler: {
@@ -185,9 +182,10 @@ class CheckoutForm extends React.Component {
 
 
   render() {
+    console.log( this.props );
     const cartSummaryItem = this.getOrder()
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
-    const { subTotal, tax, totalAmount } = this.props.total;
+    const { subTotal, tax, totalAmount } = this.props.location.state.total;
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
@@ -289,13 +287,13 @@ class CheckoutForm extends React.Component {
               </div>
               <div className="container mt-4 p-0">
                 <h4 className="col-12 col-sm-6 col-lg-5 p-0 d-block d-sm-none">Order Summary</h4>
-                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-sm-block" onClick={this.placeOrder} >Checkout</button>
+                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-sm-block" onClick={this.placeOrder} >Place Order</button>
               </div>
 
             </div>
 
             <div className="col-12 col-sm-6 col-lg-5 px-0 px-sm-3 pb-3 pt-0 p-sm-2">
-              <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
+              <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Place Order</button>
               <div className="card-footer checkout-footer container-fluid">
                 <div className="checkout-subtotal">
                   Subtotal

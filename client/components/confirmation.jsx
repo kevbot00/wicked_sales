@@ -1,5 +1,5 @@
 import React from 'react';
-import productPrice from './product-price';
+// import productPrice from './product-price';
 import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 
 class Confirmation extends React.Component {
