@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } 
 import CartSummaryItem from './cart-summary-item';
 import image from '../images/empty.png';
 import DeleteItemModal from './delete-item-modal';
-// import productPrice from './product-price';
 
 class CartSummary extends React.Component {
   constructor(props) {
