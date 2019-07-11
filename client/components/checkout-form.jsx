@@ -176,13 +176,13 @@ class CheckoutForm extends React.Component {
         <div className="container-fluid">
           <div className="row">
             <h4 className="col-12 col-sm-6 col-lg-7 p-0">Billing Address</h4>
-            <h4 className="col-12 col-sm-6 col-lg-5 d-none d-sm-block">Order Summary</h4>
+            <h4 className="col-12 col-sm-6 col-lg-5 d-none d-md-block">Order Summary</h4>
           </div>
         </div>
 
         <div className="container-fluid">
           <div className="row">
-            <div className="col-12 col-sm-6 col-lg-7 p-0">
+            <div className="col-12 col-md-6 col-lg-7 p-0">
 
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -266,14 +266,14 @@ class CheckoutForm extends React.Component {
 
                 </div>
               </div>
-              <div className="container mt-4 p-0">
-                <h4 className="col-12 col-sm-6 col-lg-5 p-0 d-block d-sm-none">Order Summary</h4>
-                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-sm-block" onClick={this.placeOrder} >Checkout</button>
+              <div className="container mt-4 mx-0 p-0">
+                <h4 className="col-12 col-md-6 col-lg-5 p-0 d-block d-md-none">Order Summary</h4>
+                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-md-block" onClick={this.placeOrder} >Checkout</button>
               </div>
 
             </div>
 
-            <div className="col-12 col-sm-6 col-lg-5 px-0 px-sm-3 pb-3 pt-0 p-sm-2">
+            <div className="col-12 col-md-6 col-lg-5 px-0 pb-3 pt-0 p-md-2">
               <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
               <div className="card-footer checkout-footer container-fluid">
                 <div className="checkout-subtotal">
