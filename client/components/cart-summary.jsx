@@ -37,15 +37,6 @@ class CartSummary extends React.Component {
     return shoppingCart;
   }
 
-  // addTotal() {
-  //   const { cart } = this.props;
-  //   let total = 0;
-  //   for (var item of cart) {
-  //     total += item.price * item.quantity;
-  //   }
-  //   return (total / 100).toFixed(2);
-  // }
-
   checkout() {
     if (this.props.cart.length) {
       this.props.history.push( '/checkout')
