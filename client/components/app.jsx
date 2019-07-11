@@ -109,7 +109,16 @@ class App extends React.Component {
       .then(res => res.json())
       .then( data => {
         this.getCartItems();
-        this.setState({ 'cart': custInfo.cart, custInfo, 'orderId': data.id, orderDetail });
+        // this.props.history.push({
+        //   pathname="/confirmation/id=" + data.id,
+        //   state = { orderDetail }
+        // });
+        this.setState({ 
+          'cart': custInfo.cart, 
+          'orderId': data.id, 
+          custInfo, 
+          orderDetail 
+        });
       })
   }
 
@@ -166,10 +175,10 @@ class App extends React.Component {
               />
               <Route
                 path="/checkout"
-                render={ props => <CheckoutForm {...props} cart={ this.state.cart } placeOrder={ this.placeOrder } getCartItem={this.getCartItems} /> }
+                render={ props => <CheckoutForm {...props} cart={ this.state.cart } cartSummaryPrice={this.state.cartSummaryPrice} placeOrder={ this.placeOrder } getCartItem={this.getCartItems} /> }
               />
               <Route
-                path="/confirmation"
+                path="/confirmation?:id"
                 render={ props => <Confirmation {...props} /> }
                 />
 

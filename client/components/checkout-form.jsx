@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
 import CreditModal from './credit-card-modal';
-// import productPrice from './product-price';
+import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
 
 
 class CheckoutForm extends React.Component {
@@ -107,7 +107,7 @@ class CheckoutForm extends React.Component {
       .then(res => res.json())
       .then( data => {
         return this.props.history.push({
-          pathname: '/confirmation', 
+          pathname: '/confirmation?id=' + data.id, 
           state: {
             'cart': custInfo.cart,
             custInfo,
@@ -120,6 +120,7 @@ class CheckoutForm extends React.Component {
   }
 
   placeOrder() {
+    console.log( this.state );
     const { firstName, lastName, email, card, street, city, usState, zip } = this.state;
     if (this.checkInputValidity()) {
       const order = {
@@ -166,11 +167,11 @@ class CheckoutForm extends React.Component {
               </div>
             </div>
             <div className="row pl-1">
-              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${productPrice((item.price / 100).toFixed(2))}</div>
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${formatPrice((item.price / 100).toFixed(2))}</div>
             </div>
             <div className="row pl-1">
               <div className="checkout-cart-item-price text-secondary">
-                ${productPrice(((item.price * item.quantity) / 100).toFixed(2))}
+                ${formatPrice(((item.price * item.quantity) / 100).toFixed(2))}
               </div>
             </div>
           </div>
@@ -185,7 +186,7 @@ class CheckoutForm extends React.Component {
     console.log( this.props );
     const cartSummaryItem = this.getOrder()
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
-    const { subTotal, tax, totalAmount } = this.props.location.state.total;
+    const { subTotal, tax, totalAmount } = this.props.cartSummaryPrice;
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>

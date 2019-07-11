@@ -1,10 +1,14 @@
 import React from 'react';
 // import productPrice from './product-price';
 import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
-
+import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
 class Confirmation extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount(){
+    console.log( this.props );
   }
 
   getOrder() {
@@ -24,11 +28,11 @@ class Confirmation extends React.Component {
               </div>
             </div>
             <div className="row pl-1">
-              <div className="checkout-cart-item-quantity text-secondary"> Qty: { item.quantity } @ ${ productPrice(item.price / 100) }</div>
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: { item.quantity } @ ${ formatPrice(item.price / 100) }</div>
             </div>
             <div className="row pl-1">
               <div className="checkout-cart-item-price text-secondary">
-                ${ productPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
+                ${ formatPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
               </div>
             </div>
           </div>

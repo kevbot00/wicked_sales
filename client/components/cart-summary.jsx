@@ -43,7 +43,7 @@ class CartSummary extends React.Component {
   }
 
   render() {
-    const { totalBeforeTax, tax, totalAmount } = this.props.cartSummaryPrice;
+    const { subTotal, tax, totalAmount } = this.props.cartSummaryPrice;
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
         <Link className="container-fluid mb-2 p-0" to={'/'}>
@@ -68,7 +68,7 @@ class CartSummary extends React.Component {
                   <div className="cart-summary-detail">
                     <div className="cart-subtotal d-flex justify-content-between px-2">
                       <p>Subtotal</p>
-                      <p>${ totalBeforeTax }</p>
+                      <p>${ subTotal }</p>
                     </div>
                     <div className="cart-shipping d-flex justify-content-between px-2">
                       <p>Estimated Shipping</p>

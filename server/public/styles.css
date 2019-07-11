@@ -331,7 +331,7 @@ input, .overlay:focus {
 .product-list-header-img {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 50%;
+  background-position: 85%;
   width: 100vw;
   height: 65vh;
   position: relative;

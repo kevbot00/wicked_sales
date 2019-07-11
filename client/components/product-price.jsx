@@ -33,10 +33,10 @@ function formatPrice( itemPrice ){
 
 function getPrices( cart ) {
   let cartSummaryPrice = {};
-  cartSummaryPrice.totalBeforeTax = addTotal( cart );
-  cartSummaryPrice.tax = addTax( cartSummaryPrice.totalBeforeTax );
-  cartSummaryPrice.totalAmount = formatPrice(addTotalAmount( cartSummaryPrice.totalBeforeTax ));
-  cartSummaryPrice.totalBeforeTax = formatPrice( cartSummaryPrice.totalBeforeTax );
+  cartSummaryPrice.subTotal = addTotal( cart );
+  cartSummaryPrice.tax = addTax( cartSummaryPrice.subTotal );
+  cartSummaryPrice.totalAmount = formatPrice(addTotalAmount( cartSummaryPrice.subTotal ));
+  cartSummaryPrice.subTotal = formatPrice( cartSummaryPrice.subTotal );
   cartSummaryPrice.tax = formatPrice( cartSummaryPrice.tax );
   return cartSummaryPrice;
 }

@@ -47,9 +47,8 @@ class ProductDetails extends React.Component {
   existInCart() {
     if (this.state.product) {
       for (let item of this.props.cart) {
-        if (item.id == this.state.product.id) return true
+        item.id == this.state.product.id ? true : false
       }
-      return false;
     }
   }
 
