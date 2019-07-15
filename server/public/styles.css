@@ -29,8 +29,6 @@ body {
   height: 15vh;
 }
 
-
-
 .cart-summary-detail {
   font-size: 14px
 }
@@ -348,6 +346,7 @@ input, .overlay:focus {
   font-weight: bold;
   width: 100%;
   text-align: center;
+  text-shadow: 2px 2px gray;
 }
 
 .product-list-header-button {
