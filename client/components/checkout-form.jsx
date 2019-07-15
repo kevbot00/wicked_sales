@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-import CreditModal from './credit-card-modal';
+import DemoModal from './demo-modal';
 import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
 
 
@@ -224,7 +224,7 @@ class CheckoutForm extends React.Component {
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="inputCity">City</label>
-                  <input type="text" name="city" className={'form-control ' + (city ? 'border border-danger' : '')} id="inputCity" onChange={this.changeHandler} value={this.state.city} />
+                  <input type="text" name="city" placeholder='City' className={'form-control ' + (city ? 'border border-danger' : '')} id="inputCity" onChange={this.changeHandler} value={this.state.city} />
                   {city && <small className='text-danger ml-2' >City is Required</small>}
                 </div>
                 <div className="form-group col-md-4">
@@ -237,7 +237,7 @@ class CheckoutForm extends React.Component {
                 </div>
                 <div className="form-group col-md-2">
                   <label htmlFor="inputZip">ZIP</label>
-                  <input type="text" name="zip" className={'form-control ' + (zip ? 'border border-danger' : '')} id="inputZip" onChange={this.changeHandler} value={this.state.zip} />
+                  <input type="text" name="zip" placeholder='ZIP' className={'form-control ' + (zip ? 'border border-danger' : '')} id="inputZip" onChange={this.changeHandler} value={this.state.zip} />
                   {zip && <small className='text-danger ml-2' >ZIP is Required</small>}
                 </div>
               </div>
@@ -299,7 +299,7 @@ class CheckoutForm extends React.Component {
           </div>
         </div>
         {/* Modal */}
-        <CreditModal toggle={this.toggleModal} showModal={this.state.showModal} />
+        <DemoModal toggle={this.toggleModal} showModal={this.state.showModal} />
       </div>
     );
   }
