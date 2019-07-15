@@ -7,6 +7,7 @@ import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
 import Confirmation from './confirmation';
 import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
+import DemoModal from './demo-modal';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,16 +18,23 @@ class App extends React.Component {
       cartSummaryPrice: {},
       custOrder: null,
       added: '',
-      updated: false
+      updated: false,
+      showModal: false,
     };
     this.addToCart = this.addToCart.bind(this);
     this.updateItemQuantity = this.updateItemQuantity.bind( this );
     this.deleteItem = this.deleteItem.bind( this );
     this.placeOrder = this.placeOrder.bind( this );
+    this.toggleModal = this.toggleModal.bind(this);
+
   }
 
   componentDidMount() {
     this.getCartItems();
+    if ( !sessionStorage.getItem( 'id' ) ){
+      this.toggleModal();
+      sessionStorage.setItem( 'id' , Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) )
+    }
   }
 
   componentDidUpdate( prevProps, prevState ){
@@ -40,6 +48,12 @@ class App extends React.Component {
       return 'snackbar show'
     })
     return 'snackbar show'
+  }
+
+  toggleModal() {
+    this.setState({
+      showModal: !this.state.showModal
+    })
   }
   
   // Fetch Calls
@@ -138,7 +152,7 @@ class App extends React.Component {
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
 
-        <div className="col-12 px-0">
+        <div className={`col-12 px-0 ${this.state.showModal ? 'modal-open' : ''}`}>
           <Header cartItemCount={ count } />
           <div className="container-fluid appContainer px-0">
             <div className="snackbarContainer">
@@ -168,6 +182,7 @@ class App extends React.Component {
               />
             </Switch>
           </div>
+          <DemoModal toggle={this.toggleModal} showModal={this.state.showModal} />
         </div>
 
     )

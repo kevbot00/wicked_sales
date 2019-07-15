@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CreditModal extends React.Component {
+class DemoModal extends React.Component {
   constructor( props ){
     super( props );
     this.dismissModal = this.dismissModal.bind( this );
@@ -40,4 +40,4 @@ class CreditModal extends React.Component {
   }
 }
 
-export default CreditModal;
+export default DemoModal;
