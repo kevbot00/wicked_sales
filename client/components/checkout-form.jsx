@@ -12,7 +12,7 @@ class CheckoutForm extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      card: '7273 8269 3277 6949',
+      card: '1234 1234 1234 1234',
       expiration: '',
       cvv: '',
       street: '',
@@ -31,7 +31,6 @@ class CheckoutForm extends React.Component {
       }
     };
     this.states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
-    // this.clickHandler = this.clickHandler.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
@@ -93,34 +92,13 @@ class CheckoutForm extends React.Component {
 
   checkInputValidity() {
     const { firstName, lastName, email, street, city, usState, zip } = this.state;
-    (firstName && lastName && email && street && city && usState && zip) ? true : false;
-  }
-
-  placeOrderToDB(custInfo , orderDetail ) {
-    fetch('/api/orders.php', {
-      method: 'POST',
-      body: JSON.stringify(custInfo),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => res.json())
-      .then( data => {
-        return this.props.history.push({
-          pathname: '/confirmation?id=' + data.id, 
-          state: {
-            'cart': custInfo.cart,
-            custInfo,
-            'orderId': data.id,
-            orderDetail
-          }
-        })
-      })
-      .catch( error => console.error( 'something went wrong', error))
+    if (firstName && lastName && email && street && city && usState && zip) {
+      return true
+    } 
+    return false;
   }
 
   placeOrder() {
-    console.log( this.state );
     const { firstName, lastName, email, card, street, city, usState, zip } = this.state;
     if (this.checkInputValidity()) {
       const order = {
@@ -133,8 +111,7 @@ class CheckoutForm extends React.Component {
         zip: zip,
         cart: this.props.cart
       }
-      // return this.placeOrderToDB( order , this.props.location.state.total );
-      return this.props.placeOrder(order, this.props.total);
+      return this.props.placeOrder( order );
     }
     this.setState({
       errorHandler: {
@@ -183,7 +160,6 @@ class CheckoutForm extends React.Component {
 
 
   render() {
-    console.log( this.props );
     const cartSummaryItem = this.getOrder()
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
     const { subTotal, tax, totalAmount } = this.props.cartSummaryPrice;

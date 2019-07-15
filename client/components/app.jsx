@@ -15,12 +15,14 @@ class App extends React.Component {
       products: [],
       cart: [],
       cartSummaryPrice: {},
+      custOrder: null,
       added: '',
       updated: false
     };
     this.addToCart = this.addToCart.bind(this);
     this.updateItemQuantity = this.updateItemQuantity.bind( this );
     this.deleteItem = this.deleteItem.bind( this );
+    this.placeOrder = this.placeOrder.bind( this );
   }
 
   componentDidMount() {
@@ -51,7 +53,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(cart => {
         const cartSummaryPrice = getPrices( cart );
-        this.setState({ cart, cartSummaryPrice }, () => console.log( this.state.cartSummaryPrice))
+        this.setState({ cart, cartSummaryPrice })
       });
   }
 
@@ -66,17 +68,22 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         
-        this.setState({ cart: [...this.state.cart, product], added: 'show' } , this.getCartItems )}
+        this.setState({ 
+          cart: [...this.state.cart, product], 
+          added: 'show'
+        } , this.getCartItems )}
       )
   }
 
   updateItemQuantity( productId, quantity ){
+    console.log( 'saved ')
     let cart = this.state.cart.map( item => {
       if ( item.id === productId ){
         item.quantity = quantity;
       }
       return item;
-    })
+    });
+
     fetch(`api/cart.php?id=${productId}`, {
       method: "PATCH",
       body: JSON.stringify({
@@ -84,7 +91,10 @@ class App extends React.Component {
       })
     })
     .then( res => res.json() )
-    .then( data => this.setState({ cart }))
+    .then( data => {
+      const cartSummaryPrice = getPrices( cart );
+      this.setState({ cart, cartSummaryPrice })
+    })
   }
 
   deleteItem( productId ){
@@ -98,7 +108,7 @@ class App extends React.Component {
     .then( data => this.setState({ cart }, this.getProducts ));
   }
 
-  placeOrder(custInfo , orderDetail ) {
+  placeOrder( custInfo ) {
     fetch('/api/orders.php', {
       method: 'POST',
       body: JSON.stringify(custInfo),
@@ -108,51 +118,25 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then( data => {
-        this.getCartItems();
-        // this.props.history.push({
-        //   pathname="/confirmation/id=" + data.id,
-        //   state = { orderDetail }
-        // });
-        this.setState({ 
-          'cart': custInfo.cart, 
-          'orderId': data.id, 
-          custInfo, 
-          orderDetail 
-        });
+        this.setState({
+          'custOrder': {
+            'orderId': data.id,
+            custInfo,
+            'cartSummaryPrice': this.state.cartSummaryPrice
+          }
+        })
+        this.props.history.push({
+          pathname: "/confirmation/" + data.id, 
+          state: {'custOrder': this.state.custOrder }
+        })
       })
-  }
-
-  addTotal( cart ) {
-    let total = 0;
-    for (var item of cart) {
-      total += item.price * item.quantity;
-    }
-    return (total / 100).toFixed(2);
-  }
-  
-  
-  productPrice( itemPrice ){
-    let price = String(itemPrice)
-    let firstSlice;
-    let secondSlice;
-    if ( price.length > 9 ) {
-      firstSlice = price.slice(0, price.length - 9 );
-      secondSlice = price.slice( price.length - 9 );
-      price = firstSlice + ',' + secondSlice;
-    } 
-    if ( price.length > 6 ){
-      firstSlice = price.slice(0 , price.length - 6 );
-      secondSlice = price.slice( price.length - 6 );
-      price = firstSlice + ',' + secondSlice;
-    }
-    return price;
   }
   
   render() {
     let count = null;
     const totalItemCount = this.state.cart.map( item => count += parseInt( item.quantity));
     return (
-      <HashRouter>
+
         <div className="col-12 px-0">
           <Header cartItemCount={ count } />
           <div className="container-fluid appContainer px-0">
@@ -175,20 +159,18 @@ class App extends React.Component {
               />
               <Route
                 path="/checkout"
-                render={ props => <CheckoutForm {...props} cart={ this.state.cart } cartSummaryPrice={this.state.cartSummaryPrice} placeOrder={ this.placeOrder } getCartItem={this.getCartItems} /> }
+                render={ props => <CheckoutForm {...props} cart={ this.state.cart } cartSummaryPrice={this.state.cartSummaryPrice} getOrderItems={ this.getOrderItems } placeOrder={ this.placeOrder } getCartItem={this.getCartItems} /> }
               />
               <Route
-                path="/confirmation?:id"
-                render={ props => <Confirmation {...props} /> }
-                />
-
-                }}
+                path="/confirmation/:id"
+                render={ props => <Confirmation {...props} custOrder={ this.state.custOrder } /> }
+              />
             </Switch>
           </div>
         </div>
-      </HashRouter>
+
     )
   }
 }
 
-export default App;
+export default withRouter(App);

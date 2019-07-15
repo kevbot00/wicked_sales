@@ -10,12 +10,9 @@ class CartSummaryItem extends React.Component {
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.saveHandler = this.saveHandler.bind( this );
-    this.getProductInfo = this.getProductInfo.bind( this );
     this.handleBlur = this.handleBlur.bind( this );
     this.quantityHandler = this.quantityHandler.bind( this );
     this.deleteHandler = this.deleteHandler.bind( this );
-
-
   }
 
   quantityHandler( evt ){
@@ -57,10 +54,6 @@ class CartSummaryItem extends React.Component {
 
   deleteHandler() {
     this.props.toggleModal( this.props.item.id )
-  }
-
-  getProductInfo(){
-    // this.props.getDetail( 'details', this.props.item )
   }
 
   handleBlur( evt ) {

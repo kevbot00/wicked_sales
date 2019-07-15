@@ -62,7 +62,6 @@ class ProductListItem extends React.Component {
   }
 
   render() {
-    // console.log( this.props );
     return (
       <div className='col-12 col-sm-6 col-md-4 col-lg-3 card-group px-1' onClick={ this.clickHandler } onTouchStart={ this.touchStartHandler } onTouchEnd={ this.touchEndHandler } >
         <div className='card mb-2 pb-2 cardContainer'>

@@ -63,6 +63,7 @@ class ProductDetails extends React.Component {
   }
 
   render() {
+    console.log( this.props );
     return this.state.product ? (
       <div className='detailContainer container-fluid px-1 px-sm-4 mt-4 '>
         <Link className="goBackSection" to={'/'}>

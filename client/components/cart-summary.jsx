@@ -43,6 +43,7 @@ class CartSummary extends React.Component {
   }
 
   render() {
+    console.log( this.props.cartSummaryPrice );
     const { subTotal, tax, totalAmount } = this.props.cartSummaryPrice;
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
