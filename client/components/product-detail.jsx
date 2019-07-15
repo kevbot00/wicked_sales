@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductCarousel from './product-detail-carousel';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 
 class ProductDetails extends React.Component {
   constructor(props) {
@@ -8,14 +9,14 @@ class ProductDetails extends React.Component {
       product: null,
       quantity: 1
     };
-    this.clickHandler = this.clickHandler.bind(this);
+    // this.clickHandler = this.clickHandler.bind(this);
     this.addHandler = this.addHandler.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
 
   }
 
   componentDidMount() {
-    fetch(`/api/products.php?id=${this.props.id.id}`, {
+    fetch(`/api/products.php?id=${this.props.match.params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -27,9 +28,9 @@ class ProductDetails extends React.Component {
       });
   }
 
-  clickHandler() {
-    this.props.goBack('catalog', {});
-  }
+  // clickHandler() {
+  //   this.props.goBack('catalog', {});
+  // }
 
   addHandler() {
     const { product, quantity } = this.state
@@ -46,9 +47,8 @@ class ProductDetails extends React.Component {
   existInCart() {
     if (this.state.product) {
       for (let item of this.props.cart) {
-        if (item.id == this.state.product.id) return true
+        item.id == this.state.product.id ? true : false
       }
-      return false;
     }
   }
 
@@ -63,11 +63,12 @@ class ProductDetails extends React.Component {
   }
 
   render() {
+    console.log( this.props );
     return this.state.product ? (
       <div className='detailContainer container-fluid px-1 px-sm-4 mt-4 '>
-        <div className="goBackSection">
-          <span className='backText' onClick={this.clickHandler} ><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
-        </div>
+        <Link className="goBackSection" to={'/'}>
+          <span className='backText' ><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
+        </Link>
         <div className="border-bottom border-secondary">
           <div className="container-fluid pt-2 pt-sm-4">
             <div className="row">

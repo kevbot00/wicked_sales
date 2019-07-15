@@ -1,14 +1,38 @@
 import React from 'react';
-import productPrice from './product-price';
+// import productPrice from './product-price';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
+import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
+
 
 class Confirmation extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      custOrder: this.props.custOrder,
+      cartSummaryPrice: null
+    }
+  }
+
+  componentDidMount(){
+    this.fetchOrderDetails();
+  }
+
+  fetchOrderDetails(){
+    fetch('/api/orders.php?id=' + this.props.match.params.id )
+    .then( res => res.json() )
+    .then( data => {
+      const cartSummaryPrice = getPrices( data.cart );
+      this.setState({
+      'custOrder': data,
+      cartSummaryPrice,
+      'custInfo': data.custInfo
+    })
+    });
   }
 
   getOrder() {
-    const order = this.props.order.cart.map(( item, index ) => {
-      console.log( 'get order', item );
+    const order = this.state.custOrder.cart.map(( item, index ) => {
+      const itemSpecs = JSON.parse(item.specifications);
       return (
         <li key={index} className="list-group-item pl-0 py-0 pr-0 pr-sm-2 border-bottom d-flex align-items-stretch" style={{ 'minHeight': '80px' }}>
           <img src={ item.image } className="d-sm-block order-summary-img mr-3" alt="" />
@@ -18,17 +42,17 @@ class Confirmation extends React.Component {
             </div>
             <div className="row pl-1 ">
               <div className="checkout-cart-item-specs text-secondary">
-                <span className="d-sm-block d-md-inline">Color / { item.specifications.color }</span>
+                <span className="d-sm-block d-md-inline">Color / { itemSpecs.color }</span>
                 <span className='d-none d-sm-none d-md-inline px-2'>|</span>
-                <span className="d-sm-block d-md-inline">Size / { item.specifications.size }</span>
+                <span className="d-sm-block d-md-inline">Size / { itemSpecs.size }</span>
               </div>
             </div>
             <div className="row pl-1">
-              <div className="checkout-cart-item-quantity text-secondary"> Qty: { item.quantity } @ ${ productPrice(item.price / 100) }</div>
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: { item.quantity } @ ${ formatPrice(item.price / 100) }</div>
             </div>
             <div className="row pl-1">
               <div className="checkout-cart-item-price text-secondary">
-                ${ productPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
+                ${ formatPrice( ((item.price * item.quantity)/100 ).toFixed(2) )}
               </div>
             </div>
           </div>
@@ -38,18 +62,10 @@ class Confirmation extends React.Component {
     return order;
   }
 
-  addTotal() {
-    const { cart } = this.props.order;
-    let total = 0;
-    for (let item of cart) {
-      total += parseInt(item.price) * item.quantity;
-    }
-    return (total / 100).toFixed(2);
-  }
-
   render() {
-    const { custInfo, orderId } = this.props.order;
-    const { subTotal, tax, totalAmount } = this.props.order.orderDetail;
+    if ( !this.state.cartSummaryPrice ) return null;
+    const custInfo = this.state.custOrder ? this.state.custInfo : null;
+    const { subTotal, tax, totalAmount } = this.state.cartSummaryPrice ? this.state.cartSummaryPrice : null;
     return (
       <div className='container-fluid h-100 px-4 mt-4'>
         <div className="row d-flex h-100 pb-4-sm">
@@ -60,7 +76,7 @@ class Confirmation extends React.Component {
               </div>
               <div className="row w-100 d-flex justify-content-center text-center h-50 mt-2 mb-4">
                 Thank you for your purchase!<br /><br />
-                Order #{orderId.toUpperCase()}
+                Order #{this.props.match.params.id.toUpperCase()}
               </div>
             </div>
             <div className="container-fluid">
@@ -70,20 +86,20 @@ class Confirmation extends React.Component {
               <div className="row">
                 <div className="col-6">
                   Shipping Address<br />
-                  <i>{custInfo.name}</i><br />
+                  <i>{custInfo.fullName}</i><br />
                   <i>{custInfo.street}</i><br />
-                  <i>{custInfo.city}, {custInfo.usState}, {custInfo.zip}</i><br />
+                  <i>{custInfo.city}, {custInfo.state}, {custInfo.zip}</i><br />
                 </div>
                 <div className="col-6">
                   Billing Address<br />
-                  <i>{custInfo.name}</i><br />
+                  <i>{custInfo.fullName}</i><br />
                   <i>{custInfo.street}</i><br />
-                  <i>{custInfo.city}, {custInfo.usState}, {custInfo.zip}</i><br />
+                  <i>{custInfo.city}, {custInfo.state}, {custInfo.zip}</i><br />
                 </div>
               </div>
             </div>
             <div className="row w-100 d-flex justify-content-center m-0 mt-4">
-              <button className='btn btn-primary' onClick={this.props.goBack.bind(this, 'catalog')} >Continue Shopping</button>
+              <Link className='btn btn-primary' to={"/"} >Continue Shopping</Link>
             </div>
           </div>
           <div className="col-lg-5 p-0">
@@ -113,10 +129,8 @@ class Confirmation extends React.Component {
               </ul>
             </div>
           </div>
-
         </div>
       </div>
-
     )
   }
 }
