@@ -90,7 +90,6 @@ class App extends React.Component {
   }
 
   updateItemQuantity( productId, quantity ){
-    console.log( 'saved ')
     let cart = this.state.cart.map( item => {
       if ( item.id === productId ){
         item.quantity = quantity;
