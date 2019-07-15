@@ -129,6 +129,7 @@ class App extends React.Component {
           pathname: "/confirmation/" + data.id, 
           state: {'custOrder': this.state.custOrder }
         })
+        this.getCartItems();
       })
   }
   
