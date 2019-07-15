@@ -1,4 +1,20 @@
-export default function productPrice( itemPrice ){
+function addTotal( cart ) {
+  let total = 0;
+  for (var item of cart) {
+    total += item.price * item.quantity;
+  }
+  return (total / 100).toFixed(2);
+}
+
+function addTax( total ){
+  return (parseFloat( total ) * .08).toFixed(2);
+}
+
+function addTotalAmount( total ) {
+  return (parseFloat( total ) * (1.08) + 10 ).toFixed(2);
+}
+
+function formatPrice( itemPrice ){
   let price = String(itemPrice)
   let firstSlice;
   let secondSlice;
@@ -14,3 +30,18 @@ export default function productPrice( itemPrice ){
   }
   return price;
 }
+
+function getPrices( cart ) {
+  let cartSummaryPrice = {};
+  cartSummaryPrice.subTotal = addTotal( cart );
+  cartSummaryPrice.tax = addTax( cartSummaryPrice.subTotal );
+  cartSummaryPrice.totalAmount = formatPrice(addTotalAmount( cartSummaryPrice.subTotal ));
+  cartSummaryPrice.subTotal = formatPrice( cartSummaryPrice.subTotal );
+  cartSummaryPrice.tax = formatPrice( cartSummaryPrice.tax );
+  return cartSummaryPrice;
+}
+
+export { addTotal, formatPrice, addTax, addTotalAmount, getPrices };
+
+
+

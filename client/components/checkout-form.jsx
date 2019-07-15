@@ -1,7 +1,8 @@
 import React from 'react';
-import CreditModal from './credit-card-modal';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-import productPrice from './product-price';
+import CreditModal from './credit-card-modal';
+import { addTotal, formatPrice, addTax, addTotalAmount, getPrices } from './product-price';
 
 
 class CheckoutForm extends React.Component {
@@ -11,7 +12,7 @@ class CheckoutForm extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      card: '7273 8269 3277 6949',
+      card: '1234 1234 1234 1234',
       expiration: '',
       cvv: '',
       street: '',
@@ -30,7 +31,6 @@ class CheckoutForm extends React.Component {
       }
     };
     this.states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
-    this.clickHandler = this.clickHandler.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.changeHandler = this.changeHandler.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
@@ -86,20 +86,16 @@ class CheckoutForm extends React.Component {
   }
 
   cvvCheck( value ){
-
     if ( value.length > 3 ) return;
     if ( !isNaN( value ) ) return this.setState({ cvv: value });
   }
 
-  clickHandler() {
-    this.props.goBack('catalog', {});
-  }
-
   checkInputValidity() {
     const { firstName, lastName, email, street, city, usState, zip } = this.state;
-    if (firstName && lastName && email && street && city && usState && zip) return true;
+    if (firstName && lastName && email && street && city && usState && zip) {
+      return true
+    } 
     return false;
-
   }
 
   placeOrder() {
@@ -115,7 +111,7 @@ class CheckoutForm extends React.Component {
         zip: zip,
         cart: this.props.cart
       }
-      return this.props.placeOrder(order, this.props.total);
+      return this.props.placeOrder( order );
     }
     this.setState({
       errorHandler: {
@@ -148,11 +144,11 @@ class CheckoutForm extends React.Component {
               </div>
             </div>
             <div className="row pl-1">
-              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${productPrice((item.price / 100).toFixed(2))}</div>
+              <div className="checkout-cart-item-quantity text-secondary"> Qty: {item.quantity} @ ${formatPrice((item.price / 100).toFixed(2))}</div>
             </div>
             <div className="row pl-1">
               <div className="checkout-cart-item-price text-secondary">
-                ${productPrice(((item.price * item.quantity) / 100).toFixed(2))}
+                ${formatPrice(((item.price * item.quantity) / 100).toFixed(2))}
               </div>
             </div>
           </div>
@@ -166,11 +162,11 @@ class CheckoutForm extends React.Component {
   render() {
     const cartSummaryItem = this.getOrder()
     const { firstName, lastName, email, street, city, usState, zip } = this.state.errorHandler;
-    const { subTotal, tax, totalAmount } = this.props.total;
+    const { subTotal, tax, totalAmount } = this.props.cartSummaryPrice;
     const states = this.states.map((state, id) => <option key={id} value={state}>{state}</option>)
     return (
       <div className={`container-fluid ${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
-        <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
+        <Link className='backText' to={'/'}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</Link>
         <h3 className="d-block mt-2">Checkout</h3>
         <hr/>
         <div className="container-fluid">
@@ -268,13 +264,13 @@ class CheckoutForm extends React.Component {
               </div>
               <div className="container mt-4 mx-0 p-0">
                 <h4 className="col-12 col-md-6 col-lg-5 p-0 d-block d-md-none">Order Summary</h4>
-                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-md-block" onClick={this.placeOrder} >Checkout</button>
+                <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg d-none d-md-block" onClick={this.placeOrder} >Place Order</button>
               </div>
 
             </div>
 
             <div className="col-12 col-md-6 col-lg-5 px-0 pb-3 pt-0 p-md-2">
-              <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Checkout</button>
+              <button type="button" className="mt-1 mb-0-sm btn btn-primary btn-lg btn-block mb-2" onClick={this.placeOrder} >Place Order</button>
               <div className="card-footer checkout-footer container-fluid">
                 <div className="checkout-subtotal">
                   Subtotal
@@ -309,4 +305,4 @@ class CheckoutForm extends React.Component {
   }
 }
 
-export default CheckoutForm;
+export default withRouter(CheckoutForm);

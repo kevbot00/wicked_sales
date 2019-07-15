@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 
 class CartSummaryItem extends React.Component {
   constructor(props) {
@@ -9,12 +10,9 @@ class CartSummaryItem extends React.Component {
     }
     this.updateQuantity = this.updateQuantity.bind(this);
     this.saveHandler = this.saveHandler.bind( this );
-    this.getProductInfo = this.getProductInfo.bind( this );
     this.handleBlur = this.handleBlur.bind( this );
     this.quantityHandler = this.quantityHandler.bind( this );
     this.deleteHandler = this.deleteHandler.bind( this );
-
-
   }
 
   quantityHandler( evt ){
@@ -58,10 +56,6 @@ class CartSummaryItem extends React.Component {
     this.props.toggleModal( this.props.item.id )
   }
 
-  getProductInfo(){
-    this.props.getDetail( 'details', this.props.item )
-  }
-
   handleBlur( evt ) {
     if ( this.state.quantity === "" ){
       this.setState( {quantity: this.props.item.quantity, edit: false})
@@ -100,7 +94,7 @@ class CartSummaryItem extends React.Component {
             <div className="cart-item-body row">
               <div className="col-7 cart-item-summary">
                 <div className="cart-item-title">
-                  <span className=" border-bottom text-primary border-primary cursor cart-summary-item-name" onClick={ this.getProductInfo }>{item.name}</span>
+                  <Link className=" border-bottom text-primary border-primary cursor cart-summary-item-name" to={`/product/${item.id}`}>{item.name}</Link>
                 </div>
                 <div className="cart-item-description product-specs">
                   <span className="d-sm-block d-md-inline">Color / <span className="text-secondary">{ this.props.item.specifications.color }</span></span> 

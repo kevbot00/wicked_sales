@@ -1,8 +1,8 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch, withRouter, HashRouter } from "react-router-dom";
 import CartSummaryItem from './cart-summary-item';
 import image from '../images/empty.png';
 import DeleteItemModal from './delete-item-modal';
-import productPrice from './product-price';
 
 class CartSummary extends React.Component {
   constructor(props) {
@@ -12,8 +12,7 @@ class CartSummary extends React.Component {
       itemToDelete: '',
       shipping: 10
     }
-    this.clickHandler = this.clickHandler.bind(this);
-    this.placeOrder = this.placeOrder.bind(this);
+    this.checkout = this.checkout.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
   }
 
@@ -37,35 +36,20 @@ class CartSummary extends React.Component {
     return shoppingCart;
   }
 
-  clickHandler(evt) {
-    this.props.goBack('catalog', {});
-  }
-
-  addTotal() {
-    const { cart } = this.props;
-    let total = 0;
-    for (var item of cart) {
-      total += item.price * item.quantity;
-    }
-    return (total / 100).toFixed(2);
-  }
-
-  placeOrder() {
+  checkout() {
     if (this.props.cart.length) {
-      this.props.goBack('checkout', { 
-        subTotal: productPrice(this.addTotal()),
-        tax: productPrice((parseInt(this.addTotal()) * .08).toFixed(2)),
-        totalAmount: productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .08 ) + 10).toFixed(2)) 
-      });
+      this.props.history.push( '/checkout')
     }
   }
 
   render() {
+    console.log( this.props.cartSummaryPrice );
+    const { subTotal, tax, totalAmount } = this.props.cartSummaryPrice;
     return (
       <div className={`${this.state.showModal ? 'modal-open' : ''} px-1 px-sm-4 mt-4`}>
-        <div className="container-fluid mb-2 p-0">
+        <Link className="container-fluid mb-2 p-0" to={'/'}>
           <span className='backText' onClick={this.clickHandler}><i className="fas fa-long-arrow-alt-left "></i> Back to catalog</span>
-        </div>
+        </Link>
         <div className="container-fluid p-0">
           <h3 className="mt-2">Cart</h3>
           <hr/>
@@ -85,7 +69,7 @@ class CartSummary extends React.Component {
                   <div className="cart-summary-detail">
                     <div className="cart-subtotal d-flex justify-content-between px-2">
                       <p>Subtotal</p>
-                      <p>${ productPrice(this.addTotal()) }</p>
+                      <p>${ subTotal }</p>
                     </div>
                     <div className="cart-shipping d-flex justify-content-between px-2">
                       <p>Estimated Shipping</p>
@@ -93,14 +77,14 @@ class CartSummary extends React.Component {
                     </div>
                     <div className="cart-tax d-flex justify-content-between px-2">
                       <p>Estimated Tax</p>
-                      <p>${ productPrice((parseInt(this.addTotal()) * .08).toFixed(2)) }</p>
+                      <p>${ tax}</p>
                     </div>
                     <div className="total d-flex justify-content-between pt-2 px-2">
                       <b><p>Total</p></b>
-                      <b><p>${ productPrice((parseInt(this.addTotal()) + ( parseInt(this.addTotal()) * .08 ) + 10).toFixed(2)) }</p></b>
+                      <b><p>${ totalAmount }</p></b>
                     </div>
                   </div>
-                  <button type="button" className="mt-2 mb-0-sm btn btn-light btn-lg btn-block" onClick={this.placeOrder} >Checkout</button>
+                  <button type="button" className="mt-2 mb-0-sm btn btn-light btn-lg btn-block" onClick={this.checkout} >Checkout</button>
                 </div>
               </div>
             }
@@ -119,4 +103,4 @@ class CartSummary extends React.Component {
   }
 }
 
-export default CartSummary;
+export default withRouter(CartSummary);
