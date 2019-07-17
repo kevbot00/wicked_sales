@@ -201,12 +201,12 @@ class CheckoutForm extends React.Component {
 
               <div className="form-row">
                 <div className="form-group mb-3 col-sm-12 col-md-6 col-lg-8">
-                  <label htmlFor="creditCard">Credit Card</label>
+                  <label htmlFor="creditCard">Credit Card (Hard Coded for Demo Purposes)</label>
                   <input type="text" name="card" className='form-control' id="creditCard" onChange={this.changeHandler} value={this.state.card} />
                 </div>
                 <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2 ">
                   <label htmlFor="expiration">Expiration</label>
-                  <input type="text" name="expiration" className='form-control' id="expiration-month" placeholder="00/00" onKeyDown={ this.changeHandler}  value={this.state.expiration}/>
+                  <input type="text" name="expiration" className='form-control' id="expiration-month" placeholder="MM/YYYY" onKeyDown={ this.changeHandler}  value={this.state.expiration}/>
                 </div>
                 <div className="form-group mb-3 col-6 col-sm-6 col-md-3 col-lg-2">
                   <label htmlFor="cvv">CVV</label>
