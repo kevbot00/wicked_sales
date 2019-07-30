@@ -1,5 +1,5 @@
 # cycler
-* Live Demo: __https://wicked-sales.kevinyang.me
+* Live Demo: __https://wicked-sales.kevinyang.me__
 
 <hr/>
 
