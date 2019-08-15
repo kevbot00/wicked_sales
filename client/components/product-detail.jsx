@@ -26,10 +26,6 @@ class ProductDetails extends React.Component {
       });
   }
 
-  // clickHandler() {
-  //   this.props.goBack('catalog', {});
-  // }
-
   addHandler() {
     const { product, quantity } = this.state
     this.props.addHandler(product, quantity);
