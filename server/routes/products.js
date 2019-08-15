@@ -1,12 +1,12 @@
 const express = require('express');
 const mysql = require('mysql');
+const router = express.Router();
 
 const connection = mysql.createConnection({
-  host: 'localhost',
   port: '8889',
   user: 'root',
   password: 'root',
-  database: ''
+  database: 'wickedSales'
 });
 
 connection.connect( function( err ){
@@ -17,9 +17,23 @@ connection.connect( function( err ){
 }); 
 
 
-// function routes() {
-//   const productRouter = express.Router();
-//   bookRouter.route('/api/products')
-// }
+router.route('/')
+  .get((req, res) => {
+    let getProductQuery = ''
+    if ( req.query.id ) {
+      getProductQuery = `WHERE id = ${req.query.id}`
+    }
 
-// module.exports = routes;
+    const getProductListQuery = `SELECT * FROM \`products\` ${getProductQuery}`;
+    connection.query( getProductListQuery , ( err, data ) => {
+      if (err) throw err;
+      data.forEach( item => {
+        item.images = JSON.parse( item.images );
+        item.specifications = JSON.parse( item.specifications );
+        return item
+      })
+      res.status( 200 ).send( data );
+    })
+  })
+
+module.exports = router

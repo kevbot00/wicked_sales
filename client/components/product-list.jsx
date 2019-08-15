@@ -20,7 +20,7 @@ class ProductList extends React.Component {
   }
 
   getProducts() {
-    fetch('/api/products.php', {
+    fetch('/api/routes/products', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

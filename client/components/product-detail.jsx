@@ -9,14 +9,12 @@ class ProductDetails extends React.Component {
       product: null,
       quantity: 1
     };
-    // this.clickHandler = this.clickHandler.bind(this);
     this.addHandler = this.addHandler.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
-
   }
 
   componentDidMount() {
-    fetch(`/api/products.php?id=${this.props.match.params.id}`, {
+    fetch(`/api/routes/products?id=${this.props.match.params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -24,7 +22,7 @@ class ProductDetails extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ product: data });
+        this.setState({ product: data }, () => console.log( data ));
       });
   }
 
@@ -47,13 +45,13 @@ class ProductDetails extends React.Component {
   existInCart() {
     if (this.state.product) {
       for (let item of this.props.cart) {
-        item.id == this.state.product.id ? true : false
+        item.id == this.state.product[0].id ? true : false
       }
     }
   }
 
   productPrice(){
-    let price = String((this.state.product.price / 100).toFixed(2))
+    let price = String((this.state.product[0].price / 100).toFixed(2))
     if ( price.length > 6 ){
       const firstSlice = price.slice(0 , price.length - 6 );
       const secondSlice = price.slice( price.length - 6 );
@@ -72,15 +70,15 @@ class ProductDetails extends React.Component {
           <div className="container-fluid pt-2 pt-sm-4">
             <div className="row">
               <div className="col-12 col-sm-12 col-md-7 p-0 text-center d-flex justify-items-stretch product-carousel-section mb-2">
-                  <ProductCarousel images={this.state.product.images} />
+                  <ProductCarousel images={this.state.product[0].images} />
               </div>
               <div className="col-12 col-sm-12 col-md-5 mb-3">
-                <h2 className='mb-2 product-detail-name'>{this.state.product.name}</h2>
+                <h2 className='mb-2 product-detail-name'>{this.state.product[0].name}</h2>
                 <h4 className='product-price'>${ this.productPrice() }</h4>
                 <hr />
-                <div className="product-short-description">{this.state.product.shortDescription}</div>
+                <div className="product-short-description">{this.state.product[0].shortDescription}</div>
                 <div className="mt-3 product-specs">
-                  Color / <span className="text-secondary">{this.state.product.specifications.color}</span> | Size / <span className="text-secondary">{this.state.product.specifications.size}</span> 
+                  Color / <span className="text-secondary">{this.state.product[0].specifications.color}</span> | Size / <span className="text-secondary">{this.state.product[0].specifications.size}</span> 
                 </div>
                 <div className="container-fluid">
                   <div className="row d-flex align-items-center mt-4">
@@ -102,7 +100,7 @@ class ProductDetails extends React.Component {
 
         <div className="container-fluid mt-3 mb-4">
           <h3>Product Details</h3>
-          {this.state.product.longDescription}
+          {this.state.product[0].longDescription}
         </div>
 
       </div>
