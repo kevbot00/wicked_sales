@@ -52,15 +52,6 @@ class ProductList extends React.Component {
 
   render(){
     const productArray = this.state.products.map(product => {
-      // (
-      // <Router>
-      //   <Route 
-          
-      //     path={`/product?id=${product.id}`}
-      //     render={ props => <ProductListItem key={ product.id } addHandler={ this.props.addHandler } />}
-      //   />
-      // </Router>
-      // )
       return <ProductListItem key={ product.id } product={ product } addHandler={ this.props.addHandler } />;
     });
     return (

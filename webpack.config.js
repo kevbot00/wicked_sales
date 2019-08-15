@@ -56,14 +56,25 @@ module.exports = {
     host: '0.0.0.0',
     port: 3000,
     contentBase: publicPath,
-    historyApiFallback: true,
     watchContentBase: true,
     stats: 'minimal',
+    historyApiFallback: true,
     proxy: {
-      '/api': {
-        changeOrigin: true,
-        target: 'http://localhost/wicked-sales/server/public'
-      }
+      '/api': 'http://localhost:3001'
     }
+  // devServer: {
+  //   host: '0.0.0.0',
+  //   port: 3000,
+  //   contentBase: publicPath,
+  //   historyApiFallback: true,
+  //   watchContentBase: true,
+  //   stats: 'minimal',
+  //   proxy: {
+  //     '/server': {
+  //       changeOrigin: true,
+  //       // target: 'http://localhost/wicked-sales/server/public'
+  //       target: 'http://localhost/wicked-sales/server/server.js'
+  //     }
+  //   }
   }
 };
