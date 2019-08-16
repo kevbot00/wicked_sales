@@ -18,19 +18,13 @@ class ProductListItem extends React.Component {
 
   }
 
-  getProductDetail() {
-    // fetch( '/product?id=' + 
-
-  }
-
   clickHandler() {
-    // this.props.detail('details', { id: this.props.product.id });
     this.props.history.push('/product/'+ this.props.product.id )
   }
 
   addHandler(event) {
     event.stopPropagation();
-    this.props.addHandler(this.props.product);
+    this.props.addHandler(this.props.product, 1);
   }
 
   productPrice(){

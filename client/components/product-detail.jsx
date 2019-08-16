@@ -9,14 +9,12 @@ class ProductDetails extends React.Component {
       product: null,
       quantity: 1
     };
-    // this.clickHandler = this.clickHandler.bind(this);
     this.addHandler = this.addHandler.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
-
   }
 
   componentDidMount() {
-    fetch(`/api/products.php?id=${this.props.match.params.id}`, {
+    fetch(`/api/routes/products?id=${this.props.match.params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -24,13 +22,9 @@ class ProductDetails extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ product: data });
+        this.setState({ product: data[0] });
       });
   }
-
-  // clickHandler() {
-  //   this.props.goBack('catalog', {});
-  // }
 
   addHandler() {
     const { product, quantity } = this.state

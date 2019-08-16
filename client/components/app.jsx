@@ -58,7 +58,7 @@ class App extends React.Component {
   
   // Fetch Calls
   getCartItems() {
-    fetch('/api/cart.php', {
+    fetch('/api/routes/cart', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ class App extends React.Component {
   }
 
   addToCart(product , quantity ) {
-    fetch('/api/cart.php', {
+    fetch('/api/routes/cart', {
       method: 'POST',
       body: JSON.stringify({ product, quantity }),
       headers: {
@@ -81,7 +81,6 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        
         this.setState({ 
           cart: [...this.state.cart, product], 
           added: 'show'
@@ -96,15 +95,16 @@ class App extends React.Component {
       }
       return item;
     });
-
-    fetch(`api/cart.php?id=${productId}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        quantity
-      })
+    fetch(`api/routes/cart?id=${productId}`, {
+      method: "PUT",
+      body: JSON.stringify({quantity}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then( res => res.json() )
     .then( data => {
+      console.log( cart );
       const cartSummaryPrice = getPrices( cart );
       this.setState({ cart, cartSummaryPrice })
     })
@@ -114,11 +114,13 @@ class App extends React.Component {
     let cart = this.state.cart.filter( item => {
       if ( item.id !== productId ) return item
     })
-    fetch(`api/cart.php?id=${productId}`, {
+    fetch(`api/routes/cart?id=${productId}`, {
       method: "DELETE",
       })
     .then( res => res.json() )
-    .then( data => this.setState({ cart }, this.getProducts ));
+    .then( data => {
+      this.setState({ cart }, this.getCartItems )
+    });
   }
 
   placeOrder( custInfo ) {
