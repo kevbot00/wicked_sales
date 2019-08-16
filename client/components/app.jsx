@@ -124,7 +124,7 @@ class App extends React.Component {
   }
 
   placeOrder( custInfo ) {
-    fetch('/api/orders.php', {
+    fetch('/api/routes/orders', {
       method: 'POST',
       body: JSON.stringify(custInfo),
       headers: {
@@ -139,12 +139,11 @@ class App extends React.Component {
             custInfo,
             'cartSummaryPrice': this.state.cartSummaryPrice
           }
-        })
+        }, this.getCartItems );
         this.props.history.push({
           pathname: "/confirmation/" + data.id, 
           state: {'custOrder': this.state.custOrder }
         })
-        this.getCartItems();
       })
   }
   

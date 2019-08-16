@@ -18,7 +18,7 @@ class Confirmation extends React.Component {
   }
 
   fetchOrderDetails(){
-    fetch('/api/orders.php?id=' + this.props.match.params.id )
+    fetch('/api/routes/orders?id=' + this.props.match.params.id )
     .then( res => res.json() )
     .then( data => {
       const cartSummaryPrice = getPrices( data.cart );
