@@ -14,8 +14,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use( session({
-  cookie: {maxAge: 28800000, sessionId: uuid()},
+app.use(session({
+  cookie: { maxAge: 28800000, sessionId: uuid() },
   resave: false,
   secret: 'testing testing',
   saveUninitialized: false
@@ -23,10 +23,11 @@ app.use( session({
 
 const productRouter = require('./routes/products');
 const cartRouter = require('./routes/cart');
+const orderRouter = require('./routes/orders');
 
 app.use('/api/routes/products', productRouter);
-app.use('/api/routes/cart', cartRouter );
-
+app.use('/api/routes/cart', cartRouter);
+app.use('/api/routes/orders', orderRouter);
 app.get('/', function (req, res) {
   console.log('Connected Server.js')
 })
