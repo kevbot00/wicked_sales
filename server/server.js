@@ -13,8 +13,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 app.use( session({
-  cookie: {maxAge: 3600000, sessionId: uuid()},
+  cookie: {maxAge: 28800000, sessionId: uuid()},
   resave: false,
   secret: 'testing testing',
   saveUninitialized: false

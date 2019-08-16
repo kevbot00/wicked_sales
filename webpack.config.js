@@ -60,7 +60,8 @@ module.exports = {
     stats: 'minimal',
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3001'
+      '/api/*': 'http://localhost:3001',
+      "changeOrigin": true
     }
   // devServer: {
   //   host: '0.0.0.0',

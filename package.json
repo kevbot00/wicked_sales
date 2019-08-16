@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack --mode=production",
-    "test": "nodemon server/server.js"
+    "test": "nodemon server/server.js --ignore './client/'"
   },
   "husky": {
     "hooks": {

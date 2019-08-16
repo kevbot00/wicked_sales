@@ -95,13 +95,16 @@ class App extends React.Component {
       }
       return item;
     });
-
     fetch(`api/routes/cart?id=${productId}`, {
-      method: "PATCH",
-      body: JSON.stringify({quantity})
+      method: "PUT",
+      body: JSON.stringify({quantity}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     .then( res => res.json() )
     .then( data => {
+      console.log( cart );
       const cartSummaryPrice = getPrices( cart );
       this.setState({ cart, cartSummaryPrice })
     })
@@ -111,11 +114,13 @@ class App extends React.Component {
     let cart = this.state.cart.filter( item => {
       if ( item.id !== productId ) return item
     })
-    fetch(`api/cart.php?id=${productId}`, {
+    fetch(`api/routes/cart?id=${productId}`, {
       method: "DELETE",
       })
     .then( res => res.json() )
-    .then( data => this.setState({ cart }, this.getProducts ));
+    .then( data => {
+      this.setState({ cart }, this.getCartItems )
+    });
   }
 
   placeOrder( custInfo ) {
